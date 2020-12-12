@@ -10,7 +10,7 @@
                         <label for="user_name">
                             Mobile Number<span class="text-danger">*</span>
                         </label>
-                        <input type="text" name="first_name" class="form-control required" required="required" value="<?php echo set_value ('first_name'); ?>" id="user_name" placeholder="Enter your name" />
+                        <input type="text" name="first_name" class="form-control required" required="required" value="<?php echo set_value ('first_name'); ?>" id="user_name" placeholder="Enter your mobile number" />
                         <small id="nameHelp" class="form-text text-muted">Can contain alpha numeric characters</small>
 
                     </div>
