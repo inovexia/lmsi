@@ -17,6 +17,7 @@ class Vitals extends MX_Controller {
 		}
 		if (! defined ('TEMPLATE_PATH')) {
 			define ('TEMPLATE_PATH', $template_path);
+			define ('INCLUDE_PATH', TEMPLATE_PATH);
 		}
 	}
 

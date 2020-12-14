@@ -1,15 +1,15 @@
  <div class="row justify-content-center">
- 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+ 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
 		<div class="card mb-4">
             <div class="card-body">
 		 		<h2 class="mb-2">Register As Teacher</h2>
 
-		 		<?php echo form_open ('login/login_actions/register', array('id'=>'validate-user')); ?>
+		 		<?php echo form_open ('api/account_actions/register', array('id'=>'validate-user')); ?>
 
                     <div class="form-group-1">
                         <div class="form-group mb-2">
                             <label for="user_name">
-                                Name<span class="text-danger">*</span>
+                                Your Name<span class="text-danger">*</span>
                             </label>
                             <input type="text" name="first_name" class="form-control required" required="required" value="<?php echo set_value ('first_name'); ?>" id="user_name" placeholder="Enter your name" />
 	                        <small id="nameHelp" class="form-text text-muted">Can contain alpha numeric characters</small>
@@ -34,15 +34,37 @@
                                	Enter OTP<span class="text-danger">*</span>
                             </label>
                             <input type="text" name="otp" class="form-control required" required="required" value="<?php echo set_value ('otp'); ?>" id="mobile-otp" onkeyup="validate_otp (this.value)" placeholder="Enter OTP recieved on your phone" maxlength="6" />
+                            <small class="form-text text-muted"></small>
                         </div>
 
-                        <div>
+                        <div class="mb-2">
                             <button type="button" id="btn-send-otp" class="btn btn-outline-secondary">Send OTP</button>
                         </div>
                     </div>
 
                     <div class="form-group-1 d-none" id="login-field">
                         
+                        <div class="form-group mb-2">
+                            <label class="">
+                                <span>Display Name</span>
+                            </label>
+                            <input type="text" name="display_name" class="form-control required" placeholder="Display name"  required="required" />
+                            <small class="form-text text-muted">This will be your brand name</small>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label class="">
+                                <span>URL</span>
+                            </label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="url"><?php echo base_url (); ?></span>
+                                </div>    
+                                <input type="text" name="url" class="form-control required" required="required" value="<?php echo set_value ('url'); ?>" id="url" placeholder="Eg, apexcoachings, jhonwick03" aria-describedby="url" />
+                            </div>
+                            <small class="form-text text-muted">A unique combination of letters and/or numbers. This will be the url your students will use to reach your page. Eg, <b>apexcoachings, jhonwick03</b>  </small>
+                        </div>
+
                         <div class="form-group mb-4">
                             <label class="">
                                 <span>Password</span>

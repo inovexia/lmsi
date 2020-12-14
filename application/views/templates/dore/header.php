@@ -237,23 +237,23 @@
             <div class="scroll">
                 <ul class="list-unstyled">
                     <li>
-                        <a href="#dashboard">
+                        <a href="<?php echo site_url ('coaching/home/dashboard'); ?>">
                             <i class="iconsminds-shop-4"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#layouts">
+                        <a href="<?php echo site_url ('coaching/courses/index'); ?>">
                             <i class="iconsminds-digital-drawing"></i> Courses
                         </a>
                     </li>
                     <li>
-                        <a href="#applications">
+                        <a href="<?php echo site_url ('coaching/users/index'); ?>">
                             <i class="iconsminds-air-balloon-1"></i> Users
                         </a>
                     </li>
                     <li>
-                        <a href="#ui">
+                        <a href="<?php echo site_url ('coaching/slots/index'); ?>">
                             <i class="iconsminds-pantone"></i> Slots
                         </a>
                     </li>
