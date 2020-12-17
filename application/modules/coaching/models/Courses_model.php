@@ -212,17 +212,14 @@ class Courses_model extends CI_Model {
 		return $category_id;
 	}
 
-	public function add_course($coaching_id, $category_id, $course_id, $feat_img, $status = COURSE_STATUS_INACTIVE) {
-		$cat_id = $this->input->post('cat_id');
-		if($category_id != $cat_id){
-			$data['cat_id'] = ($cat_id!='null')?$cat_id:null;
-			$category_id = $cat_id;
-		}
+	public function add_course ($coaching_id=0, $category_id=0, $course_id=0, $feat_img='', $status=COURSE_STATUS_INACTIVE) {
+		
+
 		$data['title'] = $this->input->post('title');
 		$data['description'] = $this->input->post('description');
 		$data['curriculum'] = $this->input->post('curriculum');
 		$data['price'] = $this->input->post('price');
-		if($feat_img!==null){
+		if ($feat_img !== null) {
 			$data['feat_img'] = $feat_img;
 		}
 		if ($course_id > 0) {
@@ -231,11 +228,9 @@ class Courses_model extends CI_Model {
 			$this->db->update('coaching_courses', $data);
 		} else {
 			$data['status'] = $status;
-			$data['enrolment_type'] = $this->input->post('enrolment_type');
+			$data['enrolment_type'] = COURSE_ENROLMENT_DIRECT;
 			$data['coaching_id'] = $coaching_id;
-			if ($category_id>0) {
-				$data['cat_id'] = $category_id;
-			}
+			$data['cat_id'] = $category_id;			
 			$data['created_on'] = time();
 			$data['created_by'] = $this->session->userdata('member_id');
 			$this->db->insert('coaching_courses', $data);

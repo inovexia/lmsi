@@ -19,6 +19,8 @@ class Vitals extends MX_Controller {
 			define ('TEMPLATE_PATH', $template_path);
 			define ('INCLUDE_PATH', TEMPLATE_PATH);
 		}
+
+		$this->session->set_userdata ('member_id', 1);
 	}
 
 

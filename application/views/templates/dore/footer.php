@@ -41,6 +41,8 @@
     <script type="text/javascript" src="<?php echo base_url (THEME_PATH . 'assets/js/default.js'); ?>"></script>
     <!-- Application JS -->
     <script type="text/javascript" src="<?php echo base_url (THEME_PATH . 'assets/js/app.js?ver=1.5'); ?>"></script>
+    <!-- Custom Js file -->
+    <script type="text/javascript" src="<?php echo base_url (THEME_PATH . 'assets/js/custom.js'); ?>"></script>
 
     <!-- Custom JS (Dynamically included) -->
     <?php

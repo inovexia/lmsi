@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
-		<?php echo form_open('coaching/courses_actions/create_course/'.$coaching_id.'/'.$cat_id.'/'.$course_id, array('class' =>'card', 'id'=>'validate-1')); ?>
+		<?php echo form_open('coaching/courses_actions/create_course/'.$coaching_id.'/'.$cat_id.'/'.$course_id, array('class' =>'card', 'class'=>'validate-form')); ?>
 			<div class="card-body">
 				
 				<div class="form-group">
@@ -22,10 +22,10 @@
 				<div class="form-group">
 					<label for="price">Price</label>
 					<div class="input-group mb-2">
-						<input type="number" class="form-control" id="price" name="price" min="0" step="1" placeholder="Course Price"<?php echo (isset($course['price'])) ? ' value="' . $course['price'] . '"' : ' '; ?>/>
 						<div class="input-group-append">
-							<div class="input-group-text">.00</div>
+							<div class="input-group-text"><i class="fa fa-inr"></i></div>
 						</div>
+						<input type="number" class="form-control" id="price" name="price" min="0" step="1" placeholder="Course Price"<?php echo (isset($course['price'])) ? ' value="' . $course['price'] . '"' : ' '; ?>/>
 					</div>
 				</div>
 				<div class="form-group">

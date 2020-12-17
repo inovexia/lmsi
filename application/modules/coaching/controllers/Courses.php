@@ -10,7 +10,7 @@ class Courses extends MX_Controller {
 		$this->common_model->autoload_resources($config, $models);
 	}
 
-	public function index ($coaching_id=0, $cat_id='-1') {
+	public function index ($coaching_id=0, $cat_id=0) {
 		
 		$data['page_title'] = 'Courses';
 		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
@@ -18,9 +18,9 @@ class Courses extends MX_Controller {
 		$data['cat_id'] 	 = $cat_id;
 
 		//$data['courses'] = $this->courses_model->get_courses ($coaching_id, $cat_id);
-		$data['toolbar_buttons'] = array(
-			'<i class="fa fa-plus-circle"></i> New Course' => 'coaching/courses/create/' . $coaching_id . '/' . $cat_id,
-			'<i class="fa fa-plus-circle"></i> New Category' => 'coaching/courses/create_category/' . $coaching_id,
+		$data['toolbar_buttons'] = array (
+			'add_new'=>['New Course' => 'coaching/courses/create/'.$coaching_id.'/'.$cat_id],
+			'<i class="fa fa-plus-circle"></i> Courses' => 'coaching/courses/index/'.$coaching_id.'/'.$cat_id
 		);
 
 		$data['courses'] = $this->courses_model->courses ($coaching_id, $cat_id);
@@ -56,7 +56,6 @@ class Courses extends MX_Controller {
 
 
 	public function manage ($coaching_id=0, $course_id=0) {
-		$data['page_title'] = 'Manage Course';
 
 		$data['course'] = $course = $this->courses_model->get_course_by_id ($course_id);
 		if (! $course) {
@@ -71,8 +70,9 @@ class Courses extends MX_Controller {
 		$data['cat_id'] = $this->courses_model->get_course_cat_id ($coaching_id, $course_id);
 		$data['coaching_id'] = $coaching_id;
 		$data['course_id'] = $course_id;
-		$data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
 		$data['bc'] = array('Courses' => 'coaching/courses/index/'.$coaching_id);
+		$data['page_title'] = 'Manage Course';
+		$data['sub_title'] = $course['title'];
 
 		$data['right_sidebar'] = $this->load->view ('courses/inc/manage_course', $data, true);
 		$this->load->view(INCLUDE_PATH . 'header', $data);
