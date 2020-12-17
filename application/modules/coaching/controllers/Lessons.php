@@ -43,7 +43,7 @@ class Lessons extends MX_Controller {
 		/* --==// Toolbar //==-- */
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
 		$data['toolbar_buttons']['<i class="fa fa-plus-circle"></i> New Chapter']= 'coaching/lessons/create/'.$coaching_id.'/'.$course_id;
-		$data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
+		// $data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
 
 		/* --==// Back //==-- */
 		$data['bc'] = ['Pages'=>'coaching/courses/manage/'.$coaching_id.'/'.$course_id];
@@ -62,7 +62,7 @@ class Lessons extends MX_Controller {
 		$data['coaching_id'] = $coaching_id;
 		$data['course_id'] = $course_id;
 		$data['lesson_id'] = $lesson_id;
-		$data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
+		// $data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
 
 		/* --==// Toolbar //==-- */
 		$data['toolbar_buttons'] = $this->toolbar_buttons;

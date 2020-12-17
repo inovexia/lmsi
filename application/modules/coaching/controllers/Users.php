@@ -17,7 +17,7 @@ class Users extends MX_Controller {
         } else {
             if ($cid == true && $this->session->userdata ('coaching_id') <> $cid) {
                 $this->message->set ('Direct url access not allowed', 'danger', true);
-                redirect ('coaching/home/dashboard');
+                // redirect ('coaching/home/dashboard');
             }
         }
 	}

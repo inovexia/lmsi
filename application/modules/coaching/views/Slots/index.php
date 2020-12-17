@@ -1,234 +1,38 @@
-<div class="row mb-3">
-    <div class="col-12">
-        <div class="mb-2">
-                       
-            <div class="collapse dont-collapse-sm" id="displayOptions">
-                
-                <div class="d-block d-md-inline-block">
-                    
-                    <div class="search-sm calendar-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                        <input class="form-control datepicker" placeholder="Search by day">
-                    </div>
-                </div>
-                <div class="float-md-right">
-                    <span class="text-muted text-small">Displaying 1-10 of 25 items </span>
-                    <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        20
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">10</a>
-                        <a class="dropdown-item active" href="#">20</a>
-                        <a class="dropdown-item" href="#">30</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="row">
-    <div class="col-12 list" data-check-all="checkAll">
-        <div class="card d-flex flex-row mb-3">
-          <div class="d-flex flex-grow-1 min-width-zero">
-              <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                <div class="flex-grow-1">
-                  <div class="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-					                   
-                        <div class="d-flex list-item-heading">
-                          <span class="mr-2">1.</span>
-                          <div class="flex-grow-1 my-auto truncate">
-                            Course 1                            
-                            <div class="text-muted text-small">
-                              Physics - Higher Ed                              
-                            </div>
-                          </div>
-                        </div>
-                   
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            Date                            
-                            <div class="text-muted text-small">
-                              01-01-2021                             
-                            </div>
-                          </div>                      
-                    </p>
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            Start Time                            
-                            <div class="text-muted text-small">
-                              10:00 AM                           
-                            </div>
-                          </div>                      
-                    </p>
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            End Time                            
-                            <div class="text-muted text-small">
-                              11:00 AM                             
-                            </div>
-                          </div>                   
-                    </p>
-                  </div>
-                </div>
-                  <div class="flex-shrink-0">
-                    <a class="btn btn-primary" href="#"><i class="fa fa-cog"></i> Edit </a>
-                    <a class="btn btn-primary" href="#"><i class="fa fa-cog"></i> Delete </a>
-
-                  </div>
-                </div>
-            </div>
+  <?php if(!empty($slots)): ?>
+  <div class="col-12 list" data-check-all="checkAll">
+    <?php foreach($slots as $i => $slot): ?>
+    <?php extract($slot); ?>
+    <div class="card d-flex flex-row mb-3">
+      <div class="d-flex flex-grow-1 min-width-zero">
+        <label class="custom-control custom-checkbox checkbox-left mb-1 align-self-center pr-4">
+          <input type="checkbox" class="custom-control-input" name="" value="<?php echo $slot_id; ?>">
+          <span class="custom-control-label">&nbsp;</span>
+        </label>
+        <div
+          class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+          <a class="list-item-heading mb-0 truncate w-20 w-xs-100"
+            href="<?php echo site_url("/coaching/slots/create/$slot_id"); ?>">
+            <?php echo $subject; ?>
+          </a>
+          <p class="mb-0 text-muted text-small w-15 w-xs-100"><?php echo date ('d-m-Y', $date); ?></p>
+          <p class="mb-0 text-muted text-small w-15 w-xs-100"><?php echo date ('H:i', $start_time); ?></p>
+          <p class="mb-0 text-muted text-small w-15 w-xs-100"><?php echo date ('H:i', $end_time); ?></p>
+          <div class="w-15 w-xs-100">
+            <span
+              class="badge badge-pill badge-<?php echo $slot_type == APPOINTMENT_TYPE_SINGLE? "primary":"secondary"; ?>"><?php echo $slot_type == APPOINTMENT_TYPE_SINGLE? "Single":"Multiple"; ?></span>
+          </div>
         </div>
-        <div class="card d-flex flex-row mb-3">
-          <div class="d-flex flex-grow-1 min-width-zero">
-              <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                <div class="flex-grow-1">
-                  <div class="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-					                   
-                  <div class="d-flex list-item-heading">
-                          <span class="mr-2">2.</span>
-                          <div class="flex-grow-1 my-auto truncate">
-                            Course 1                            
-                            <div class="text-muted text-small">
-                              Physics - Higher Ed                              
-                            </div>
-                          </div>
-                        </div>
-                  
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            Date                            
-                            <div class="text-muted text-small">
-                              21-01-2021                             
-                            </div>
-                          </div>                       
-                    </p>
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            Start Time                           
-                            <div class="text-muted text-small">
-                              03:00 PM                            
-                            </div>
-                          </div>                      
-                    </p>
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            End Time                           
-                            <div class="text-muted text-small">
-                             04:00 PM                             
-                            </div>
-                          </div>                    
-                    </p>
-                  </div>
-                </div>
-                  <div class="flex-shrink-0">
-                    <a class="btn btn-primary" href="#"><i class="fa fa-cog"></i> Edit </a>
-                    <a class="btn btn-primary" href="#"><i class="fa fa-cog"></i> Delete </a>
-
-                  </div>
-                </div>
-            </div>
-        </div>
-        <div class="card d-flex flex-row mb-3">
-          <div class="d-flex flex-grow-1 min-width-zero">
-              <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                <div class="flex-grow-1">
-                  <div class="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-					                   
-                  <div class="d-flex list-item-heading">
-                          <span class="mr-2">3.</span>
-                          <div class="flex-grow-1 my-auto truncate">
-                            Course 1                            
-                            <div class="text-muted text-small">
-                              Physics - Higher Ed                              
-                            </div>
-                          </div>
-                        </div>
-                   
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            Date                            
-                            <div class="text-muted text-small">
-                              11-01-2021                             
-                            </div>
-                          </div>                     
-                    </p>
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            Start Time                           
-                            <div class="text-muted text-small">
-                              09:00 AM                            
-                            </div>
-                          </div>                     
-                    </p>
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            End Time                           
-                            <div class="text-muted text-small">
-                              10:00 AM                            
-                            </div>
-                          </div>                   
-                    </p>
-                  </div>
-                </div>
-                  <div class="flex-shrink-0">
-                    <a class="btn btn-primary" href="#"><i class="fa fa-cog"></i> Edit </a>
-                    <a class="btn btn-primary" href="#"><i class="fa fa-cog"></i> Delete </a>
-
-                  </div>
-                </div>
-            </div>
-        </div>
-        <div class="card d-flex flex-row mb-3">
-          <div class="d-flex flex-grow-1 min-width-zero">
-              <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                <div class="flex-grow-1">
-                  <div class="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-					                    
-                  <div class="d-flex list-item-heading">
-                          <span class="mr-2">4.</span>
-                          <div class="flex-grow-1 my-auto truncate">
-                            Course 3                            
-                            <div class="text-muted text-small">
-                              Physics - Higher Ed                              
-                            </div>
-                          </div>
-                        </div>
-                   
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            Date                            
-                            <div class="text-muted text-small">
-                              15-12-2021                             
-                            </div>
-                          </div>                    
-                    </p>
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            Start Time                           
-                            <div class="text-muted text-small">
-                              07:0 PM                            
-                            </div>
-                          </div>                 
-                    </p>
-                    <p class="my-2 my-md-0 text-muted text-small w-15 w-xs-100">
-                    <div class="flex-grow-1 my-auto truncate">
-                            End Time                           
-                            <div class="text-muted text-small">
-                              08:0 PM                            
-                            </div>
-                          </div>                  
-                    </p>
-                  </div>
-                </div>
-                  <div class="flex-shrink-0">
-                    <a class="btn btn-primary" href="#"><i class="fa fa-cog"></i> Edit </a>
-                    <a class="btn btn-primary" href="#"><i class="fa fa-cog"></i> Delete </a>
-
-                  </div>
-                </div>
-            </div>
-        </div>
-        
+      </div>
     </div>
+    <?php endforeach; ?>
+  </div>
+  <?php else: ?>
+    <div class="col-12">
+      <div class="alert alert-danger" role="alert">
+        <strong>Slots are empty!</strong> There aren't any slots created yet.
+      </div>
+      <?php echo anchor ('coaching/slots/create/'.$coaching_id.'/'.$slot_id, 'Create a new slot', ['class'=>'btn btn-primary']); ?>
+    </div>
+  <?php endif; ?>
 </div>

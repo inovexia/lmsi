@@ -64,7 +64,7 @@
     </div>
 
     <!-- Teachers -->
-	<?php if ($is_admin) { ?>
+	
 	    <div class="col-lg-6 col-md-12 mb-4">
 	        <div class="card">
 	            <div class="card-body">
@@ -85,7 +85,7 @@
 	            </div>
 	        </div>
 	    </div>
-	<?php } ?>
+
     
 	    <!-- Organize -->
 	    <div class="col-lg-6 col-md-12 mb-4">
@@ -158,19 +158,19 @@
     						<i class="simple-icon-cloud-upload heading-icon"></i>
     						<span class="align-middle d-inline-block">Publish</span>
     					</a>
-    					<?php if ($is_admin == true) { ?>
+    					
     						<a class="list-item-heading mb-0 truncate w-100 mt-0 d-inline-block" href="<?php echo site_url ('coaching/courses/edit/'.$coaching_id.'/'.$cat_id.'/'.$course_id); ?>">
     							<i class="simple-icon-pencil heading-icon"></i>
     							<span class="align-middle d-inline-block">Edit</span>
     						</a>
-		                <?php } ?>
+		                
 		            <?php } else { ?>
 		            	<a class="list-item-heading mb-0 truncate w-100 mt-0 d-inline-block" href="javascript:void(0)" onclick="javascript:show_confirm ('Are you sure you want to un-publish this course?', '<?php echo site_url('coaching/courses_actions/unpublish/'.$coaching_id.'/'.$course_id); ?>')" title="Un-Publish Test">
 		                    <i class="simple-icon-cloud-download heading-icon"></i>
 		                    <span class="align-middle d-inline-block">Un-Publish</span>
 		                </a>
 		            <?php } ?>
-		            <?php if ($is_admin == true) { ?>
+		          
 						
 						<!------ DUPLICATE COURSE ------------>
 		            	<a href="#" class="list-item-heading mb-0 truncate w-100 mt-0 d-inline-block" data-toggle="modal" data-target=".duplicate-modal-sm">
@@ -220,7 +220,7 @@
 		            		</div>
 		            	</div>
 						<!------ DELETE COURSE ------------>
-		            <?php } ?>
+		       
 		        </div>
 		    </div>
 		</div>
