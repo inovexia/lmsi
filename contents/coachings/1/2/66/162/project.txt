@@ -1,0 +1,69 @@
+Best practices for web images
+1. The size of the image length by width in pixel is generally reduced to suit the page layout using css and the aspect ratio of image is also maintained by css. Instead, the image should be reduced using Photoshop or other suitable programs to actual size in the page layout. In this case there will be no need to further compress the image in server before the page is displayed on the client's device.
+2. Find suitable image type that you would like to display on teh page
+	If the image contain transparent area which you want to display on a page and would like to maintain the transparency then use .png.
+	If the image is normal image where maintaining image transparency is not important then use .jpg with suitable compression technique
+	If you have a small graphics with simple component, you can use SVG format, but teh size in HTML will increase rapidly if the image becomes complicated
+3. Do not write text on top of image while creating image, since the text cannot be read by search engine and is poor for SEO purpose.
+4. Create create new PSD from existing image as it will reduce quality of image. Start with main PSD and use the smae. Each time you open to edit and save, the quality of image is affected. 
+5. Do not use simple editing tools like Microsoft Paintshop as it increases file size due to compression and will affect image quality.
+6. Do not store images in Word document as each time you copy and paste back in Word format, it looses quality.
+7. Use clear images that expresses the point of interest clearly.
+8. Alternative Text - Always use alternative text to define the objective of using teh image in text and can lead to a better search of your site.
+9. Include picture of yourself or your team. This may give face to each activity and project undertaken.
+10. Create your own image as publicly available images may not be suitable to define your site goals.
+
+
+
+You are developer and developing website. Fill up the checklist and prepare yourself for the great launch
+1. Define the purpose of teh website which should match with teh aims and objective of teh organization.
+2. Select appropriate domain name that will also determine the name of teh APP or Software.
+3. Determine the colour pallete that will be used throughout the site. Most common pallettes are available at https://www.color-hex.com/color-palettes/, https://colorpalettes.net/, and https://color.adobe.com/create/color-wheel.
+4. Select proper set of fonts.
+5. Select template for Logo and and business card.
+6. Define number of pages that will be added to the site.
+7. There are 4-5 pages that you should not ignore:
+	- Blogs
+	- Terms and Conditions
+	- Privacy
+	- Knowledgebase and FAQs
+	- Contact Us
+	- About Us
+8. Consider a content management system that will make update easier - most common are Word Press (see a comprehensive list at https://en.wikipedia.org/wiki/List_of_content_management_systems).
+9. Get the template created
+10. Decide how many landing pages will be appropriate for users for quick access to your products and services.  11. Design Main landing page, other landing pages and other pages
+12. Develop your own theme - light and fast
+13. Develop separate CMS template for each landing page, product services pages and other common pages.
+14. QA the development of project on daily basis.
+15. Consider Agile system for project devleopment.
+16. Get approval of client at every stage.
+17. Get the final approval for the site launch.
+
+Incorporate SEO while developing website
+1. Ensure headers are added in everypage and there is only one H1 tag in a page.
+2. Verify that there is unformity is usage of fonts and font sizes.
+3. Ensure uniformity is usage of colour pallete
+4. Check for hyperlinks between pages and within a page.
+5. Check for breaks in links.
+6. Images, animations and multimedia resources are optimized.
+7. Make sure the images and tables are responsive
+8. Adopt responsive theme and template
+8. Add Alt Attributes for images. This is important for search engine and screen readers.
+9. Determine pages that should not be search by bots and block them from search.
+10. Every href tag should be properly connected.
+11. Add script tag at the end of the script.
+13. Dont use scripts at common place where it is loaded for every page. This will slow the page loading. 
+14. 
+
+
+
+
+
+
+
+
+
+
+
+
+

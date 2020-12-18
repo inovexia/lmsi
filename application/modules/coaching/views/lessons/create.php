@@ -1,5 +1,5 @@
 <div class="card">
-	<?php echo form_open ('coaching/lesson_actions/create_lesson/'.$coaching_id.'/'.$course_id.'/'.$lesson_id, array('class' => 'card', 'id' => 'validate-1')); ?> 
+	<?php echo form_open ('coaching/lesson_actions/create_lesson/'.$coaching_id.'/'.$course_id.'/'.$lesson_id, array('class' => 'card', 'class'=>'validate-form',  'id' => 'validate-1')); ?> 
 		<div class="card-body">
 			
 			<div class="form-group">

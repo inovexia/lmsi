@@ -62,9 +62,7 @@
 						<div>
 							<p class="text-danger">No tests found. You can</p>
 							<ul class="list-unstyled">
-								<li><?php echo anchor ('coaching/tests/create_test/'.$coaching_id.'/'.$course_id, 'Create Test'); ?></li>
-								<li><?php echo anchor ('coaching/indiatests/index/'.$coaching_id.'/'.$course_id, 'Import Free Tests from EasyLMS'); ?></li>
-								<li><?php echo anchor ('coaching/indiatests/index/'.$coaching_id.'/'.$course_id.'/1', 'Buy Tests from EasyLMS'); ?></li>
+								<li><?php echo anchor ('coaching/tests/create_test/'.$coaching_id.'/'.$course_id, 'Create Test', array('class'=>'btn btn-lg btn-primary')); ?></li>
 							</ul>
 						</div>
 					</div>

@@ -7,7 +7,7 @@ class Tests extends MX_Controller {
 	public function __construct () {
 	    // Load Config and Model files required throughout Users sub-module
 	    $config = [ 'config_coaching', 'config_course'];
-	    $models = ['coaching_model', 'subscription_model', 'courses_model', 'tests_model', 'test_plans_model', 'qb_model', 'users_model', 'plans_model'];
+	    $models = ['coaching_model', 'courses_model', 'tests_model', 'qb_model', 'users_model'];
 	    $this->common_model->autoload_resources ($config, $models);
 	    
 	    $coaching_id = $this->uri->segment (4);
@@ -24,16 +24,16 @@ class Tests extends MX_Controller {
         	// Security step to prevent unauthorized access through url
             if ($coaching_id == true && $this->session->userdata ('coaching_id') <> $coaching_id) {
                 $this->message->set ('Direct url access not allowed', 'danger', true);
-                redirect ('coaching/home/dashboard');
+                // redirect ('coaching/home/dashboard');
             }
 
         	// Check subscription plan expiry
-            $coaching = $this->subscription_model->get_coaching_subscription ($coaching_id);
+            // $coaching = $this->subscription_model->get_coaching_subscription ($coaching_id);
             $today = time ();
             $current_plan = $coaching['subscription_id'];
             if ($today > $coaching['ending_on']) {
             	$this->message->set ('Your subscription has expired. Choose a plan to upgrade', 'danger', true);
-            	redirect ('coaching/subscription/browse_plans/'.$coaching_id.'/'.$current_plan);
+            	// redirect ('coaching/subscription/browse_plans/'.$coaching_id.'/'.$current_plan);
             }
         }
 	}

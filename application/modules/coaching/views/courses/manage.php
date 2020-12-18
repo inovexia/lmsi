@@ -16,15 +16,6 @@
 	                    <i class="simple-icon-plus heading-icon"></i>
 	                    <span class="align-middle d-inline-block">Create Chapter</span>
 	                </a>
-	                <a class="list-item-heading mb-0 truncate w-100 mt-0 d-inline-block" href="<?php echo site_url ('coaching/indiatests/lesson_plans/'.$coaching_id.'/'.$course_id.'/12/'); ?>">
-	                    <i class="simple-icon-arrow-down-circle heading-icon"></i>
-	                    <span class="align-middle d-inline-block">Import Free Lessons</span>
-	                </a>
-
-			      	<a class="list-item-heading mb-0 truncate w-100 mt-0 d-inline-block" href="<?php echo site_url ('coaching/indiatests/lesson_plans/'.$coaching_id.'/'.$course_id.'/0/1'); ?>">
-			      		<i class="simple-icon-basket heading-icon"></i>
-	                    <span class="align-middle d-inline-block">Buy From EasyLMS</span>
-			      	</a>
                 
 	            </div>
             </div>
@@ -48,44 +39,12 @@
 	                    <i class="simple-icon-plus heading-icon"></i>
 	                    <span class="align-middle d-inline-block">Create Test</span>
 	                </a>
-	                <a class="list-item-heading mb-0 truncate w-100 mt-0 d-inline-block" href="<?php echo site_url ('coaching/indiatests/test_plans/'.$coaching_id.'/'.$course_id.'/0/0'); ?>">
-	                    <i class="simple-icon-arrow-down-circle heading-icon"></i>
-	                    <span class="align-middle d-inline-block">Import Free Tests</span>
-	                </a>
-
-			      	<a class="list-item-heading mb-0 truncate w-100 mt-0 d-inline-block" href="<?php echo site_url ('coaching/indiatests/test_plans/'.$coaching_id.'/'.$course_id.'/0/1'); ?>">
-			      		<i class="simple-icon-basket heading-icon"></i>
-	                    <span class="align-middle d-inline-block">Buy From EasyLMS</span>
-			      	</a>
-                
 	            </div>
             </div>
         </div>
     </div>
 
     <!-- Teachers -->
-	
-	    <div class="col-lg-6 col-md-12 mb-4">
-	        <div class="card">
-	            <div class="card-body">
-	                <h5 class="card-title text-primary">
-	                	<span><i class="iconsminds-business-man-woman pr-3"></i></span>Teachers <span class="badge badge-primary float-right"><?php echo $num_teachers; ?></span>
-	                </h5>
-	                <div class="separator mb-5"></div>
-	                <div class="card-body p-0 align-self-center justify-content-between min-width-zero align-items-md-center">
-		                <a class="list-item-heading mb-0 truncate w-100 mt-0 d-inline-block" href="<?php echo site_url ('coaching/courses/teachers/'.$coaching_id.'/'.$course_id); ?>">
-		                    <i class="iconsminds-business-man-woman heading-icon"></i>
-		                    <span class="align-middle d-inline-block">Teachers</span>
-		                </a>
-		                <a class="list-item-heading mb-0 truncate w-100 mt-0 d-inline-block" href="<?php echo site_url ('coaching/courses/teachers/'.$coaching_id.'/'.$course_id.'/'.TEACHERS_NOT_ASSIGNED); ?>">
-		                    <i class="iconsminds-add-user heading-icon"></i>
-		                    <span class="align-middle d-inline-block">Add Teacher</span>
-		                </a>
-		            </div>
-	            </div>
-	        </div>
-	    </div>
-
     
 	    <!-- Organize -->
 	    <div class="col-lg-6 col-md-12 mb-4">
@@ -109,7 +68,7 @@
 	        </div>
 	    </div>
 
-   	<?php if ($course['enrolment_type'] == COURSE_ENROLMENT_DIRECT) { ?>
+   
 	    <div class="col-lg-6 col-md-12 mb-4">
 	        <div class="card">
 	            <div class="card-body">
@@ -124,25 +83,8 @@
 	        </div>
 	    </div>
 
-	<?php } else { ?>
 
-	    <div class="col-lg-6 col-md-12 mb-4">
-	        <div class="card">
-	            <div class="card-body">
-	                <h5 class="card-title text-primary">
-	                	<span><i class="iconsminds-conference pr-3"></i></span>Batches & Reports <span class="badge badge-primary float-right"></span>
-	                </h5>
-	                <div class="separator mb-5"></div>
-	                <div class="card-body p-0 align-self-center justify-content-between min-width-zero align-items-md-center">
-		                <a class="list-item-heading mb-0 truncate w-100 mt-0 d-inline-block" href="<?php echo site_url ('coaching/enrolments/batches/'.$coaching_id.'/'.$course_id); ?>">
-		                    <i class="iconsminds-calendar-1 heading-icon"></i>
-		                    <span class="align-middle d-inline-block">Batches and Schedules</span>
-		                </a>	                
-		            </div>
-	            </div>
-	        </div>
-	    </div>
-	<?php } ?>
+	   
 
     <!-- Settings -->
     <div class="col-lg-6 col-md-12 mb-4">

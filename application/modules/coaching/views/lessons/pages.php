@@ -23,7 +23,7 @@
 		                    <div class="mt-2">
 								<div class="btn-group">
 									<?php 
-										echo anchor ('coaching/lessons/add_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id.'/'.$row['page_id'], '<i class="fa fa-edit"></i>', ['class'=>'btn btn-primary btn-xs']);
+										echo anchor ('coaching/lessons/add_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id.'/'.$row['page_id'], '<i class="simple-icon-note"></i>', ['class'=>'btn btn-primary btn-xs']);
 									?>
 									<?php 
 										echo anchor ('coaching/lessons/view_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id.'/'.$row['page_id'], '<i class="simple-icon-eye"></i>', ['class'=>'btn btn-info btn-xs']);
@@ -32,7 +32,7 @@
 									$msg = 'Delete this page?';
 									$url = site_url ('coaching/lesson_actions/delete_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id.'/'.$row['page_id']);
 									?>
-									<a href="javascript: void ()" onclick="show_confirm ('<?php echo $msg; ?>', '<?php echo $url; ?>')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+									<a href="javascript: void ()" onclick="show_confirm ('<?php echo $msg; ?>', '<?php echo $url; ?>')" class="btn btn-danger btn-xs"><i class="simple-icon-trash"></i></a>
 								</div>
 		                    </div>
                         </div>
