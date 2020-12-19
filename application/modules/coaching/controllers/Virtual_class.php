@@ -17,23 +17,23 @@ class Virtual_class extends MX_Controller {
 	    $batch_id = $this->uri->segment (6);
         //$this->toolbar_buttons['<i class="fa fa-list"></i> All Classes']= 'coaching/virtual_class/index/'.$cid.'/'.$course_id.'/'.$batch_id;
         
-        if ($this->session->userdata ('is_admin') == TRUE) {
-        } else {
-        	// Security step to prevent unauthorized access through url
-            if ($cid == true && $this->session->userdata ('coaching_id') <> $cid) {
-                $this->message->set ('Direct url access not allowed', 'danger', true);
-                redirect ('coaching/home/dashboard');
-            }
+        // if ($this->session->userdata ('is_admin') == TRUE) {
+        // } else {
+        // 	// Security step to prevent unauthorized access through url
+        //     if ($cid == true && $this->session->userdata ('coaching_id') <> $cid) {
+        //         $this->message->set ('Direct url access not allowed', 'danger', true);
+        //         redirect ('coaching/home/dashboard');
+        //     }
 
-        	// Check subscription plan expiry
-            $coaching = $this->subscription_model->get_coaching_subscription ($cid);
-            $today = time ();
-            $current_plan = $coaching['subscription_id'];
-            if ($today > $coaching['ending_on'] && $this->session->userdata ('role_id') != USER_ROLE_STUDENT) {
-            	$this->message->set ('Your subscription has expired. Choose a plan to upgrade', 'danger', true);
-            	redirect ('coaching/subscription/browse_plans/'.$cid.'/'.$current_plan);
-            }
-        }
+        // 	// Check subscription plan expiry
+        //     $coaching = $this->subscription_model->get_coaching_subscription ($cid);
+        //     $today = time ();
+        //     $current_plan = $coaching['subscription_id'];
+        //     if ($today > $coaching['ending_on'] && $this->session->userdata ('role_id') != USER_ROLE_STUDENT) {
+        //     	$this->message->set ('Your subscription has expired. Choose a plan to upgrade', 'danger', true);
+        //     	redirect ('coaching/subscription/browse_plans/'.$cid.'/'.$current_plan);
+        //     }
+        // }
 	}
 	
 	public function index ($coaching_id=0, $course_id=0, $batch_id=0) {
