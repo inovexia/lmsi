@@ -11,7 +11,8 @@ class Users extends MX_Controller {
 	    $this->common_model->autoload_resources ($config, $models);
 	    
         $cid = $this->uri->segment (4);
-        $this->toolbar_buttons['<i class="fa fa-list"></i> All Users']= 'coaching/users/index/'.$cid;
+        $this->toolbar_buttons['<i class="simple-icon-list"></i> All Users']= 'coaching/users/index/'.$cid;
+        $this->toolbar_buttons['<i class="simple-icon-plus"></i> New User']= 'coaching/users/create/'.$cid;
         // Security step to prevent unauthorized access through url
         if ($this->session->userdata ('is_admin') == TRUE) {
         } else {

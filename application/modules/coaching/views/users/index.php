@@ -1,4 +1,4 @@
-<?php echo form_open('coaching/user_actions/confirm/'.$coaching_id.'/'.$role_id.'/'.$status, array('class'=>'form-horizontal row-border', 'id'=>'validate-1') ); ?>
+<?php echo form_open('coaching/user_actions/confirm/'.$coaching_id.'/'.$role_id.'/'.$status, array('class'=>'form-horizontal row-border validate-form', 'id'=>'validate-1') ); ?>
 	<div class="row">
 		<div class="col-12 list" data-check-all="checkAll" id="users-list">
 			<?php $this->load->view ('users/inc/index', $data); ?>
