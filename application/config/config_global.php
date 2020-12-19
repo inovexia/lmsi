@@ -22,7 +22,7 @@ $config['temp_dir']						= CONTENT_DIR . 'temp/';
 $config['sys_dir']						= CONTENT_DIR . 'system/';
 $config['system_logo']					= CONTENT_DIR . 'logo.png';
 $config['profile_picture_path']			= CONTENT_DIR . 'users/';
-//define ('ANSWER_TEMPLATE', 			    'templates/answer_choices/');
+define ('ANSWER_TEMPLATE', 			    TEMPLATE_DIR . 'answer_choices/');
 define ('SMS_TEMPLATE', 			    TEMPLATE_DIR . 'sms/');
 define ('EMAIL_TEMPLATE', 			    TEMPLATE_DIR . 'email/');
 

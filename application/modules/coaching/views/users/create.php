@@ -6,7 +6,7 @@
 <?php } ?>
 		<div class="card mb-4">
 			<div class="card-body">
-				<?php echo form_open ('coaching/user_actions/create_account/'.$coaching_id.'/'.$role_id.'/'.$member_id, array ('class'=>'form-horizontal', 'id'=>'validate-1')); ?>
+				<?php echo form_open ('coaching/user_actions/create_account/'.$coaching_id.'/'.$role_id.'/'.$member_id, array ('class'=>'form-horizontal validate-form', 'id'=>'validate-1')); ?>
 					
 				    <?php if ($member_id > 0) { ?>
 						<div class="form-group row">

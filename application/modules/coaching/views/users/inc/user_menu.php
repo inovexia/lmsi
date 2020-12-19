@@ -45,7 +45,7 @@
 <div class="modal" tabindex="-1" role="dialog" id="add_image">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-	  <?php echo form_open_multipart ('coaching/user_actions/upload_profile_picture/'.$member_id.'/'.$coaching_id, array ('class'=>'form-horizontal row-border', 'id'=>'upload_image')); ?>
+	  <?php echo form_open_multipart ('coaching/user_actions/upload_profile_picture/'.$member_id.'/'.$coaching_id, array ('class'=>'form-horizontal row-border validate-form', 'id'=>'upload_image')); ?>
             <div class="modal-header">
                 <h5 class="modal-title">Profile Image</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

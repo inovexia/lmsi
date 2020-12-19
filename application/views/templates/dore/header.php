@@ -859,8 +859,11 @@
 	                                        <a class="dropdown-item" href="#">Another action</a>
 	                                    </div>
 	                                </div>
-	                                <div class="search-sm calendar-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+	                                <!-- <div class="search-sm calendar-sm d-inline-block float-md-left mr-1 mb-1 align-top">
 	                                    <input class="form-control datepicker" placeholder="Search by day">
+	                                </div> -->
+                                    <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+	                                    <input id="search-by-name" class="form-control search-by-name" placeholder="Search by name">
 	                                </div>
 	                            </div>
 	                            <div class="float-md-right">

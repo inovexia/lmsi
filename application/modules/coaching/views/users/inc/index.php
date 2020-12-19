@@ -17,25 +17,14 @@
 					<i class="simple-icon-phone pr-2"></i>
 					<?php echo $row['primary_contact']; ?>
 				</p>
-				<p class="w-20 w-xs-100 mb-2 m-md-0">
-					<?php
-					if(USER_ROLE_COACHING_ADMIN == $row['role_id']){
-						$color = 'badge-danger';
-					}else if(USER_ROLE_TEACHER == $row['role_id']){
-						$color = 'badge-warning';
-					}else{
-						$color = 'badge-success';
-					}
-					?>
-					<span class="<?php echo "badge $color"; ?>"><?php echo $row['description']; ?></span>
-				</p>
+				
 				<div class="w-10 w-xs-100">
 					<?php if ($row['status'] == USER_STATUS_ENABLED) { ?>
-						<span class="badge badge-primary">Enabled</span>
+						<span class="badge badge-success">Enabled</span>
 					<?php } else if ($row['status'] == USER_STATUS_UNCONFIRMED) { ?>
-						<span class="badge badge-danger">Pending</span>
+						<span class="badge badge-warning">Pending</span>
 					<?php } else if ($row['status'] == USER_STATUS_DISABLED) { ?>
-						<span class="badge badge-light">Disabled</span>
+						<span class="badge badge-danger">Disabled</span>
 					<?php } ?>
 				</div>
 				<div class="dropdown w-20 w-xs-100 text-left text-md-right mt-2 mt-md-0">

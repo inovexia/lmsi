@@ -17,7 +17,7 @@ class Users extends MX_Controller {
         } else {
             if ($cid == true && $this->session->userdata ('coaching_id') <> $cid) {
                 $this->message->set ('Direct url access not allowed', 'danger', true);
-                redirect ('coaching/home/dashboard');
+                // redirect ('coaching/home/dashboard');
             }
         }
 	}
@@ -109,7 +109,7 @@ class Users extends MX_Controller {
 		$data['member_id'] 	= $member_id;
 
 		// Reference Id
-		$subscription = $this->subscription_model->get_coaching_subscription ($coaching_id);
+		// $subscription = $this->subscription_model->get_coaching_subscription ($coaching_id);
 		$data['profile_image'] 	= $this->users_model->view_profile_image ($member_id, $coaching_id);
 		$data['result'] 	= $user = $this->users_model->get_user ($member_id);
 		$user['role']	 	= $this->users_model->user_role_name ($user['role_id']);
@@ -377,6 +377,7 @@ class Users extends MX_Controller {
 		$data['page_title'] 	= 'Courses';
 		$data['data']			= $data;
 		
+		$data['bc'] = array ('Users'=>'coaching/users/edit/'.$coaching_id.'/'.$role_id.'/'.$member_id);
 		$this->load->view(INCLUDE_PATH . 'header', $data);
 		$this->load->view('users/courses', $data); 
 		$this->load->view(INCLUDE_PATH . 'footer', $data);
@@ -400,6 +401,7 @@ class Users extends MX_Controller {
 		$data['page_title'] 	= 'Tests Taken';
 		$data['data']			= $data;
 		
+		$data['bc'] = array ('Users'=>'coaching/users/edit/'.$coaching_id.'/'.$role_id.'/'.$member_id);
 		$this->load->view(INCLUDE_PATH . 'header', $data);
 		$this->load->view('users/tests_taken', $data); 
 		$this->load->view(INCLUDE_PATH . 'footer', $data);

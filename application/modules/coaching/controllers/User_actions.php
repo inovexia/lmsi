@@ -179,20 +179,20 @@ class User_actions extends MX_Controller {
 			// Display message
 			$this->message->set('Password changed successfully', 'success', true);			
 
-			// Send SMS
-			$data = [];
-			$contact = $user['primary_contact'];
-			$message = $this->load->view (SMS_TEMPLATE . 'change_password', $data, true);
-			$this->sms_model->send_sms ($contact, $message);
+			// // Send SMS
+			// $data = [];
+			// $contact = $user['primary_contact'];
+			// $message = $this->load->view (SMS_TEMPLATE . 'change_password', $data, true);
+			// $this->sms_model->send_sms ($contact, $message);
 
-			// Send Email
-			if ($user['email'] != '') {
-				$data = [];
-				$email = $user['email'];
-				$subject = "Password Changed";
-				$message = $this->load->view (EMAIL_TEMPLATE . 'change_password', $data, true);
-				$this->common_model->send_email ($email, $subject, $message );				
-			}
+			// // Send Email
+			// if ($user['email'] != '') {
+			// 	$data = [];
+			// 	$email = $user['email'];
+			// 	$subject = "Password Changed";
+			// 	$message = $this->load->view (EMAIL_TEMPLATE . 'change_password', $data, true);
+			// 	$this->common_model->send_email ($email, $subject, $message );				
+			// }
 
 			if ($member_id == $this->session->userdata ('member_id')) {
 				$redirect = site_url ('coaching/users/my_account/'.$coaching_id.'/'.$member_id);
@@ -261,18 +261,18 @@ class User_actions extends MX_Controller {
 		$data['access_code'] = $coaching['reg_no'];
 		$data['url'] = site_url ('login/login/index/?sub='.$data['access_code']);
 
-		// Send SMS
-		$contact = $user['primary_contact'];
-		$message = $this->load->view (SMS_TEMPLATE . 'user_acc_enabled', $data, true);
-		$this->sms_model->send_sms ($contact, $message);
+		// // Send SMS
+		// $contact = $user['primary_contact'];
+		// $message = $this->load->view (SMS_TEMPLATE . 'user_acc_enabled', $data, true);
+		// $this->sms_model->send_sms ($contact, $message);
 
-		// Send Email
-		if ($user['email'] != '') {
-			$email = $user['email'];
-			$subject = 'Account Approved';
-			$message = $this->load->view (EMAIL_TEMPLATE . 'user_acc_enabled', $data, true);
-			$this->common_model->send_email ($email, $subject, $message);
-		}
+		// // Send Email
+		// if ($user['email'] != '') {
+		// 	$email = $user['email'];
+		// 	$subject = 'Account Approved';
+		// 	$message = $this->load->view (EMAIL_TEMPLATE . 'user_acc_enabled', $data, true);
+		// 	$this->common_model->send_email ($email, $subject, $message);
+		// }
 
 		if ($r == 1) {
 			$this->message->set ('User account enabled successfully', 'success', TRUE);		

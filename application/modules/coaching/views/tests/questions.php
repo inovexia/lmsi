@@ -2,7 +2,7 @@
   <div class="col-12 mb-5">
 	<?php 
 	if ( ! empty ($results) ) {
-  		echo form_open('coaching/tests_actions/remove_questions/'.$course_id.'/'.$test_id, array('class'=>'form-horizontol', 'id'=>'validate-1') );
+  		echo form_open('coaching/tests_actions/remove_questions/'.$course_id.'/'.$test_id, array('class'=>'form-horizontol validate-form', 'id'=>'validate-1') );
 
 		$num_parent = 1;
 		foreach ( $results as $parent_id=>$all_questions) {

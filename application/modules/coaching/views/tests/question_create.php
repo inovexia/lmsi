@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-body">
-				<?php echo form_open ('coaching/tests_actions/validate_question_create/'.$coaching_id.'/'.$course_id.'/'.$test_id.'/'.$parent_id.'/'.$question_id, array('class'=>'form-horizontal row-border', 'id'=>'validate-1') ); ?>
+				<?php echo form_open ('coaching/tests_actions/validate_question_create/'.$coaching_id.'/'.$course_id.'/'.$test_id.'/'.$parent_id.'/'.$question_id, array('class'=>'form-horizontal row-border validate-form', 'id'=>'validate-1') ); ?>
 
 					<div class="form-group row">
 						<div class="col-md-6">
