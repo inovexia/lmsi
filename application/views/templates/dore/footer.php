@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 col-sm-6">
-                        <p class="mb-0 text-muted">ColoredStrategies 2019</p>
+                        <p class="mb-0 text-muted">Product of <a href="https://inovexiasoftware.com" target="_blank">ISSPL</a></p>
                     </div>
                     <div class="col-sm-6 d-none d-sm-block">
                         <ul class="breadcrumb pt-0 pr-0 float-right">
@@ -41,11 +41,15 @@
     <script type="text/javascript" src="<?php echo base_url (THEME_PATH . 'assets/js/default.js'); ?>"></script>
     <!-- Application JS -->
     <script type="text/javascript" src="<?php echo base_url (THEME_PATH . 'assets/js/app.js?ver=1.5'); ?>"></script>
-    <!-- Custom Js file -->
-    <script type="text/javascript" src="<?php echo base_url (THEME_PATH . 'assets/js/custom.js'); ?>"></script>
 
     <!-- Custom JS (Dynamically included) -->
     <?php
+    if (isset ($script_footer) && !empty ($script_footer)) {
+        foreach ($script_footer as $script) {
+            echo '<script src="'.base_url(THEME_PATH . $script).'" type="text/javascript"></script>';
+        }
+    }
+    // Custom JS with PHP
     if (isset ($script)) {
         echo $script;
     }

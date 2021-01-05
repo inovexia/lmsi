@@ -49,7 +49,6 @@
     <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/scrollbar.light.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/dore.light.purple.min.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/main.css'); ?>" />
-
     <!-- Toastr CSS -->
     <link type="text/css" href="<?php echo base_url(THEME_PATH . 'assets/css/toastr.min.css'); ?>" rel="stylesheet">
 
@@ -57,7 +56,14 @@
     <?php
     if (isset ($script_header) && !empty ($script_header)) {
         foreach ($script_header as $script) {
-            echo '<script src="'.base_url($script).'" type="text/javascript"></script>';
+            echo '<script src="'.base_url(THEME_PATH . $script).'" type="text/javascript"></script>';
+        }
+    }
+    ?>
+    <?php
+    if (isset ($script_css) && !empty ($script_css)) {
+        foreach ($script_css as $css) {
+		    echo '<link rel="stylesheet" href="'.base_url(THEME_PATH . $css).'" />';
         }
     }
     ?>

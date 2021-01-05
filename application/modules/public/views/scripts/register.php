@@ -15,20 +15,16 @@ $('#show-password').on ('click', function () {
 });
 
 //
-const formSelector = document.getElementById('validate-user');
-var formData = new FormData(formSelector);
 
-$('#btn-send-otp').on ('click', function () {
-	var user_name = $('#user_name').val ();
-	var user_mobile = $('#user_mobile').val ();
-	validate_user_mobile (user_name, user_mobile);	
-});
-
-
-function validate_user_mobile (user_name, user_mobile) {
+$('#btn-send-otp').on ('click', function (e) {
+	
+	const formSelector 		= document.getElementById('basic-info-form');
+	const formURL 			= '<?php echo site_url ('api/account_actions/validate_user_mobile'); ?>';
+	var formData 			= new FormData(formSelector);
+	e.preventDefault ();
 
 	toastr.clear ();
-	fetch ('<?php echo site_url ('api/account_actions/validate_user_mobile'); ?>/'+user_name+'/'+user_mobile, {
+	fetch (formURL, {
 		method : 'POST',
 		body: formData,
 	}).then (function (response) {
@@ -51,16 +47,19 @@ function validate_user_mobile (user_name, user_mobile) {
 			toastr.error (result.error, '', {timeOut:3000});
 		}
 	});
-}
+});
+
+
 
 function validate_otp (otp) {
-	var n = otp.length;
-	var user_mobile = $('#user_mobile').val ();
-	toastr.clear ();
-	if (n < 6 || n > 6) {
-		//toastr.error ('Invalid OTP', '', {timeOut:3000});
-	} else {
-		fetch ('<?php echo site_url ('api/account_actions/validate_otp'); ?>/'+user_mobile+"/"+otp, {
+	
+	const formSelector 		= document.getElementById('basic-info-form');
+	const formURL 			= '<?php echo site_url ('api/account_actions/validate_otp'); ?>';
+	var formData 			= new FormData (formSelector);
+	
+	if (otp.length == 6) {
+		toastr.clear ();
+		fetch (formURL, {
 			method : 'POST',
 			body: formData,
 		}).then (function (response) {
@@ -75,20 +74,21 @@ function validate_otp (otp) {
 				$('#btn-send-otp').addClass ('d-none');
 				// Add OTP input box
 				$('#login-field').removeClass ('d-none');
+				$('#create-password-selector').removeClass ('d-none');
 			} else {
 				toastr.error (result.error, '', {timeOut:3000});
 			}
-
 		});
 	}
 }
 
 
-formSelector.addEventListener ('submit', e => {
+const basicformSelector = document.getElementById('basic-info-form');
+basicformSelector.addEventListener ('submit', e => {
 	e.preventDefault ();
-	const formURL = formSelector.getAttribute ('action');
-	var formData = new FormData(formSelector);
-	toastr.info ('Please wait...');
+	const formURL = basicformSelector.getAttribute ('action');
+	var formData = new FormData(basicformSelector);
+	toastr.clear ();
 	fetch (formURL, {
 		method : 'POST',
 		body: formData,
