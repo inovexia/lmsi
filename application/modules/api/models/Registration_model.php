@@ -54,6 +54,7 @@ class Registration_model extends CI_Model {
 
 	public function create_teacher_account () {
 		$data['first_name'] = $this->input->post ('first_name');
+		$password = $this->input->post ('password');
 		$data['role_id'] = USER_ROLE_TEACHER;
 		$data['password'] = password_hash ($password, PASSWORD_DEFAULT);
 		$data['user_token'] =  '';
@@ -75,6 +76,14 @@ class Registration_model extends CI_Model {
 		$this->db->set ('login', $user_id);
 		$this->db->where ('member_id', $member_id);
 		$this->db->update ('members');
+	}
+
+	public function is_unique_url () {
+		return true;
+	}
+
+	public function setup_user_account () {
+
 	}
 
 }

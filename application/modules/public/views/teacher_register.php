@@ -42,7 +42,7 @@
                     <div class="d-none" id="create-password-selector">
                         <div class="form-group mb-4">
                             <label class="">
-                                <span>Create Password</span>
+                                Create Password<span class="text-danger">*</span>
                             </label>
                             <div class="input-group">
                                 <input type="password" name="password" id="reg-password" class="form-control required" placeholder="Password"  aria-label="Password" aria-describedby="show-password" required="required" />
@@ -73,7 +73,7 @@
         </div>
 
 
-        <div class="card mb-4 d-none" id="step-3">
+        <div class="card mb-4 d-none" id="step-2">
             <div class="card-body">
                 <h2 class="mb-2">Step 2 - Setup your account</h2>
 
@@ -81,23 +81,19 @@
                         
                     <div class="form-group mb-2">
                         <label class="">
-                            <span>Display Name</span>
+                            Display Name<span class="text-danger">*</span>
                         </label>
                         <input type="text" name="display_name" class="form-control required" placeholder="Display name"  required="required" />
-                        <p class="form-text text-muted">This will be your brand name</p>
+                        <p class="form-text text-muted">This will be your brand name. Users will see this name on their pages</p>
                     </div>
 
                     <div class="form-group mb-2">
                         <label class="">
-                            <span>URL</span>
+                            URL<span class="text-danger">*</span>
                         </label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="url"><?php echo base_url (); ?></span>
-                            </div>    
-                            <input type="text" name="url" class="form-control required" required="required" value="<?php echo set_value ('url'); ?>" id="url" placeholder="Eg, apexcoachings, jhonwick03" aria-describedby="url" />
-                        </div>
-                        <small class="form-text text-muted">A unique combination of letters and/or numbers. This will be the url your students will use to reach your page. Eg, <b>apexcoachings, jhonwick03</b>  </small>
+                        <p class="" ><?php echo base_url (); ?></p>
+                        <input type="text" name="url" class="form-control required" required="required" value="<?php echo set_value ('url'); ?>" id="url-selector" placeholder="Eg, apexcoachings, jhonwick03" aria-describedby="url" />
+                        <p class="form-text text-muted">A unique combination of letters and/or numbers. This will be the url your students will use to reach your page. Eg, <b>apexcoachings, jhonwick03</b>  </p>
                     </div>
 
                     <div class="form-group mb-4">
@@ -108,8 +104,9 @@
                     </div>
 
 
-                    <div class="d-flex justify-content-between align-items-center">
-                        <input type="submit" class="btn btn-primary btn-lg btn-shadow" name="save" value="Create Account">
+                    <div class="d-flex align-items-center">
+                        <input type="submit" class="btn btn-primary btn-lg btn-shadow" name="save" value="Setup Account">
+                        <a href="<?php echo site_url ('coaching/home/dashboard'); ?>" class="btn btn-link">I will do this later</a>
                     </div>
                    
                 <?php echo form_close(); ?>                    

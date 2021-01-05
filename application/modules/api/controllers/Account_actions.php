@@ -6,7 +6,7 @@ class Account_actions extends MX_Controller {
 
 	public function __construct () {
 		$config = ['config_public'];
-		$models = ['registration_model'];
+		$models = ['registration_model', 'coaching/users_model'];
 	    $this->common_model->autoload_resources ($config, $models);
 	    $this->load->helper ('string');
 	}
@@ -81,61 +81,64 @@ class Account_actions extends MX_Controller {
 
 			// Save user details
 			$member_id = $this->registration_model->create_teacher_account ();
-
 				
-				// Notification Email to teacher
-				if ($email != '') {
-					$to = $email;
-					$subject = 'Welcome to '.APP_NAME;
-						$email_message = 'A new user <strong>'.$user_name.'</strong> has registered in your coaching <strong>'.$coaching_name. '</strong>. ';
-					if ($status == USER_STATUS_UNCONFIRMED) {
-						$email_message .= 'Account is pending for approval. Click here for details ' . anchor ('coaching/users/index/'.$coaching_id.'/'.$user_role.'/'.USER_STATUS_UNCONFIRMED);
-					} 
-					$this->common_model->send_email ($to, $subject, $email_message);
-				}
-			
-				// Notification email to user
-				if ($status == USER_STATUS_UNCONFIRMED) {
-					// Email message for user
-					$email_message = '<strong> Hi '.$user_name.',</strong><br>
-					<p>You have created an account in <strong>'.$coaching_name.'</strong>. You can login with your registered email and password once your account is approved. You will receive another email regarding account approval.</p>';
-					// Display message for user
-					$message = 'Your account in '.$coaching_name.' has been created but pending for admin approval. You will be notified once your account is approved by your coaching admin';
-					$this->message->set ($message, 'warning', true );
-					// Send SMS to user
-					$this->sms_model->send_sms ($contact, $message);
-				} else {
+			// Notification Email to teacher
+			if ($email != '') {
+				$to = $email;
+				$subject = 'Welcome to '.APP_NAME;
+				$data['name'] = $user_name;
+				$message = $this->load->view (EMAIL_TEMPLATE . 'create_teacher_account', $data, true);
+				$this->common_model->send_email ($to, $subject, $message);
+			}					
 					
-					// Email message for user
-					$email_message = '<strong> Hi '.$user_name.',</strong><br>
-					<p>You have created an account in <strong>'.$coaching_name.'</strong>. Your account is active now. You can login with your registered email and password.</p>';
-					
-					// Display message for user
-					$message = 'Your account has been created. You can log-in to your account';
-					
-					// Send SMS to user
-					$data['name'] = $user_name;
-					$data['coaching_name'] = $coaching['coaching_name'];
-					$data['access_code'] = $coaching['reg_no'];
-					$data['url'] = site_url ('login/login/index/?sub='.$data['access_code']);
-					$data['login'] = $contact;
-					$data['password'] = $this->input->post ('password');
-					$message = $this->load->view (SMS_TEMPLATE . 'user_acc_created', $data, true);
-					$this->sms_model->send_sms ($contact, $message);
-					$this->message->set ($message, 'success', true );
-				}
-				if ($this->input->post ('email')) {
-					$to = $this->input->post('email');
-					$subject = 'Account Created';
-					$this->common_model->send_email ($to, $subject, $email_message);				
-				}
-
-				$this->output->set_content_type("application/json");
-				$this->output->set_output(json_encode(array('status'=>true, 'message'=>$message, 'redirect'=>site_url('login/user/index?sub='.$ac)) ));
-			}
+			// Send SMS to user
+			$data['name'] = $user_name;
+			$message = $this->load->view (SMS_TEMPLATE . 'create_teacher_account', $data, true);
+			$this->sms_model->send_sms ($contact, $message);
+			$this->message->set ($message, 'success', true );
+			$this->output->set_content_type("application/json");
+			$this->output->set_output(json_encode(array('status'=>true, 'message'=>$message)));
 	    } else {
 			$this->output->set_content_type("application/json");
 			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors() )));
 		}
 	}
+
+	
+	public function is_unique_url () {
+
+		$this->form_validation->set_rules ('url', 'URL', 'required|trim|valid_url|alpha_numeric|min_length[4]|max_length[20]');
+
+		if ($this->form_validation->run () == true) {
+			if ($this->registration_model->is_unique_url () == false) {
+				$this->output->set_content_type("application/json");
+				$this->output->set_output(json_encode(array('status'=>false, 'error'=>'This url is already taken by someone')));
+			}
+		} else {
+			$this->output->set_content_type("application/json");
+			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors ())));
+		}
+	}
+
+
+	public function validate_user_account () {
+
+		$this->form_validation->set_rules ('display_name', 'Display Name', 'required|trim|alpha_numeric_spaces|min_length[3]|max_length[20]');
+		$this->form_validation->set_rules ('url', 'URL', 'required|trim|valid_url|alpha_numeric|min_length[4]|max_length[20]');
+
+		if ($this->form_validation->run () == true) {
+			if ($this->registration_model->is_unique_url () == true) {
+				$this->registration_model->setup_user_account ();
+				$this->output->set_content_type("application/json");
+				$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Account created successfully.', 'redirect'=>site_url ('coaching/home/dashboard'))));
+			} else {
+				$this->output->set_content_type("application/json");
+				$this->output->set_output(json_encode(array('status'=>false, 'error'=>'This url is already taken by someone')));
+			}
+		} else {
+			$this->output->set_content_type("application/json");
+			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors ())));
+		}
+	}
+
 }

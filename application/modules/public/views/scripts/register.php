@@ -99,6 +99,56 @@ basicformSelector.addEventListener ('submit', e => {
 		if (result.status == true) {
 			// Show success message
 			toastr.success (result.message, '', {timeOut:3000});
+			$('#step-1').addClass ('d-none');
+			// Add OTP input box
+			$('#step-2').removeClass ('d-none');
+		} else {
+			toastr.error (result.error, '', {timeOut:3000});
+		}
+
+	});
+});
+
+/* STEP 2 VERIFICATION */
+
+$('#url-selector'). on ('keyup', function () {
+
+	const formSelector 		= document.getElementById('account-info-form');
+	const formURL 			= '<?php echo site_url ('api/account_actions/is_unique_url'); ?>';
+	var formData 			= new FormData(formSelector);
+
+	toastr.clear ();
+	fetch (formURL, {
+		method : 'POST',
+		body: formData,
+	}).then (function (response) {
+		return response.json ();
+	}).then(function(result) {
+		if (result.status == true) {
+			// Show success message
+			toastr.success (result.message, '', {timeOut:3000});
+		} else {
+			toastr.error (result.error, '', {timeOut:3000});
+		}
+	});	
+});
+
+const accountformSelector = document.getElementById('account-info-form');
+accountformSelector.addEventListener ('submit', e => {
+	e.preventDefault ();
+	const formURL = accountformSelector.getAttribute ('action');
+	var formData = new FormData(accountformSelector);
+	toastr.clear ();
+	fetch (formURL, {
+		method : 'POST',
+		body: formData,
+	}).then (function (response) {
+		return response.json ();
+	}).then(function(result) {
+		toastr.clear ();
+		if (result.status == true) {
+			// Show success message
+			toastr.success (result.message, '', {timeOut:3000});
 			if (result.redirect) {
 				document.location = result.redirect;
 			}
