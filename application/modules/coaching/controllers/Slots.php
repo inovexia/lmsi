@@ -10,7 +10,7 @@ class Slots extends MX_Controller {
         $this->common_model->autoload_resources($config, $models);
     }
 
-    public function index ($coaching_id=0, $slot_id=0) {
+    public function index ($coaching_id=0, $slot_id=0) { 
 
         $data['page_title'] = 'Slots';
         $data['bc'] = ['Dashboard' => 'coaching/home/dashboard/'];
@@ -25,7 +25,15 @@ class Slots extends MX_Controller {
         $data['coaching_id'] = $coaching_id;
         $data['slot_id'] = $slot_id;
         $member_id = $this->session->userdata('member_id');
-        $data['slots'] = $this->slots_model->get_slots ($coaching_id);
+        $data['slots'] = $slots = $this->slots_model->get_slots ($coaching_id);
+        $courses = [];
+        if (! empty ($slots)) {
+            foreach ($slots as $slot) {
+                $courses[$slot['title']][] = $slot;
+            }
+        }
+        $data['courses'] = $courses;
+        $data['script'] = $this->load->view('slots/scripts/index', $data, true);
         $this->load->view(INCLUDE_PATH . 'header', $data);
         $this->load->view('slots/index', $data);
         $this->load->view(INCLUDE_PATH . 'footer', $data);

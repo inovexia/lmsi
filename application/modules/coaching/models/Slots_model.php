@@ -1,28 +1,23 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 // ? echo $this->db->last_query(); to print query on the output
-class Slots_model extends CI_Model
-{
-    public function __construct()
-    {
+
+class Slots_model extends CI_Model {
+
+    public function __construct() {
         parent::__construct();
     }
-    public function get_slots($member_id)
-    {
-		$this->db->where ('created_by', $member_id);
-        $sql = $this->db->get('slots');
+
+    public function get_slots ($coaching_id=0) {
+		$this->db->select ('CS.*, CC.title');
+        $this->db->from ('coaching_slots CS');
+        $this->db->join ('coaching_courses CC', 'CS.course_id=CC.course_id');
+        $this->db->where ('CS.coaching_id', $coaching_id);
+        $sql = $this->db->get();
 		$result = $sql->result_array();
-		foreach ($result as $i => $slot){
-			$this->db->select ('title');
-			$this->db->where ('course_id', $slot['subject']);
-			$this->db->where ('created_by', $member_id);
-			$sql = $this->db->get('coaching_courses');
-			$course = $sql->row_array();
-			$result[$i]['subject'] = $course['title'];
-			
-		}
 		return $result;
 	}
+
 	public function get_slot($slot_id){
 		$this->db->where ('slot_id', $slot_id);
 		$sql = $this->db->get('slots');
