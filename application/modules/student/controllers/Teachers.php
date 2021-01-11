@@ -25,7 +25,10 @@ class Teachers extends MX_Controller
       $data,
       true
     );
-    $data['courses'] = $this->teachers_model->courses($coaching_id, $cat_id);
+    $data['courses'] = $courses = $this->teachers_model->courses($coaching_id, $cat_id);
+    foreach ($courses as $i => $course) {
+      $data['courses'][$i]['slots'] = $this->teachers_model->get_slots_by_course_id($coaching_id, $course['course_id']);
+    }
 
     $this->load->view(INCLUDE_PATH . 'header', $data);
     $this->load->view('teachers/index', $data);
