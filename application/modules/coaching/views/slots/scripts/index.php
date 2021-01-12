@@ -7,6 +7,7 @@ $('#addSlot').on('show.bs.modal', function(e) {
     var slot_id = $(e.relatedTarget).data('slot-id');
 
     const outputSelector = $('#output-selector');
+    const deleteSelector = $('#delete_container');
 
     //populate the textbox
     $(e.currentTarget).find('input[name="course_id"]').val(course_id);
@@ -20,9 +21,14 @@ $('#addSlot').on('show.bs.modal', function(e) {
 		}).then (function (result) {
 			if (result.status == true) {
 				outputSelector.html (result.data);
+				deleteSelector.html ('<a href="<?php echo site_url ('coaching/slot_actions/delete_slot/'.$coaching_id); ?>/'+slot_id+'" class="btn btn-danger">Delete</a>');
 			}
     	});
 		outputSelector.html ('<i class="simple-icon-refresh"></i>');
     }
 });
+
+function change_date (date) {
+	document.location = '<?php echo site_url ('coaching/slots/index/'.$coaching_id); ?>/'+date;
+}
 </script>

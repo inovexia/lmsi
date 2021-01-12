@@ -1,3 +1,20 @@
+<div class="row mb-1">
+    <div class="col-12 " >
+        <form class="form-inline">
+            <?php
+            for ($i=0; $i<3; $i++) {
+                $dt = mktime (0, 0, 0, date ('m'), date('d')+$i, date ('Y'));
+                $d = date ('D, d', strtotime('+'.$i.' days'));
+                echo '<a href="'.site_url ('coaching/slots/index/'.$coaching_id.'/'.$dt).'" class="btn btn-sm btn-primary mb-1 mr-1">'.$d.'</a>';
+            }
+            $dt = mktime (0, 0, 0, date ('m'), date('d')+3, date ('Y'));
+            ?>
+            <input type="date" name="" class="form-control my-2" min="<?php echo date ('Y-m-d'); ?>" max="<?php echo date ('Y-m-d', strtotime('+90 days')); ?>" placeholder="Select date" value="<?php echo date ('Y-m-d', strtotime('+3 days')); ?>" onchange="change_date(<?php echo $dt; ?>)">
+        </form>
+    </div>
+</div>
+
+
 <div class="row">
     <div class="col-12 list" data-check-all="checkAll">
         <?php 
@@ -56,12 +73,12 @@
 
                         <div class="form-group">
                             <label>Start Time</label>
-                            <input type="time" class="form-control" placeholder="" name="start_time" value="<?php echo date ('H:i'); ?>">
+                            <input type="time" class="form-control" placeholder="" name="start_time" min="<?php echo date ('H:i'); ?>" value="<?php echo date ('H:i'); ?>">
                         </div>
 
                         <div class="form-group">
                             <label>End Time</label>
-                            <input type="time" class="form-control" placeholder="" name="end_time" value="<?php echo date ('H:i', strtotime('+1 hour')); ?>">
+                            <input type="time" class="form-control" placeholder="" name="end_time" min="<?php echo date ('H:i'); ?>" value="<?php echo date ('H:i', strtotime('+1 hour')); ?>">
                         </div>
 
                         <div class="form-group">
@@ -85,6 +102,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
+                    <div id="delete_container"></div>
                 </div>
             </div>
         <?php echo form_close (); ?>

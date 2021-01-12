@@ -44,4 +44,11 @@ class Slot_actions extends MX_Controller {
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode(['status'=>true, 'data'=>$result]));
     }
+
+    public function delete_slot ($coaching_id=0, $slot_id=0) {
+        $this->slots_model->delete_slot ($coaching_id, $slot_id);
+        $this->message->set('Slot deleted successfully', 'success', true);
+        redirect ('coaching/slots/index/'.$coaching_id);
+    }
+
 }

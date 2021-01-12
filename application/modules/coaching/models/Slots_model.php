@@ -16,10 +16,13 @@ class Slots_model extends CI_Model {
             $d = date ('d');
             $from = mktime (0, 0, 0, $m, $d, $y);
             $to = mktime (23, 59, 59, $m, $d, $y);
-            $where = 'CS.start_time >='.$from. ' AND CS.end_time <='.$to;
         } else {
-            $where = 1;
+            $from = $date;
+            // 24 hours from date
+            $step = (24 * 60 * 60) - 1;
+            $to = $date + $step;
         }
+        $where = 'CS.start_time >='.$from. ' AND CS.end_time <='.$to;
         $data = [];
         if (! empty($courses)) {
             foreach ($courses as $course) {
@@ -38,7 +41,7 @@ class Slots_model extends CI_Model {
 		return $data;
 	}
 
-	public function get_slot($coaching_id=0, $slot_id=0){
+	public function get_slot ($coaching_id=0, $slot_id=0){
 		$this->db->where ('coaching_id', $coaching_id);
         $this->db->where ('slot_id', $slot_id);
 		$sql = $this->db->get('coaching_slots');
@@ -86,5 +89,12 @@ class Slots_model extends CI_Model {
         }
 
         return $slot_id;
+    }
+
+
+    public function delete_slot ($coaching_id=0, $slot_id=0) {
+        $this->db->where ('coaching_id', $coaching_id);
+        $this->db->where ('slot_id', $slot_id);
+        $this->db->delete ('coaching_slots');
     }
 }

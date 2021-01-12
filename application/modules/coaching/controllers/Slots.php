@@ -10,7 +10,7 @@ class Slots extends MX_Controller {
         $this->common_model->autoload_resources($config, $models);
     }
 
-    public function index ($coaching_id=0, $slot_id=0) { 
+    public function index ($coaching_id=0, $date="") { 
 
         $data['page_title'] = 'Slots';
         $data['bc'] = ['Dashboard' => 'coaching/home/dashboard/'];
@@ -22,47 +22,26 @@ class Slots extends MX_Controller {
             '<i class="fa fa-history"></i> History' =>
                 'coaching/slots/history/',
         ];
+
+        if ($date == "") {
+            $date = mktime (0, 0, 0, date ('m'), date('d'), date('Y'));
+        }
         $data['coaching_id'] = $coaching_id;
-        $data['slot_id'] = $slot_id;
+        $data['date'] = $date;
         $data['script_css'] = ['assets/css/vendor/bootstrap-datepicker3.min.css'];
         $data['script_footer'] = ['assets/js/vendor/bootstrap-datepicker.js'];
 
-        $member_id = $this->session->userdata('member_id');
-        $data['courses'] = $this->slots_model->get_slots ($coaching_id);
+        $data['courses'] = $this->slots_model->get_slots ($coaching_id, $date);
         $data['script'] = $this->load->view('slots/scripts/index', $data, true);
         $this->load->view(INCLUDE_PATH . 'header', $data);
         $this->load->view('slots/index', $data);
         $this->load->view(INCLUDE_PATH . 'footer', $data);
     }
 
-    public function create ($slot_id = 0) {
-        $coaching_id = $this->session->userdata('coaching_id');
-        $data['slot_id'] = $slot_id;
-        $data['page_title'] = 'Create Slots';
-        $data['bc'] = ['View Slots' => 'coaching/slots/index/'];
-        $data['courses'] = $this->courses_model->courses($coaching_id);
-        $data['member_id'] = $this->session->userdata('member_id');
-        $data['slot'] =
-            $slot_id > 0 ? $this->slots_model->get_slot($slot_id) : [];
-        $this->load->view(INCLUDE_PATH . 'header', $data);
-        $this->load->view('slots/create', $data);
-        $this->load->view(INCLUDE_PATH . 'footer', $data);
-    }
 
-
-    public function my_appointments() {
+    public function my_appointments($coaching_id=0) {
         $data['page_title'] = 'My Appointments';
-        $data['bc'] = ['View Slots' => 'coaching/slots/index/'];
-        $data['appointments'] = array_fill(0, 10, null);
-        $data['actions'] = [
-            ['icon' => 'check', 'label' => 'Approve', 'class' => 'primary'],
-            ['icon' => 'times', 'label' => 'Reject', 'class' => 'secondary'],
-            ['icon' => 'trash', 'label' => 'Delete', 'class' => 'danger'],
-        ];
-        $data['acted'] = [
-            ['label' => 'Rejected', 'class' => 'secondary'],
-            ['label' => 'Approved', 'class' => 'primary'],
-        ];
+        $data['bc'] = ['Slots' => 'coaching/slots/index/'.$coaching_id];
 
         $this->load->view(INCLUDE_PATH . 'header', $data);
         $this->load->view('slots/my_appointments', $data);
