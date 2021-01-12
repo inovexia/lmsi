@@ -46,4 +46,32 @@ class Teachers_model extends CI_Model
     $sql = $this->db->get('coaching_course_category');
     return $sql->row_array();
   }
+  public function get_slots_by_course_id($coaching_id, $course_id)
+  {
+    $this->db->where('coaching_id', $coaching_id);
+    $this->db->where('course_id', $course_id);
+    $slots = $this->db->get('coaching_slots')->result_array();
+    foreach ($slots as $i => $slot) {
+      $slots[$i]["start_time"] = date('H:i', strtotime($slot["start_time"]));
+      $slots[$i]["end_time"] = date('H:i', strtotime($slot["end_time"]));
+    }
+    return $slots;
+  }
+  public function book_slot($coaching_id)
+  {
+    $data = [
+      'coaching_id' => $coaching_id,
+      'course_id' => $this->input->post('course_id'),
+      'slot_id' => $this->input->post('slot_id'),
+      'member_id' => $this->session->userdata('member_id'),
+      'booking_date' => DateTime::createFromFormat('d-m-Y H:i:s', $this->input->post('booking_date') . " 00:00:00")->format('U'),
+    ];
+    $sql = $this->db->insert('coaching_slot_booking', $data);
+    $booking_id = $this->db->insert_id();
+    if ($booking_id > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

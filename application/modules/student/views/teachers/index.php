@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-  <div class="col-md-6">
+  <div class="col-lg-6">
     <div class="card">
       <div class="card-header pl-0 pr-0">
         <ul class="nav nav-tabs nav-fill card-header-tabs ml-0 mr-0" role="tablist">
@@ -28,7 +28,7 @@
                     <p class="list-item-heading"><?php echo $course['title']; ?></p>
                   </td>
                   <td>
-                    <button type="button" class="btn btn-xs btn-primary"
+                    <button type="button" class="btn btn-xs btn-primary slots-toggle"
                       data-course_id="<?php echo $course['course_id']; ?>">Slots</button>
                   </td>
                 </tr>
@@ -38,43 +38,54 @@
           </div>
           <div class="tab-pane fade" id="slots" role="tabpanel" aria-labelledby="slots_tab">
             <div class="form-group mb-1">
-              <button type="button" class="btn btn-xs btn-primary active">Today</button>
-              <button type="button" class="btn btn-xs btn-primary">1<sup>st</sup> Jan</button>
-              <button type="button" class="btn btn-xs btn-primary">2<sup>nd</sup> Jan</button>
-              <button type="button" class="btn btn-xs btn-primary">3<sup>rd</sup> Jan</button>
+              <button type="button" data-value="<?php echo date('d-m-Y'); ?>"
+                class="btn btn-xs btn-primary active set-date">Today</button>
+              <button type="button" data-value="<?php echo date('d-m-Y', strtotime(date('m/d/Y') . "+1 days")); ?>"
+                class="btn btn-xs btn-primary set-date">
+                <?php echo date('j<\s\up>S</\s\up> M', strtotime(date('m/d/Y') . "+1 days")); ?>
+              </button>
+              <button type="button" data-value="<?php echo date('d-m-Y', strtotime(date('m/d/Y') . "+2 days")); ?>"
+                class="btn btn-xs btn-primary set-date">
+                <?php echo date('j<\s\up>S</\s\up> M', strtotime(date('m/d/Y') . "+2 days")); ?>
+              </button>
+              <button type="button" data-value="<?php echo date('d-m-Y', strtotime(date('m/d/Y') . "+3 days")); ?>"
+                class="btn btn-xs btn-primary set-date">
+                <?php echo date('j<\s\up>S</\s\up> M', strtotime(date('m/d/Y') . "+3 days")); ?>
+              </button>
             </div>
             <div class="form-group mb-1">
               <label>Select Date</label>
               <div class="input-group date">
-                <input type="text" value="" data-date-orientation="bottom" data-date-format="dd-mm-yyyy"
-                  class="form-control datepicker" />
+                <input type="text" value="<?php echo date('d-m-Y'); ?>" data-date-orientation="bottom"
+                  data-date-format="dd-mm-yyyy" class="form-control datepicker" id="booking_date" />
                 <span class="input-group-text input-group-append input-group-addon">
                   <i class="simple-icon-calendar"></i>
                 </span>
               </div>
             </div>
-            <?php foreach ($courses as $course): ?>
-            <div class="form-group mb-1" data-course_id="<?php echo $course['course_id']; ?>">
-              <h4><?php echo $course['title']; ?></h4>
-              <hr />
-              <div class="d-flex mb-3">
-                <label class="flex-grow-1 my-auto">9.00 - 10:00</label>
-                <button type="button" class="btn btn-xs btn-primary">Book</button>
+            <div id="courses">
+              <?php foreach ($courses as $course): ?>
+              <div class="form-group mb-1" data-course_id="<?php echo $course['course_id']; ?>">
+                <h4 class="pb-2 border-bottom" data-toggle="collapse"
+                  data-target="#course-<?php echo $course['course_id']; ?>" aria-expanded="false"
+                  aria-controls="collapseOne">
+                  <?php echo $course['title']; ?>
+                </h4>
+                <div id="course-<?php echo $course['course_id']; ?>" class="collapse" data-parent="#courses">
+                  <?php foreach ($course['slots'] as $i => $slot): extract($slot);?>
+                  <div class="d-flex mb-2">
+                    <label class="flex-grow-1 my-auto"><?php echo "$start_time - $end_time"; ?></label>
+                    <button type="button" data-coaching_id="<?php echo $coaching_id; ?>"
+                      data-course_id="<?php echo $course['course_id']; ?>"
+                      data-slot_id="<?php echo $slot['slot_id']; ?>" class="btn btn-xs btn-primary book-slot">
+                      Book
+                    </button>
+                  </div>
+                  <?php endforeach;?>
+                </div>
               </div>
-              <div class="d-flex mb-3">
-                <label class="flex-grow-1 my-auto">11.00 - 12:00</label>
-                <button type="button" class="btn btn-xs btn-primary">Book</button>
-              </div>
-              <div class="d-flex mb-3">
-                <label class="flex-grow-1 my-auto">14.00 - 15:00</label>
-                <button type="button" class="btn btn-xs btn-primary">Book</button>
-              </div>
-              <div class="d-flex mb-3">
-                <label class="flex-grow-1 my-auto">17.00 - 18:00</label>
-                <button type="button" class="btn btn-xs btn-primary">Book</button>
-              </div>
+              <?php endforeach;?>
             </div>
-            <?php endforeach;?>
           </div>
           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile_tab">
             <h3 class="mb-4">About</h3>
