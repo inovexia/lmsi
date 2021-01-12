@@ -5,7 +5,7 @@ class Slots extends MX_Controller {
 
     public function __construct() {
         // Load Config and Model files required throughout Users sub-module
-        $config = ['config_course'];
+        $config = ['config_coaching', 'config_course'];
         $models = ['courses_model', 'slots_model'];
         $this->common_model->autoload_resources($config, $models);
     }
@@ -24,15 +24,11 @@ class Slots extends MX_Controller {
         ];
         $data['coaching_id'] = $coaching_id;
         $data['slot_id'] = $slot_id;
+        $data['script_css'] = ['assets/css/vendor/bootstrap-datepicker3.min.css'];
+        $data['script_footer'] = ['assets/js/vendor/bootstrap-datepicker.js'];
+
         $member_id = $this->session->userdata('member_id');
-        $data['slots'] = $slots = $this->slots_model->get_slots ($coaching_id);
-        $courses = [];
-        if (! empty ($slots)) {
-            foreach ($slots as $slot) {
-                $courses[$slot['title']][] = $slot;
-            }
-        }
-        $data['courses'] = $courses;
+        $data['courses'] = $this->slots_model->get_slots ($coaching_id);
         $data['script'] = $this->load->view('slots/scripts/index', $data, true);
         $this->load->view(INCLUDE_PATH . 'header', $data);
         $this->load->view('slots/index', $data);

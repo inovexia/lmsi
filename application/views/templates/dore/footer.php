@@ -45,8 +45,8 @@
     <!-- Custom JS (Dynamically included) -->
     <?php
     if (isset ($script_footer) && !empty ($script_footer)) {
-        foreach ($script_footer as $script) {
-            echo '<script src="'.base_url(THEME_PATH . $script).'" type="text/javascript"></script>';
+        foreach ($script_footer as $script_path) {
+            echo '<script src="'.base_url(THEME_PATH . $script_path).'" type="text/javascript"></script>';
         }
     }
     // Custom JS with PHP
