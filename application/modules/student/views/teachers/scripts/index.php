@@ -6,15 +6,19 @@
       course_id = $(this).data('course_id');
       $('#slots_tab').trigger('click');
     });
-    $('#slots_tab').click(function() {
+    $('#slots_tab').on('shown.bs.tab', function(e) {
       if (course_id === null) {
-        $('.collapse').collapse('show');
+        $('.tab-content .collapse').collapse('show');
       } else {
         if (!$(`#course-${course_id}`).hasClass('show')) {
-          $('.collapse').collapse('hide');
+          $('.tab-content .collapse').collapse('hide');
           $(`#course-${course_id}`).collapse('show');
         }
       }
+    });
+    $('#courses_tab, #profile_tab').on('shown.bs.tab', function(e) {
+      course_id = null;
+      $('.tab-content .collapse').collapse('hide');
     });
     $('.set-date').click(function() {
       if (!$(this).hasClass('active')) {
@@ -24,6 +28,7 @@
       }
     });
     $('.book-slot').click(function() {
+      const clickedButton = $(this);
       const coaching_id = $(this).data('coaching_id');
       const action =
         `<?php echo site_url('student/teachers_action/book_slot'); ?>/${coaching_id}/`;
@@ -36,7 +41,7 @@
       formData.append('booking_date', booking_date);
       toastr.clear();
       toastr.info("Please wait...");
-      $(this).prop('disabled', true);
+      clickedButton.prop('disabled', true);
       fetch(action, {
           method: "POST",
           body: formData,
@@ -51,10 +56,12 @@
             toastr.success(result.message, "", {
               timeOut: 3000
             });
+            clickedButton.prop('disabled', false);
           } else {
             toastr.error(result.message, "", {
               timeOut: 3000
             });
+            clickedButton.prop('disabled', false);
           }
         })
         .catch(function(error) {

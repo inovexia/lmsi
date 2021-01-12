@@ -59,19 +59,50 @@ class Teachers_model extends CI_Model
   }
   public function book_slot($coaching_id)
   {
-    $data = [
+    $coaching_id = intval($coaching_id);
+    $course_id = intval($this->input->post('course_id'));
+    $slot_id = intval($this->input->post('slot_id'));
+    $member_id = ($this->session->userdata('member_id'));
+    $book_on = $this->input->post('booking_date');
+    $booking_date = intval(DateTime::createFromFormat('d-m-Y H:i:s', $book_on . " 00:00:00")->format('U'));
+    $this->db->where([
       'coaching_id' => $coaching_id,
-      'course_id' => $this->input->post('course_id'),
-      'slot_id' => $this->input->post('slot_id'),
-      'member_id' => $this->session->userdata('member_id'),
-      'booking_date' => DateTime::createFromFormat('d-m-Y H:i:s', $this->input->post('booking_date') . " 00:00:00")->format('U'),
-    ];
-    $sql = $this->db->insert('coaching_slot_booking', $data);
-    $booking_id = $this->db->insert_id();
-    if ($booking_id > 0) {
-      return true;
+      'course_id' => $course_id,
+      'slot_id' => $slot_id,
+      'member_id' => $member_id,
+      'booking_date' => $booking_date,
+    ]);
+    // $this->db->where('course_id', $course_id);
+    // $this->db->where('slot_id', $slot_id);
+    // $this->db->where('member_id', $member_id);
+    // $this->db->where('booking_date', $booking_date);
+    $sql = $this->db->get('coaching_slot_booking');
+    if ($sql->num_rows() === 0) {
+      $data = [
+        'coaching_id' => $coaching_id,
+        'course_id' => $course_id,
+        'slot_id' => $slot_id,
+        'member_id' => $member_id,
+        'booking_date' => $booking_date,
+      ];
+      $sql = $this->db->insert('coaching_slot_booking', $data);
+      $booking_id = $this->db->insert_id();
+      if ($booking_id > 0) {
+        return [
+          'status' => true,
+          'message' => "Slot Booked Successfully",
+        ];
+      } else {
+        return [
+          'status' => false,
+          'message' => "Slot Booking Failed",
+        ];
+      }
     } else {
-      return false;
+      return [
+        'status' => false,
+        'message' => "Your slot is already booked for <span class=\"d-block\">$book_on</span>",
+      ];
     }
   }
 }

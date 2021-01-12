@@ -4,16 +4,16 @@
       <div class="card-header pl-0 pr-0">
         <ul class="nav nav-tabs nav-fill card-header-tabs ml-0 mr-0" role="tablist">
           <li class="nav-item text-center">
-            <a class="nav-link active" id="courses_tab" data-toggle="tab" href="#courses" role="tab"
-              aria-controls="courses" aria-selected="true">Courses</a>
+            <a class="nav-link active" id="courses_tab" data-toggle="tab" href="javascript:void(0);"
+              data-target="#courses" role="tab" aria-controls="courses" aria-selected="true">Courses</a>
           </li>
           <li class="nav-item text-center">
-            <a class="nav-link" id="slots_tab" data-toggle="tab" href="#slots" role="tab" aria-controls="slots"
-              aria-selected="false">Slots</a>
+            <a class="nav-link" id="slots_tab" data-toggle="tab" href="javascript:void(0);" data-target="#slots"
+              role="tab" aria-controls="slots" aria-selected="false">Slots</a>
           </li>
           <li class="nav-item text-center">
-            <a class="nav-link" id="profile_tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-              aria-selected="false">Profile</a>
+            <a class="nav-link" id="profile_tab" data-toggle="tab" href="javascript:void(0);" data-target="#profile"
+              role="tab" aria-controls="profile" aria-selected="false">Profile</a>
           </li>
         </ul>
       </div>
@@ -66,11 +66,13 @@
             <div id="courses">
               <?php foreach ($courses as $course): ?>
               <div class="form-group mb-1" data-course_id="<?php echo $course['course_id']; ?>">
-                <h4 class="pb-2 border-bottom" data-toggle="collapse"
+                <a href="javascript:void(0);" data-toggle="collapse"
                   data-target="#course-<?php echo $course['course_id']; ?>" aria-expanded="false"
                   aria-controls="collapseOne">
-                  <?php echo $course['title']; ?>
-                </h4>
+                  <h4 class="pb-2 border-bottom">
+                    <?php echo $course['title']; ?>
+                  </h4>
+                </a>
                 <div id="course-<?php echo $course['course_id']; ?>" class="collapse" data-parent="#courses">
                   <?php foreach ($course['slots'] as $i => $slot): extract($slot);?>
                   <div class="d-flex mb-2">

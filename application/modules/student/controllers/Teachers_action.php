@@ -14,25 +14,10 @@ class Teachers_action extends MX_Controller
 
   public function book_slot($coaching_id = 0)
   {
+    $returnArray = $this->teachers_model->book_slot($coaching_id);
     $this->output->set_content_type("application/json");
-    if ($this->teachers_model->book_slot($coaching_id)) {
-      $this->output->set_output(
-        json_encode(
-          [
-            'status' => true,
-            'message' => "Slot Booked Successfully",
-          ]
-        )
-      );
-    } else {
-      $this->output->set_output(
-        json_encode(
-          [
-            'status' => false,
-            'message' => "Slot Booking Failed",
-          ]
-        )
-      );
-    }
+    $this->output->set_output(
+      json_encode($returnArray)
+    );
   }
 }
