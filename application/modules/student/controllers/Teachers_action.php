@@ -20,4 +20,15 @@ class Teachers_action extends MX_Controller
       json_encode($returnArray)
     );
   }
+  public function change_date($coaching_id, $date)
+  {
+    $day = intval(DateTime::createFromFormat('Y-m-d H:i:s', $date . " 00:00:00")->format('U'));
+    $this->output->set_content_type("application/json");
+    $this->output->set_output(
+      json_encode([
+        "status" => true,
+        "redirect" => site_url("/student/teachers/index/$coaching_id/$day"),
+      ])
+    );
+  }
 }

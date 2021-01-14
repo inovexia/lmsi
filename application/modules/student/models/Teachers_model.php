@@ -46,14 +46,15 @@ class Teachers_model extends CI_Model
     $sql = $this->db->get('coaching_course_category');
     return $sql->row_array();
   }
-  public function get_slots_by_course_id($coaching_id, $course_id)
+  public function get_slots_by_course_id($coaching_id, $course_id, $date)
   {
     $this->db->where('coaching_id', $coaching_id);
     $this->db->where('course_id', $course_id);
+    $this->db->where('date', $date);
     $slots = $this->db->get('coaching_slots')->result_array();
     foreach ($slots as $i => $slot) {
-      $slots[$i]["start_time"] = date('H:i', strtotime($slot["start_time"]));
-      $slots[$i]["end_time"] = date('H:i', strtotime($slot["end_time"]));
+      $slots[$i]["start_time"] = date('H:i', $slot["start_time"]);
+      $slots[$i]["end_time"] = date('H:i', $slot["end_time"]);
     }
     return $slots;
   }
@@ -63,8 +64,8 @@ class Teachers_model extends CI_Model
     $course_id = intval($this->input->post('course_id'));
     $slot_id = intval($this->input->post('slot_id'));
     $member_id = ($this->session->userdata('member_id'));
-    $book_on = $this->input->post('booking_date');
-    $booking_date = intval(DateTime::createFromFormat('d-m-Y H:i:s', $book_on . " 00:00:00")->format('U'));
+    $booking_date = $this->input->post('booking_date');
+    $book_on = date('d-m-Y', $booking_date);
     $this->db->where([
       'coaching_id' => $coaching_id,
       'course_id' => $course_id,
