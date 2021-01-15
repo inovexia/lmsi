@@ -38,30 +38,18 @@
           </div>
           <div class="tab-pane fade" id="slots" role="tabpanel" aria-labelledby="slots_tab">
             <div class="form-group mb-1">
-              <button type="button" data-value="<?php echo date('d-m-Y'); ?>"
-                class="btn btn-xs btn-primary active set-date">Today</button>
-              <button type="button" data-value="<?php echo date('d-m-Y', strtotime(date('m/d/Y') . "+1 days")); ?>"
-                class="btn btn-xs btn-primary set-date">
-                <?php echo date('j<\s\up>S</\s\up> M', strtotime(date('m/d/Y') . "+1 days")); ?>
-              </button>
-              <button type="button" data-value="<?php echo date('d-m-Y', strtotime(date('m/d/Y') . "+2 days")); ?>"
-                class="btn btn-xs btn-primary set-date">
-                <?php echo date('j<\s\up>S</\s\up> M', strtotime(date('m/d/Y') . "+2 days")); ?>
-              </button>
-              <button type="button" data-value="<?php echo date('d-m-Y', strtotime(date('m/d/Y') . "+3 days")); ?>"
-                class="btn btn-xs btn-primary set-date">
-                <?php echo date('j<\s\up>S</\s\up> M', strtotime(date('m/d/Y') . "+3 days")); ?>
-              </button>
+              <?php foreach ($days as $n => $day): ?>
+              <a href="<?php echo site_url("/student/teachers/index/$coaching_id/$day"); ?>"
+                class="<?php echo ($booking_date == $day) ? "btn btn-xs btn-primary disabled" : "btn btn-xs btn-primary"; ?>">
+                <?php echo ($n === 0) ? "Today" : date("j<\s\u\p>S</\s\u\p> M", $day); ?>
+              </a>
+              <?php endforeach;?>
             </div>
             <div class="form-group mb-1">
               <label>Select Date</label>
-              <div class="input-group date">
-                <input type="text" value="<?php echo date('d-m-Y'); ?>" data-date-orientation="bottom"
-                  data-date-format="dd-mm-yyyy" class="form-control datepicker" id="booking_date" />
-                <span class="input-group-text input-group-append input-group-addon">
-                  <i class="simple-icon-calendar"></i>
-                </span>
-              </div>
+              <input type="date" data-value="<?php echo $booking_date; ?>"
+                min="<?php echo date('Y-m-d', $booking_date); ?>" value="<?php echo date('Y-m-d', $booking_date); ?>"
+                class="form-control" id="booking_date" />
             </div>
             <div id="courses">
               <?php foreach ($courses as $course): ?>
@@ -74,6 +62,7 @@
                   </h4>
                 </a>
                 <div id="course-<?php echo $course['course_id']; ?>" class="collapse" data-parent="#courses">
+                  <?php if (!empty($course['slots'])): ?>
                   <?php foreach ($course['slots'] as $i => $slot): extract($slot);?>
                   <div class="d-flex mb-2">
                     <label class="flex-grow-1 my-auto"><?php echo "$start_time - $end_time"; ?></label>
@@ -84,6 +73,9 @@
                     </button>
                   </div>
                   <?php endforeach;?>
+                  <?php else: ?>
+                  <div class="alert alert-danger">There are no slots available.</div>
+                  <?php endif;?>
                 </div>
               </div>
               <?php endforeach;?>
