@@ -82,7 +82,10 @@
           }
         })
         .catch(function(error) {
-          console.error(error);
+          toastr.info(error.message, "", {
+            timeOut: 3000
+          });
+          clickedButton.prop('disabled', false);
         });
     });
   });
