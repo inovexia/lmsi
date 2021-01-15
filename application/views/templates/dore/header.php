@@ -766,23 +766,23 @@
 
 	                    	<div class="top-right-button-container">
 	                    		<?php if (isset ($toolbar_buttons)) { ?>
-	                            <div class="btn-group">
-	                            	<?php 
-	                            	if (isset ($toolbar_buttons['add_new'])) { 
-	                            		$add_new = $toolbar_buttons['add_new'];
-	                            		?>
-		                                <div class="btn btn-primary btn-lg pl-4 pr-0 ">
-		                                    <?php echo key ($add_new); ?>
+		                            <div class="btn-group">
+		                            	<?php 
+		                            	if (isset ($toolbar_buttons['add_new'])) { 
+		                            		$add_new = $toolbar_buttons['add_new'];
+		                            		?>
+			                                <div class="btn btn-primary btn-lg pl-4 pr-0 ">
+			                                    <?php echo key ($add_new); ?>
+			                                </div>
+		                            	<?php } ?>
+		                                <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                                    <span class="sr-only">Toggle Dropdown</span>
+		                                </button>
+		                                <div class="dropdown-menu dropdown-menu-right">
+		                                    <a class="dropdown-item" href="#">Action</a>
+		                                    <a class="dropdown-item" href="#">Another action</a>
 		                                </div>
-	                            	<?php } ?>
-	                                <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                    <span class="sr-only">Toggle Dropdown</span>
-	                                </button>
-	                                <div class="dropdown-menu dropdown-menu-right">
-	                                    <a class="dropdown-item" href="#">Action</a>
-	                                    <a class="dropdown-item" href="#">Another action</a>
-	                                </div>
-	                            </div>
+		                            </div>
 	                    		<?php } ?>
 	                            <div class="btn-group">
 	                                <div class="btn btn-primary btn-lg pl-4 pr-0 check-button">
