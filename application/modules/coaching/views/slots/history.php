@@ -1,15 +1,10 @@
 <div class="row mb-1">
     <div class="col-12 " >
         <form class="form-inline">
-            <?php
-            for ($i=0; $i<3; $i++) {
-                $dt = mktime (0, 0, 0, date ('m'), date('d')+$i, date ('Y'));
-                $d = date ('D, d', strtotime('+'.$i.' days'));
-                echo '<a href="'.site_url ('coaching/slots/index/'.$coaching_id.'/'.$dt).'" class="btn btn-sm btn-primary mb-1 mr-1">'.$d.'</a>';
-            }
-            $dt = mktime (0, 0, 0, date ('m'), date('d')+3, date ('Y'));
+            <?php            
+            $dt = mktime (0, 0, 0, date ('m'), date('d')-1, date ('Y'));
             ?>
-            <input type="date" name="" class="form-control my-2" min="<?php //echo date ('Y-m-d'); ?>" max="<?php echo date ('Y-m-d', strtotime('+90 days')); ?>" placeholder="Select date" value="<?php echo date ('Y-m-d', strtotime('+3 days')); ?>" onchange="change_date(<?php echo $dt; ?>)">
+            <input type="date" name="" class="form-control my-2" min="" max="<?php echo date ('Y-m-d'); ?>" placeholder="Select date" value="<?php echo date ('Y-m-d'); ?>" onchange="change_date(<?php echo $dt; ?>)">
         </form>
     </div>
 </div>
@@ -38,9 +33,6 @@
                             }
                         }
                         ?>
-                        <div class="my-2 mt-2">
-                             <button type="button" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-backdrop="static" data-target="#addSlot" data-course-id="<?php echo $course_id; ?>" data-slot-id="0">Add Slot</button>
-                        </div>
                     </div>
                 </div>
                 <?php
@@ -54,13 +46,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <?php echo form_open ('coaching/slot_actions/create_slot/'.$coaching_id, ['class'=>'validate-form']); ?>
-                <div class="modal-body">
-
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Slot</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-
-                    <h5 class="modal-title">Add Slot</h5>
+                </div>
+                <div class="modal-body">
                             
                     <input type="hidden" name="course_id">
                     <input type="hidden" name="slot_id">
@@ -100,9 +92,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-sm btn-primary">Save</button>
-                    <span id="delete_container"></span>
-                    <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div id="delete_container"></div>
                 </div>
             </div>
         <?php echo form_close (); ?>

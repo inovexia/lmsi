@@ -49,6 +49,57 @@ class Slots_model extends CI_Model {
 		return $result;
 	}
 
+    public function get_all_appointments ($coaching_id=0, $from="", $to="") {
+        // Convert time
+        list ($sy, $sm, $sd) = explode ('-', $from);
+        $str_from = mktime (0, 0, 0, $sm, $sd, $sy);
+
+        list ($ey, $em, $ed) = explode ('-', $to);
+        $str_to = mktime (23, 59, 59, $em, $ed, $ey);
+
+        $where = 'CS.start_time >='.$str_from.' AND CS.end_time <='.$str_to.'';
+        $this->db->select ('M.first_name, M.last_name, CC.title, CS.start_time, CS.end_time, CS.date, CSB.*');
+        $this->db->from ('coaching_slot_booking CSB');
+        $this->db->join ('members M', 'CSB.member_id=M.member_id');
+        $this->db->join ('coaching_courses CC', 'CSB.course_id=CC.course_id');
+        $this->db->join ('coaching_slots CS', 'CSB.slot_id=CS.slot_id');
+        $this->db->where ($where);
+        $this->db->where ('CSB.coaching_id', $coaching_id);
+        $sql = $this->db->get ();
+        $result = [];
+        if ($sql->num_rows () > 0) {
+            foreach ($sql->result_array () as $row) {
+                $member_id = $row['member_id'];
+                // get profile image
+                $pi = $this->users_model->view_profile_image ($member_id);
+                $row['pi'] = $pi;
+                $result[] = $row;
+            }
+        }
+        return $result;
+    }
+
+    public function get_appointments ($coaching_id=0, $slot_id=0) {
+        $this->db->select ('M.first_name, M.last_name, CC.title, CSB.*');
+        $this->db->from ('coaching_slot_booking CSB');
+        $this->db->join ('members M', 'CSB.member_id=M.member_id');
+        $this->db->join ('coaching_courses CC', 'CSB.course_id=CC.course_id');
+        $this->db->where ('CSB.coaching_id', $coaching_id);
+        $this->db->where ('CSB.slot_id', $slot_id);
+        $sql = $this->db->get ();
+        $result = [];
+        if ($sql->num_rows () > 0) {
+            foreach ($sql->result_array () as $row) {
+                $member_id = $row['member_id'];
+                // get profile image
+                $pi = $this->users_model->view_profile_image ($member_id);
+                $row['pi'] = $pi;
+                $result[] = $row;
+            }
+        }
+        return $result;
+    }
+
     public function create_slot ($coaching_id=0) {
         $course_id = $this->input->post ('course_id');
         $slot_id = $this->input->post ('slot_id'); 

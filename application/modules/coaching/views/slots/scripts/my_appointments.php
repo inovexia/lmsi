@@ -21,16 +21,18 @@ $('#addSlot').on('show.bs.modal', function(e) {
 		}).then (function (result) {
 			if (result.status == true) {
 				outputSelector.html (result.data);
-                actionButtons = '<a href="<?php echo site_url ('coaching/slots/my_appointments/'.$coaching_id); ?>/'+slot_id+'" class="btn btn-sm btn-secondary">Bookings</a>';
-                actionButtons += ' <a href="<?php echo site_url ('coaching/slot_actions/delete_slot/'.$coaching_id); ?>/'+slot_id+'" class="btn btn-sm btn-danger">Delete</a>';
-				deleteSelector.html (actionButtons);
+				deleteSelector.html ('<a href="<?php echo site_url ('coaching/slot_actions/delete_slot/'.$coaching_id); ?>/'+slot_id+'" class="btn btn-danger">Delete</a>');
 			}
     	});
 		outputSelector.html ('<i class="simple-icon-refresh"></i>');
     }
 });
 
-function change_date (date) {
-	document.location = '<?php echo site_url ('coaching/slots/index/'.$coaching_id); ?>/'+date;
+function change_from_date (date) {
+	document.location = '<?php echo site_url ('coaching/slots/my_appointments/'.$coaching_id); ?>/0/'+date+'/<?php echo $to; ?>';
+}
+
+function change_to_date (date) {
+    document.location = '<?php echo site_url ('coaching/slots/my_appointments/'.$coaching_id.'/0/'.$from); ?>/'+date;
 }
 </script>
