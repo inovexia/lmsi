@@ -4,8 +4,13 @@
             <?php
             for ($i=0; $i<3; $i++) {
                 $dt = mktime (0, 0, 0, date ('m'), date('d')+$i, date ('Y'));
+                if ($dt == $date) {
+                    $selected = 'btn-success';
+                } else {
+                    $selected = 'btn-outline-success';                    
+                }
                 $d = date ('D, d', strtotime('+'.$i.' days'));
-                echo '<a href="'.site_url ('coaching/slots/index/'.$coaching_id.'/'.$dt).'" class="btn btn-sm btn-primary mb-1 mr-1">'.$d.'</a>';
+                echo '<a href="'.site_url ('coaching/slots/index/'.$coaching_id.'/'.$dt).'" class="btn btn-sm '.$selected.' mb-1 mr-1">'.$d.'</a>';
             }
             $dt = mktime (0, 0, 0, date ('m'), date('d')+3, date ('Y'));
             ?>
@@ -30,7 +35,7 @@
                         if (! empty ($slots)) {
                             foreach ($slots as $slot) {
                                 ?>
-                                <button type="button" class="btn btn-xs btn-secondary mb-2" data-toggle="modal" data-backdrop="static" data-target="#addSlot" data-course-id="<?php echo $course_id; ?>" data-slot-id="<?php echo $slot['slot_id']; ?>">
+                                <button type="button" class="btn btn-xs btn-info mb-2" data-toggle="modal" data-backdrop="static" data-target="#addSlot" data-course-id="<?php echo $course_id; ?>" data-slot-id="<?php echo $slot['slot_id']; ?>">
                                     <?php echo date ('h:i a', $slot['start_time']); ?> - 
                                     <?php echo date ('h:i a', $slot['end_time']); ?>
                                 </button>
@@ -61,9 +66,9 @@
                     </button>
 
                     <h5 class="modal-title">Add Slot</h5>
-                            
-                    <input type="hidden" name="course_id">
-                    <input type="hidden" name="slot_id">
+
+                    <input type="hidden" name="course_id" value="0">
+                    <input type="hidden" name="slot_id" value="0">
 
                     <div id="output-selector">
                         <div class="form-group">

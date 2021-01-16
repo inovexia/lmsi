@@ -47,7 +47,7 @@
     <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/component-custom-switch.min.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/perfect-scrollbar.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/scrollbar.light.css'); ?>" />
-    <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/dore.light.purple.min.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/dore.light.blue.min.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/main.css'); ?>" />
     <!-- Toastr CSS -->
     <link type="text/css" href="<?php echo base_url(THEME_PATH . 'assets/css/toastr.min.css'); ?>" rel="stylesheet">
@@ -758,47 +758,45 @@
 		                    <h1>
 		                    	<?php
 		                    	if (isset ($bc)) {
-		                    		echo '<span class="mr-3"><a href="'.site_url (current($bc)).'" title="Back to '.key ($bc).'"><i class="iconsminds-arrow-out-left"></i></a></span>';
+		                    		echo '<a href="'.site_url (current($bc)).'" title="Back to '.key ($bc).'"><i class="iconsminds-arrow-out-left"></i></a>';
 		                    	}
 		                    	?>
-		                    	<?php if (isset($page_title)) echo $page_title; ?>
+		                    	<span class="ml-1"><?php if (isset($page_title)) echo $page_title; ?></span>
 	                    	</h1>
 
 	                    	<div class="top-right-button-container">
 	                    		<?php if (isset ($toolbar_buttons)) { ?>
 		                            <div class="btn-group">
 		                            	<?php 
-		                            	if (isset ($toolbar_buttons['add_new'])) { 
+		                            	if (isset ($toolbar_buttons['add_new'])) {
 		                            		$add_new = $toolbar_buttons['add_new'];
 		                            		?>
-			                                <div class="btn btn-primary btn-lg pl-4 pr-0 ">
+			                                <a class="btn btn-primary btn-lg pl-4 pr-2" href="<?php echo base_url (current($add_new)); ?>">
 			                                    <?php echo key ($add_new); ?>
-			                                </div>
+			                                </a>
+		                            	<?php } else { ?>
+			                                <a class="btn btn-primary btn-lg pl-4 pr-2" href="#">
+			                                    Actions
+			                                </a>
 		                            	<?php } ?>
 		                                <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		                                    <span class="sr-only">Toggle Dropdown</span>
 		                                </button>
-		                                <div class="dropdown-menu dropdown-menu-right">
-		                                    <a class="dropdown-item" href="#">Action</a>
-		                                    <a class="dropdown-item" href="#">Another action</a>
-		                                </div>
+		                                <?php 
+		                                if (! empty($toolbar_buttons['actions'])) { 
+		                            		$actions = $toolbar_buttons['actions'];
+		                                	?>
+			                                <div class="dropdown-menu dropdown-menu-right">
+			                                	<?php foreach ($actions as $name=>$url) { ?>
+					                                <a class="dropdown-item" href="<?php echo base_url ($url); ?>">
+					                                    <?php echo $name; ?>
+					                                </a>
+			                                	<?php } ?>
+			                                </div>
+		                                <?php } ?>
 		                            </div>
 	                    		<?php } ?>
-	                            <div class="btn-group">
-	                                <div class="btn btn-primary btn-lg pl-4 pr-0 check-button">
-	                                    <label class="custom-control custom-checkbox mb-0 d-inline-block">
-	                                        <input type="checkbox" class="custom-control-input" id="checkAll">
-	                                        <span class="custom-control-label">&nbsp;</span>
-	                                    </label>
-	                                </div>
-	                                <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                    <span class="sr-only">Toggle Dropdown</span>
-	                                </button>
-	                                <div class="dropdown-menu dropdown-menu-right">
-	                                    <a class="dropdown-item" href="#">Action</a>
-	                                    <a class="dropdown-item" href="#">Another action</a>
-	                                </div>
-	                            </div>
+	                           
 	                        </div>
 
 	                    	<?php if (isset ($sub_title)) { ?>
@@ -812,82 +810,12 @@
 			                <?php } ?>
 	                	</div>
 
-	                    <div class="mb-2">
-	                        <a class="btn pt-0 pl-0 d-inline-block d-md-none" data-toggle="collapse" href="#displayOptions"
-	                            role="button" aria-expanded="true" aria-controls="displayOptions">
-	                            Display Options
-	                            <i class="simple-icon-arrow-down align-middle"></i>
-	                        </a>
-	                        <div class="collapse dont-collapse-sm" id="displayOptions">
-	                            <span class="mr-3 mb-2 d-inline-blocks d-none float-md-left">
-	                                <a href="#" class="mr-2 view-icon active">
-	                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-	                                        <path class="view-icon-svg" d="M17.5,3H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" />
-	                                        <path class="view-icon-svg" d="M17.5,10H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" />
-	                                        <path class="view-icon-svg" d="M17.5,17H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z" />
-	                                    </svg>
-	                                </a>
-	                                <a href="#" class="mr-2 view-icon">
-	                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-	                                        <path class="view-icon-svg" d="M17.5,3H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" />
-	                                        <path class="view-icon-svg"
-	                                            d="M3,2V3H1V2H3m.12-1H.88A.87.87,0,0,0,0,1.88V3.12A.87.87,0,0,0,.88,4H3.12A.87.87,0,0,0,4,3.12V1.88A.87.87,0,0,0,3.12,1Z" />
-	                                        <path class="view-icon-svg"
-	                                            d="M3,9v1H1V9H3m.12-1H.88A.87.87,0,0,0,0,8.88v1.24A.87.87,0,0,0,.88,11H3.12A.87.87,0,0,0,4,10.12V8.88A.87.87,0,0,0,3.12,8Z" />
-	                                        <path class="view-icon-svg"
-	                                            d="M3,16v1H1V16H3m.12-1H.88a.87.87,0,0,0-.88.88v1.24A.87.87,0,0,0,.88,18H3.12A.87.87,0,0,0,4,17.12V15.88A.87.87,0,0,0,3.12,15Z" />
-	                                        <path class="view-icon-svg"
-	                                            d="M17.5,10H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" />
-	                                        <path class="view-icon-svg"
-	                                            d="M17.5,17H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z" /></svg>
-	                                </a>
-	                                <a href="#" class="mr-2 view-icon">
-	                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-	                                        <path class="view-icon-svg"
-	                                            d="M7,2V8H1V2H7m.12-1H.88A.87.87,0,0,0,0,1.88V8.12A.87.87,0,0,0,.88,9H7.12A.87.87,0,0,0,8,8.12V1.88A.87.87,0,0,0,7.12,1Z" />
-	                                        <path class="view-icon-svg"
-	                                            d="M17,2V8H11V2h6m.12-1H10.88a.87.87,0,0,0-.88.88V8.12a.87.87,0,0,0,.88.88h6.24A.87.87,0,0,0,18,8.12V1.88A.87.87,0,0,0,17.12,1Z" />
-	                                        <path class="view-icon-svg"
-	                                            d="M7,12v6H1V12H7m.12-1H.88a.87.87,0,0,0-.88.88v6.24A.87.87,0,0,0,.88,19H7.12A.87.87,0,0,0,8,18.12V11.88A.87.87,0,0,0,7.12,11Z" />
-	                                        <path class="view-icon-svg"
-	                                            d="M17,12v6H11V12h6m.12-1H10.88a.87.87,0,0,0-.88.88v6.24a.87.87,0,0,0,.88.88h6.24a.87.87,0,0,0,.88-.88V11.88a.87.87,0,0,0-.88-.88Z" />
-	                                    </svg>
-	                                </a>
-	                            </span>
-	                            <div class="d-block d-md-inline-block">
-	                                <div class="btn-group float-md-left mr-1 mb-1">
-	                                    <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button"
-	                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                        Order By
-	                                    </button>
-	                                    <div class="dropdown-menu">
-	                                        <a class="dropdown-item" href="#">Action</a>
-	                                        <a class="dropdown-item" href="#">Another action</a>
-	                                    </div>
-	                                </div>
-	                                <!-- <div class="search-sm calendar-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-	                                    <input class="form-control datepicker" placeholder="Search by day">
-	                                </div> -->
-                                    <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-	                                    <input id="search-by-name" class="form-control search-by-name" placeholder="Search by name">
-	                                </div>
-	                            </div>
-	                            <div class="float-md-right">
-	                                <span class="text-muted text-small">Displaying 1-10 of 210 items </span>
-	                                <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button"
-	                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                    20
-	                                </button>
-	                                <div class="dropdown-menu dropdown-menu-right">
-	                                    <a class="dropdown-item" href="#">10</a>
-	                                    <a class="dropdown-item active" href="#">20</a>
-	                                    <a class="dropdown-item" href="#">30</a>
-	                                    <a class="dropdown-item" href="#">50</a>
-	                                    <a class="dropdown-item" href="#">100</a>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
+	                    <?php
+	                    // include filters
+	                    if (isset ($filter_template)) {
+	                    	echo $filter_template;
+	                    }
+	                    ?>
 	                    <div class="separator mb-5"></div>
 	                </div>
 	            </div>
