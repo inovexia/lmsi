@@ -4,12 +4,14 @@
       <div class="card-header pl-0 pr-0">
         <ul class="nav nav-tabs nav-fill card-header-tabs ml-0 mr-0" role="tablist">
           <li class="nav-item text-center">
-            <a class="nav-link active" id="courses_tab" data-toggle="tab" href="javascript:void(0);"
-              data-target="#courses" role="tab" aria-controls="courses" aria-selected="true">Courses</a>
+            <a class="<?php echo ($active_tab == "courses_tab") ? "nav-link active" : "nav-link"; ?>" id="courses_tab"
+              data-toggle="tab" href="javascript:void(0);" data-target="#courses" role="tab" aria-controls="courses"
+              aria-selected="true">Courses</a>
           </li>
           <li class="nav-item text-center">
-            <a class="nav-link" id="slots_tab" data-toggle="tab" href="javascript:void(0);" data-target="#slots"
-              role="tab" aria-controls="slots" aria-selected="false">Slots</a>
+            <a class="<?php echo ($active_tab == "slots_tab") ? "nav-link active" : "nav-link"; ?>" id="slots_tab"
+              data-toggle="tab" href="javascript:void(0);" data-target="#slots" role="tab" aria-controls="slots"
+              aria-selected="false">Slots</a>
           </li>
           <li class="nav-item text-center">
             <a class="nav-link" id="profile_tab" data-toggle="tab" href="javascript:void(0);" data-target="#profile"

@@ -24,6 +24,9 @@ class Teachers extends MX_Controller
     if ($date == null) {
       // Today's date
       $date = $today;
+      $data['active_tab'] = "courses_tab";
+    } else {
+      $data['active_tab'] = "slots_tab";
     }
     $data['coaching_id'] = $coaching_id;
     $data['courses'] = $courses = $this->teachers_model->courses($coaching_id);
