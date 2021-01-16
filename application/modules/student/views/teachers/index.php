@@ -4,12 +4,14 @@
       <div class="card-header pl-0 pr-0">
         <ul class="nav nav-tabs nav-fill card-header-tabs ml-0 mr-0" role="tablist">
           <li class="nav-item text-center">
-            <a class="nav-link active" id="courses_tab" data-toggle="tab" href="javascript:void(0);"
-              data-target="#courses" role="tab" aria-controls="courses" aria-selected="true">Courses</a>
+            <a class="<?php echo ($active_tab == "courses_tab") ? "nav-link active" : "nav-link"; ?>" id="courses_tab"
+              data-toggle="tab" href="javascript:void(0);" data-target="#courses" role="tab" aria-controls="courses"
+              aria-selected="true">Courses</a>
           </li>
           <li class="nav-item text-center">
-            <a class="nav-link" id="slots_tab" data-toggle="tab" href="javascript:void(0);" data-target="#slots"
-              role="tab" aria-controls="slots" aria-selected="false">Slots</a>
+            <a class="<?php echo ($active_tab == "slots_tab") ? "nav-link active" : "nav-link"; ?>" id="slots_tab"
+              data-toggle="tab" href="javascript:void(0);" data-target="#slots" role="tab" aria-controls="slots"
+              aria-selected="false">Slots</a>
           </li>
           <li class="nav-item text-center">
             <a class="nav-link" id="profile_tab" data-toggle="tab" href="javascript:void(0);" data-target="#profile"
@@ -22,14 +24,14 @@
           <div class="tab-pane fade active show" id="courses" role="tabpanel" aria-labelledby="courses_tab">
             <table class="table">
               <tbody>
-                <?php foreach ($courses as $course): ?>
+                <?php foreach ($courses as $course): extract($course);?>
                 <tr>
                   <td width="90%" class="align-middle">
-                    <p class="list-item-heading"><?php echo $course['title']; ?></p>
+                    <p class="list-item-heading"><?php echo $title; ?></p>
                   </td>
                   <td>
                     <button type="button" class="btn btn-xs btn-primary slots-toggle"
-                      data-course_id="<?php echo $course['course_id']; ?>">Slots</button>
+                      data-course_id="<?php echo $course_id; ?>">Slots</button>
                   </td>
                 </tr>
                 <?php endforeach;?>
@@ -52,23 +54,22 @@
                 class="form-control" id="booking_date" />
             </div>
             <div id="courses">
-              <?php foreach ($courses as $course): ?>
-              <div class="form-group mb-1" data-course_id="<?php echo $course['course_id']; ?>">
-                <a href="javascript:void(0);" data-toggle="collapse"
-                  data-target="#course-<?php echo $course['course_id']; ?>" aria-expanded="false"
-                  aria-controls="collapseOne">
+              <?php foreach ($courses as $course): extract($course);?>
+              <div class="form-group mb-1" data-course_id="<?php echo $course_id; ?>">
+                <a href="javascript:void(0);" data-toggle="collapse" data-target="#course-<?php echo $course_id; ?>"
+                  aria-expanded="false" aria-controls="collapseOne">
                   <h4 class="pb-2 border-bottom">
-                    <?php echo $course['title']; ?>
+                    <?php echo $title; ?>
                   </h4>
                 </a>
-                <div id="course-<?php echo $course['course_id']; ?>" class="collapse" data-parent="#courses">
-                  <?php if (!empty($course['slots'])): ?>
-                  <?php foreach ($course['slots'] as $i => $slot): extract($slot);?>
+                <div id="course-<?php echo $course_id; ?>" class="collapse" data-parent="#courses">
+                  <?php if (!empty($slots)): ?>
+                  <?php foreach ($slots as $i => $slot): extract($slot);?>
                   <div class="d-flex mb-2">
                     <label class="flex-grow-1 my-auto"><?php echo "$start_time - $end_time"; ?></label>
                     <button type="button" data-coaching_id="<?php echo $coaching_id; ?>"
-                      data-course_id="<?php echo $course['course_id']; ?>"
-                      data-slot_id="<?php echo $slot['slot_id']; ?>" class="btn btn-xs btn-primary book-slot">
+                      data-course_id="<?php echo $course_id; ?>" data-slot_id="<?php echo $slot_id; ?>"
+                      class="btn btn-xs btn-primary book-slot">
                       Book
                     </button>
                   </div>

@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) {
+<?php
+if (!defined('BASEPATH')) {
   exit('No direct script access allowed');
 }
 
@@ -65,27 +66,14 @@ class Teachers_model extends CI_Model
     $slot_id = intval($this->input->post('slot_id'));
     $member_id = ($this->session->userdata('member_id'));
     $booking_date = $this->input->post('booking_date');
-    $book_on = date('d-m-Y', $booking_date);
-    $this->db->where([
+    $data = [
       'coaching_id' => $coaching_id,
       'course_id' => $course_id,
       'slot_id' => $slot_id,
       'member_id' => $member_id,
       'booking_date' => $booking_date,
-    ]);
-    // $this->db->where('course_id', $course_id);
-    // $this->db->where('slot_id', $slot_id);
-    // $this->db->where('member_id', $member_id);
-    // $this->db->where('booking_date', $booking_date);
-    $sql = $this->db->get('coaching_slot_booking');
-    if ($sql->num_rows() === 0) {
-      $data = [
-        'coaching_id' => $coaching_id,
-        'course_id' => $course_id,
-        'slot_id' => $slot_id,
-        'member_id' => $member_id,
-        'booking_date' => $booking_date,
-      ];
+    ];
+    if ($this->db->where($data)->get('coaching_slot_booking')->num_rows() === 0) {
       $sql = $this->db->insert('coaching_slot_booking', $data);
       $booking_id = $this->db->insert_id();
       if ($booking_id > 0) {
@@ -100,9 +88,10 @@ class Teachers_model extends CI_Model
         ];
       }
     } else {
+      $book_on = date('d-m-Y', $booking_date);
       return [
         'status' => false,
-        'message' => "Your slot is already booked for <span class=\"d-block\">$book_on</span>",
+        'message' => "<p>Your slot is already booked for <span class=\"d-block\">$book_on</span></p>",
       ];
     }
   }
