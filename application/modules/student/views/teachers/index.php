@@ -56,7 +56,7 @@
                     <?php echo $title; ?>
                   </h4>
                 </a>
-                <div id="course-<?php echo $course_id; ?>" class="collapse" data-parent="#courses">
+                <div id="course-<?php echo $course_id; ?>" class="<?php echo ($active_tab == "slots_tab") ? "collapse show" : "collapse"; ?>" data-parent="#courses">
                   <?php if (!empty($slots)): ?>
                   <?php foreach ($slots as $i => $slot): extract($slot);?>
                   <div class="d-flex mb-2">
@@ -64,8 +64,8 @@
                       <?php echo "$start_time - $end_time"; ?>
                     </label>
                     <button type="button" data-coaching_id="<?php echo $coaching_id; ?>" data-course_id="<?php echo $course_id; ?>" data-slot_id="<?php echo $slot_id; ?>"
-                      class="btn btn-xs btn-primary book-slot">
-                      Book
+                      class="<?php echo ($booked) ? "btn btn-xs btn-primary disabled" : "btn btn-xs btn-primary book-slot" ?>">
+                      <?php echo ($booked) ? "Booked" : "Book" ?>
                     </button>
                   </div>
                   <?php endforeach;?>
