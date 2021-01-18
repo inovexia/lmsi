@@ -4,15 +4,18 @@ class Users extends MX_Controller {
 	
     var $toolbar_buttons = []; 
     var $is_admin;
+
 	public function __construct () {
+
 	    // Load Config and Model files required throughout Users sub-module
 	    $config = ['config_coaching', 'config_course'];
 	    $models = ['users_model', 'coaching_model'];
 	    $this->common_model->autoload_resources ($config, $models);
 	    
         $cid = $this->uri->segment (4);
-        $this->toolbar_buttons['<i class="simple-icon-list"></i> All Users']= 'coaching/users/index/'.$cid;
-        $this->toolbar_buttons['<i class="simple-icon-plus"></i> New User']= 'coaching/users/create/'.$cid;
+        $this->toolbar_buttons['add_new'] = ['<i class="simple-icon-plus"></i> Invite Users'=>'coaching/users/invite/'.$cid];
+        $this->toolbar_buttons['actions'] = ['<i class="simple-icon-list"></i> All Users'=>'coaching/users/index/'.$cid];
+
         // Security step to prevent unauthorized access through url
         if ($this->session->userdata ('is_admin') == TRUE) {
         } else {
@@ -115,7 +118,7 @@ class Users extends MX_Controller {
 		$data['result'] 	= $user = $this->users_model->get_user ($member_id);
 		$user['role']	 	= $this->users_model->user_role_name ($user['role_id']);
 		$data['num_users']  = $this->coaching_model->num_users ($coaching_id);
-		$data['max_users'] 	= $subscription['max_users'];
+		//$data['max_users'] 	= $subscription['max_users'];
 
 
 		$role_lvl 		 	= $this->session->userdata ('role_lvl');
@@ -138,6 +141,21 @@ class Users extends MX_Controller {
 		$this->load->view(INCLUDE_PATH . 'footer', $data);
 	}
 	
+
+	public function invite ($coaching_id=0) {
+		$data['coaching_id'] 	= $coaching_id;
+
+		// Reference Id
+		// $subscription = $this->subscription_model->get_coaching_subscription ($coaching_id);		
+		$data['toolbar_buttons'] = $this->toolbar_buttons;
+		$data['bc'] = array ('Users'=>'coaching/users/index/'.$coaching_id);
+		$data['page_title'] = 'Invite Users';
+
+		$this->load->view(INCLUDE_PATH . 'header', $data);
+		$this->load->view ('users/invite', $data);
+		$this->load->view(INCLUDE_PATH . 'footer', $data);
+
+	}
 	
 	// VIEW USER ACCOUNT
 	public function view ($coaching_id=0, $role_id=0, $member_id=0) {
@@ -183,57 +201,6 @@ class Users extends MX_Controller {
 		$this->load->view(INCLUDE_PATH . 'footer', $data);
 	}
 	
-	/*----------- MY ACCOUNT FUNCTIONS -------------*/
-	public function my_account ($coaching_id=0, $member_id=0) {
-		
-		$data['page_title'] = 'My Account';
-		if ($member_id == 0) {
-			$member_id = $this->session->userdata ('member_id');
-		}
-		
-		$data['member_id'] 		= $member_id;
-		$data['profile_image'] 	= $this->users_model->view_profile_image ($member_id);
-		$user 					= $this->users_model->get_user ($member_id);
-		$user_profile 			= $this->users_model->member_profile ($member_id);
-		if ( is_array ($user) ) {
-			$data['result'] 	= array_merge ($user, $user_profile);			
-		} else {
-			$data['result'] 	= false;
-		}		
-		$data['coaching_id'] 	= $coaching_id;
-		$data['role_id'] 		= $user['role_id'];
-		$data['roles']	 		= $this->users_model->user_role_name ($user['role_id']);
-		$data['rand_str'] 		= time ();
-		
-		/* Breadcrumbs */
-		if($this->is_admin){
-			$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
-		}else{
-			$data['bc'] = array ('Dashboard'=>'coaching/home/teacher/'.$coaching_id);
-		}
-		$data['data'] = $data;
-		// $data['script'] = $this->load->view ('users/scripts/my_account', $data, true);
-
-		$this->load->view (INCLUDE_PATH . 'header', $data);
-		$this->load->view ('users/my_account', $data);
-		$this->load->view (INCLUDE_PATH . 'footer', $data);
-	}
-	
-	/*----------- MY PASSWORD ----------------*/
-	public function my_password ($coaching_id=0, $member_id=0) {
-		$data['result'] = $this->users_model->get_user ($member_id);
-		$data['profile_image'] = $this->users_model->view_profile_image ($member_id);
-		$data['page_title'] = 'Change Password'; 
-		$data['member_id']  = $member_id;       
-		$data['coaching_id']   = $coaching_id;
-		$data["bc"] = array ( 'Users'=>'coaching/users/my_account/'.$coaching_id.'/'.$member_id );
-		$data['data'] = $data;
-		
-		$data['script'] = $this->load->view ('users/scripts/change_password', $data, true);
-		$this->load->view(INCLUDE_PATH . 'header', $data);
-		$this->load->view('users/my_password', $data);
-		$this->load->view(INCLUDE_PATH . 'footer', $data);
-	}
 	
 	/* MEMBER LOG FUNCTIONS */
 	public function member_log ($coaching_id=0, $role=0, $member_id=0, $log_id=0) {		
@@ -276,91 +243,7 @@ class Users extends MX_Controller {
 	}
 	
 	
-	/*
-	 * Batches
-	*/
-	public function batches ($coaching_id=0, $batch_id=0) {
-		$data["page_title"] = "Batches";
-		$data["sub_title"] = "All Batches";
-		$data["batch_id"] = $batch_id;
-		$data["coaching_id"] = $coaching_id;
-		$data['toolbar_buttons'] = $this->toolbar_buttons;
-		$data['toolbar_buttons']['<i class="fa fa-plus"></i> New Batch'] = 'coaching/users/create_batch/'.$coaching_id;
-		$data["bc"] = array ( 'Users'=>'coaching/users/index/'.$coaching_id );
-		$data['all_batches'] = $this->users_model->get_batches ($coaching_id);
 
-		$this->load->view(INCLUDE_PATH . 'header', $data);
-		$this->load->view('users/batches', $data);
-		$this->load->view(INCLUDE_PATH . 'footer', $data);		
-	}
-	
-	public function create_batch ($coaching_id=0, $batch_id=0) {
-		$data["page_title"] = "Create Batch";
-		$data["sub_title"] = "Create New Batch";
-		$data["batch_id"] = $batch_id;
-		$data["coaching_id"] = $coaching_id;
-		$data['toolbar_buttons'] = $this->toolbar_buttons;
-		$data['toolbar_buttons']['<i class="fa fa-plus"></i> New Batch'] = 'coaching/users/create_batch/'.$coaching_id;
-		$data["bc"] = array ( 'Batches'=>'coaching/users/batches/'.$coaching_id );
-		$data['batch'] = $this->users_model->get_batch_details ($batch_id);
-        if ($data['batch']) {
-            $data['sub_title'] = 'Edit Batch: ' . $data['batch']['batch_name'];
-        }
-		$this->load->view(INCLUDE_PATH . 'header', $data);
-		$this->load->view('users/batch_create', $data);
-		$this->load->view(INCLUDE_PATH . 'footer', $data);		
-	}
-	
-	
-	public function batch_users ($coaching_id=0, $batch_id=0, $add_users=0) {
-		$batch = $this->users_model->get_member_batches ($batch_id);
-		if ( ! empty ($batch)) {
-			$batch_title = $batch['batch_name'];
-		} else {
-			$batch_title = 'Batch Users';
-		}
-		$data["page_title"]  = 'Batch Users';
-		$data["sub_title"] = "Users in ";
-        if ($batch) {
-            $data['sub_title'] .= $batch['batch_name'];
-        }
-		$data["batch_title"] = $batch_title;
-		$data["batch_id"] = $batch_id;
-		$data["coaching_id"] = $coaching_id;
-		$data['add_users'] = $add_users;
-		$data["bc"] = array ( 'Batches'=>'coaching/users/batches/'.$coaching_id);
-		$data['toolbar_buttons'] = $this->toolbar_buttons;
-
-		$users_not_in_batch = $this->users_model->users_not_in_batch ($batch_id, $coaching_id);
-		if (! empty($users_not_in_batch)) {
-		    $num_users_notin = count($users_not_in_batch);
-		} else {
-		    $num_users_notin = 0;
-		}
-		$data['num_users_notin'] = $num_users_notin;
-		
-		$users_in_batch = $this->users_model->batch_users ($batch_id);
-		if (! empty($users_in_batch)) {
-		    $num_users_in = count($users_in_batch);
-		} else {
-		    $num_users_in = 0;
-		}
-		$data['num_users_in'] = $num_users_in;
-		
-		if ($add_users > 0) {
-		    $result = $users_not_in_batch;
-		} else {
-		    $result = $users_in_batch;
-		}
-		
-		$data['result'] = $result;
-
-		$data['script'] = $this->load->view('users/scripts/batch_users', $data, true);
-		$this->load->view(INCLUDE_PATH . 'header', $data);
-		$this->load->view('users/batch_users', $data); 
-		$this->load->view(INCLUDE_PATH . 'footer', $data);
-	}
-	
 	/* Tests Report */
 	public function courses ($coaching_id=0, $role_id=0, $member_id=0) {
 		
