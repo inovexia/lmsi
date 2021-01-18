@@ -78,12 +78,12 @@
 
                         <div class="form-group">
                             <label>Start Time</label>
-                            <input type="time" class="form-control" placeholder="" name="start_time" min="<?php echo date ('H:i'); ?>" value="<?php echo date ('H:i'); ?>">
+                            <input type="time" class="form-control" placeholder="" name="start_time" min="<?php echo date ('h:i a'); ?>" value="<?php echo date ('h:i a'); ?>">
                         </div>
 
                         <div class="form-group">
                             <label>End Time</label>
-                            <input type="time" class="form-control" placeholder="" name="end_time" min="<?php echo date ('H:i'); ?>" value="<?php echo date ('H:i', strtotime('+1 hour')); ?>">
+                            <input type="time" class="form-control" placeholder="" name="end_time" min="<?php echo date ('h:i a'); ?>" value="<?php echo date ('h:i a', strtotime('+1 hour')); ?>">
                         </div>
 
                         <div class="form-group">
