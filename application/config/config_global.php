@@ -30,6 +30,8 @@ define ('EMAIL_TEMPLATE', 			    TEMPLATE_DIR . 'email/');
 define ('APP_NAME', 					'LMEi');
 define ('BRANDING_TEXT', 				'LMS Made Easy - Instructors');
 define ('BRANDING_URL', 				'https://lmsmadeeasy.com');
+define ('CONTACT_EMAIL', 				'contact@lmsmadeeasy.com');
+define ('SITE_TITLE', 					'LMS Made Easy');
 
 /* MENU TYPES */
 define ('MENUTYPE_SIDEMENU', 				1);

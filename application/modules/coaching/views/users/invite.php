@@ -1,36 +1,43 @@
-<div class="card">
-	<div class="card-body">
-		<h4 class="card-title">Send Invite By Email</h4>
+<div class="row">
+    <div class="col-sm-6 mb-2">
+		<div class="card">
+			<div class="card-body">
+				
+				<?php echo form_open ('coaching/user_actions/invite_by_email/'.$coaching_id, ['class'=>'validate-form']); ?>
+					<h4 class="card-title">Send Invite By Email</h4>
 
-		<?php echo form_open ('coaching/user_actions/invite/'.$coaching_id, ['class'=>'validate-form']); ?>
+                    <div class="input-group">
+                        <input type="email" class="form-control" name="email" required="true" placeholder="Enter user email-id" >
+                        <div class="input-group-append ">
+                            <button type="submit" class="btn btn-primary default">
+                                Invite 
+                            </button>
+                        </div>
+                    </div>
+				<?php echo form_close (); ?>
+            </div>
+        </div>
+    </div>
 
-			<div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="first_name">First Name</label>
-                    <input type="text" class="form-control" id="first_name" placeholder="First Name" required="true">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="last_name">Last Name</label>
-                    <input type="text" class="form-control" id="last_name" placeholder="Last Name" required="true">
+    <div class="col-sm-6">
+				
+		<div class="card">
+			<div class="card-body">
+
+				<?php echo form_open ('coaching/user_actions/invite_by_mobile/'.$coaching_id, ['class'=>'validate-form']); ?>
+					<h4 class="card-title">Send Invite By Mobile</h4>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="mobile" required="true" placeholder="Enter mobile number" >
+                        <div class="input-group-append ">
+                            <button type="submit" class="btn btn-primary default">
+                                Invite 
+                            </button>
+                        </div>
+					<?php echo form_close (); ?>
                 </div>
             </div>
+        </div>
+    </div>
 
-			<div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="mobile">Mobile</label>
-    				<input type="text" name="mobile" class="form-control required" required="true">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="email">Email</label>
-    				<input type="email" name="email" class="form-control required" required="true">
-                </div>
-            </div>
-
-			<div class="form-group">
-			</div>
-			<div>
-				<input type="submit" name="">
-			</div>
-		<?php echo form_close (); ?>
-	</div>
 </div>

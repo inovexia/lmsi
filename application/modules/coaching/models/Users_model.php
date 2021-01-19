@@ -1000,4 +1000,86 @@ class Users_model extends CI_Model {
 		return $otp;
 	}
 
+	/* 
+	 *	SEND USER INVITATION 
+	 */
+	public function invite_by_email ($coaching_id=0) {
+		$email = $this->input->post ('email');
+		$checksum = md5 ($email);
+
+		if ($this->invite_exists ($coaching_id, 'email', $email) == false) {
+			// Send invite
+			$this->send_invite ($coaching_id, 'email', $email, $checksum);
+			// Add record
+			$data['coaching_id'] = $coaching_id;
+			$data['email'] = $email;
+			$data['checksum'] = $checksum;
+			$data['sent_time'] = time ();
+			$data['mobile'] = '';
+			$data['status'] = 0;
+			$this->db->insert ('member_invites', $data);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function invite_by_mobile ($coaching_id=0) {
+		$mobile = $this->input->post ('mobile');
+		$checksum = md5 ($mobile);
+
+		if ($this->invite_exists ($coaching_id, 'mobile', $mobile) == false) {
+			// Send invite
+			$this->send_invite ($coaching_id, 'mobile', $mobile, $checksum);
+			// Add record
+			$data['coaching_id'] = $coaching_id;
+			$data['checksum'] = $checksum;
+			$data['sent_time'] = time ();
+			$data['mobile'] = $mobile;
+			$data['email'] = '';
+			$data['status'] = 0;
+			$this->db->insert ('member_invites', $data);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function invite_exists ($coaching_id=0, $type='email', $str='') {
+		$this->db->where ('coaching_id', $coaching_id);
+		if ($type == 'email') {
+			$this->db->where ('email', $str);
+		} else {
+			$this->db->where ('mobile', $str);
+		}
+		$sql = $this->db->get ('member_invites', $str);
+		if ($sql->num_rows () > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function send_invite ($coaching_id=0, $type='email', $to='', $checksum='') {
+		$coaching = $this->coaching_model->get_coaching ($coaching_id);
+		$url = base_url ($coaching['coaching_url']);
+		$data['url'] = $url . '?c='.$checksum;		
+		$data['name'] = $coaching['coaching_name'];
+		$subject = $data['name'];
+
+		if ($type == 'email') {
+			$message = $this->load->view (EMAIL_TEMPLATE . 'invite_user', $data, true);
+			$this->common_model->send_email ($to, $subject, $message);
+		} else {
+			$message = $this->load->view (SMS_TEMPLATE . 'invite_user', $data, true);
+			$this->sms_model->send_sms ($to, $message);			
+		}
+	}
+
+	public function get_sent_invitations ($coaching_id=0) {
+		$this->db->where ('coaching_id', $coaching_id);
+		$this->db->order_by ('sent_time', 'DESC');
+		$sql = $this->db->get ('member_invites');
+		return $sql->result_array ();
+	}
 }
