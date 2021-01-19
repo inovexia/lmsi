@@ -54,8 +54,17 @@ class Teachers_model extends CI_Model
     $this->db->where('date', $date);
     $slots = $this->db->get('coaching_slots')->result_array();
     foreach ($slots as $i => $slot) {
-      $slots[$i]["start_time"] = date('H:i', $slot["start_time"]);
-      $slots[$i]["end_time"] = date('H:i', $slot["end_time"]);
+      if ($slot["slot_type"] == APPOINTMENT_TYPE_SINGLE) {
+        $this->db->where('slot_id', $slot['slot_id']);
+        $this->db->where('booking_date', $date);
+        $slots[$i]["booked"] = $this->db->get('coaching_slot_booking')->num_rows() > 0 ? true : false;
+      } else if ($slot["slot_type"] == APPOINTMENT_TYPE_MULTIPLE) {
+        $this->db->where('slot_id', $slot['slot_id']);
+        $this->db->where('booking_date', $date);
+        $slots[$i]["booked"] = $this->db->get('coaching_slot_booking')->num_rows() >= $slot['max_appointment'] ? true : false;
+      }
+      $slots[$i]["start_time"] = date('h:i A', $slot["start_time"]);
+      $slots[$i]["end_time"] = date('h:i A', $slot["end_time"]);
     }
     return $slots;
   }
