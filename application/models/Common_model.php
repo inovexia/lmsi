@@ -144,5 +144,14 @@ class Common_model extends CI_Model {
 		return $ref_id;
 	}
 
-
+	public function send_email ($send_to='', $subject=SITE_TITLE, $message='', $from=CONTACT_EMAIL, $title=SITE_TITLE) {
+		$this->load->library ('email');
+		$config['mailtype'] = 'html';
+		$this->email->initialize($config);
+		$this->email->from( $from, $title);
+		$this->email->to ($send_to);
+		$this->email->subject($subject);
+		$this->email->message($message);
+		$this->email->send();
+	}
 }

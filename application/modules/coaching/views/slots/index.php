@@ -5,9 +5,9 @@
             for ($i=0; $i<3; $i++) {
                 $dt = mktime (0, 0, 0, date ('m'), date('d')+$i, date ('Y'));
                 if ($dt == $date) {
-                    $selected = 'btn-success';
+                    $selected = 'btn-dark';
                 } else {
-                    $selected = 'btn-outline-success';                    
+                    $selected = 'btn-outline-dark';                    
                 }
                 $d = date ('D, d', strtotime('+'.$i.' days'));
                 echo '<a href="'.site_url ('coaching/slots/index/'.$coaching_id.'/'.$dt).'" class="btn btn-sm '.$selected.' mb-1 mr-1">'.$d.'</a>';
@@ -44,7 +44,7 @@
                         }
                         ?>
                         <div class="my-2 mt-2">
-                             <button type="button" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-backdrop="static" data-target="#addSlot" data-course-id="<?php echo $course_id; ?>" data-slot-id="0">Add Slot</button>
+                            <button type="button" class="btn btn-xs btn-outline-primary" data-toggle="modal" data-backdrop="static" data-target="#addSlot" data-course-id="<?php echo $course_id; ?>" data-slot-id="0">Add Slot</button>
                         </div>
                     </div>
                 </div>

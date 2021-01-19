@@ -36,7 +36,7 @@ for (i = 0; i < submitFormSelectors.length; i++) {
           toastr.clear();
           if (result.status == true) {
             toastr.success(result.message, "", { timeOut: 1000 });
-            if (result.redirect != "") {
+            if (result.redirect) {
               document.location = result.redirect;
             }
           } else {

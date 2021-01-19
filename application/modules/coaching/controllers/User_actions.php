@@ -507,7 +507,33 @@ class User_actions extends MX_Controller {
 		$this->output->set_output(json_encode(array('status'=>true, 'message'=>'OTP sent on user mobile', 'redirect'=>'')));
 	}
 
-	public function invite ($coaching_id=0) {
-		
+	public function invite_by_email ($coaching_id=0) {
+		$this->form_validation->set_rules ('email', 'Email', 'required|valid_email');
+
+		if ($this->form_validation->run () == true) {
+			$this->users_model->invite_by_email ($coaching_id);
+			$this->output->set_content_type("application/json");
+			$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Invitation sent')));
+		} else {
+			$this->output->set_content_type("application/json");
+			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors ())));
+		}
+	}
+
+	public function invite_by_mobile ($coaching_id=0) {
+		$this->form_validation->set_rules ('mobile', 'Mobile', 'required|is_natural|min_length[10]');
+
+		if ($this->form_validation->run () == true) {
+			if ($this->users_model->invite_by_mobile ($coaching_id)) {
+				$this->output->set_content_type("application/json");
+				$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Invitation sent')));				
+			} else {
+				$this->output->set_content_type("application/json");
+					$this->output->set_output(json_encode(array('status'=>false, 'error'=>'Invitation already sent')));
+			}
+		} else {
+			$this->output->set_content_type("application/json");
+			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors ())));
+		}
 	}
 }

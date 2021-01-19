@@ -1,0 +1,1 @@
+Please connect with <?php echo $name; ?> using the link <?php echo $url; ?>
