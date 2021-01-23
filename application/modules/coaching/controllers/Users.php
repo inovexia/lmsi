@@ -146,7 +146,7 @@ class Users extends MX_Controller {
 		$data['coaching_id'] 	= $coaching_id;
 
 		// Reference Id
-		// $subscription = $this->subscription_model->get_coaching_subscription ($coaching_id);		
+		$data['invitations'] = $this->users_model->get_sent_invitations ($coaching_id);
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
 		$data['bc'] = array ('Users'=>'coaching/users/index/'.$coaching_id);
 		$data['page_title'] = 'Invite Users';

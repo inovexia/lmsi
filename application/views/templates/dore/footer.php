@@ -1,4 +1,9 @@
+                </div>
+            </div>
         </div>
+
+        <?php if (isset ($right_sidebar)) echo $right_sidebar; ?>
+        
     </main>
 
 

@@ -5,10 +5,9 @@
     if ( ! empty ($courses)) { 
       foreach ($courses as $row) { 
         ?>
-        <div class="card d-flex flex-row mb-3">
+        <div class="card mb-3">
             <div class="d-flex flex-grow-1 min-width-zero">
-                <div
-                    class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                     <a class="list-item-heading mb-0 truncate w-40 w-xs-100" href="<?php echo site_url ('coaching/courses/manage/'.$coaching_id.'/'.$row['course_id']); ?>">
                         <?php echo $row['title']; ?>
                     </a>
@@ -26,10 +25,6 @@
                       <a class="btn btn-primary" href="<?php echo site_url ('coaching/courses/manage/'.$coaching_id.'/'.$row['course_id']); ?>"><i class="fa fa-cog"></i> Manage </a>
                     </p>
                 </div>
-                <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-label">&nbsp;</span>
-                </label>
             </div>
         </div>
         

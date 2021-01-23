@@ -70,7 +70,7 @@
 
 </head>
 
-<body id="app-container" class="show-spinner <?php if (isset ($hide_sidemenu)) echo 'menu-hidden'; else { echo 'menu-default';} ?>">
+<body id="app-container" class="show-spinner <?php if (isset ($hide_sidemenu)) echo 'menu-hidden'; else { echo 'menu-default';} ?> <?php if (isset ($right_sidebar)) echo 'right-menu'; ?>">
 	<?php if (isset($hide_navbar) && $hide_navbar == true) { ?>
 
 	<?php } else { ?>
@@ -749,11 +749,11 @@
 
     <main>
         <div class="container-fluid disable-text-selection">
-        	<?php if (isset ($hide_titlebar)) { ?>
+            <div class="row <?php if (isset ($right_sidebar)) echo 'app-row'; ?>">
+                <div class="col-12">
+		        	<?php if (isset ($hide_titlebar)) { ?>
 
-        	<?php } else  { ?>
-	            <div class="row">
-	                <div class="col-12">
+		        	<?php } else  { ?>
 	                    <div class="mb-2">
 		                    <h1>
 		                    	<?php
@@ -816,7 +816,5 @@
 	                    	echo $filter_template;
 	                    }
 	                    ?>
-	                    <div class="separator mb-5"></div>
-	                </div>
-	            </div>
-        	<?php } ?>
+	                    <div class="separator mb-5"></div>	               
+		        	<?php } ?>
