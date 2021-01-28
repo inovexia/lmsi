@@ -18,27 +18,28 @@
 				</div>
 				
 
-				<div class="form-group">
-					<label for="price">Price</label>
-					<div class="input-group mb-2">
-						<div class="input-group-append">
-							<div class="input-group-text"><i class="fa fa-inr"></i></div>
+				<div class="form-group row">
+					<div class="col-md-6">
+						<label for="price">Price</label>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<div class="input-group-text"><?php echo $default['currency']; ?></div>
+							</div>
+							<input type="number" class="form-control" id="price" name="price" min="0" step="0.01" placeholder="Course Price" value="<?php echo (isset($course['price'])) ?  $course['price'] : 0; ?>"/>
 						</div>
-						<input type="number" class="form-control" id="price" name="price" min="0" step="1" placeholder="Course Price"<?php echo (isset($course['price'])) ? ' value="' . $course['price'] . '"' : ' '; ?>/>
 					</div>
-				</div>
-
-				<div class="form-group">
-					<label>Feauted Image</label>
-					<div class="custom-file mb-3">
-						<input type="file" class="custom-file-input" id="feat_img" name="feat_img" accept="image/*" />
-						<label class="custom-file-label" for="feat_img">Select file to upload...</label>
+					<div class="col-md-6">
+						<label>Feauted Image</label>
+						<div class="custom-file mb-3">
+							<input type="file" class="custom-file-input" id="feat_img" name="feat_img" accept="image/*" />
+							<label class="custom-file-label" for="feat_img">Select file to upload...</label>
+						</div>
+						<?php if (isset($course['feat_img'])) :?>
+						<div>
+							<img src="<?php echo site_url($course['feat_img']); ?>" class="img-fluid" style="width: 128px;" />
+						</div>
+						<?php endif;?>
 					</div>
-					<?php if (isset($course['feat_img'])) :?>
-					<div>
-						<img src="<?php echo site_url($course['feat_img']); ?>" class="img-fluid" style="width: 128px;" />
-					</div>
-					<?php endif;?>
 				</div>
 
 				<div class="seperator my-3"></div>

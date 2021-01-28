@@ -8,12 +8,12 @@ class Settings extends MX_Controller {
 	    $this->common_model->autoload_resources ($config, $models);
 	    $this->load->helper ('file');
 
-        $cid = $this->uri->segment (4);
+        $coaching_id = $this->uri->segment (4);
         
         // Security step to prevent unauthorized access through url
         if ($this->session->userdata ('is_admin') == TRUE) {
         } else {
-            if ($cid == true && $this->session->userdata ('coaching_id') <> $cid) {
+            if ($coaching_id == true && $this->session->userdata ('coaching_id') <> $coaching_id) {
                 $this->message->set ('Direct url access not allowed', 'danger', true);
                 redirect ('coaching/home/dashboard');
             }
@@ -25,8 +25,60 @@ class Settings extends MX_Controller {
 		if ($coaching_id == 0) {
 			$coaching_id = $this->session->userdata ('coaching_id');
 		}
-		$this->general ($coaching_id);
+		$this->account_info ($coaching_id);
 	}
+
+	public function account_info ($coaching_id=0) {
+
+		$data['page_title'] = 'Account Information';
+		
+		/* Back Link */
+		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
+		$data['coaching'] = $this->coaching_model->get_coaching ($coaching_id);
+		$data['coaching_id'] = $coaching_id;
+		
+		$this->load->view(INCLUDE_PATH . 'header', $data);
+		$this->load->view('settings/account_info', $data);
+		$this->load->view(INCLUDE_PATH . 'footer', $data);
+
+	}
+
+	public function account_settings ($coaching_id=0) {
+
+		$data['page_title'] = 'Account Settings';
+		
+		/* Back Link */
+		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
+		$data['coaching'] = $this->coaching_model->get_coaching ($coaching_id);
+		$data['settings'] = $this->settings_model->get_settings ($coaching_id);
+		$data['coaching_id'] = $coaching_id;
+		
+		$this->load->view(INCLUDE_PATH . 'header', $data);
+		$this->load->view('settings/account_settings', $data);
+		$this->load->view(INCLUDE_PATH . 'footer', $data);
+
+	}
+
+	public function default_settings ($coaching_id=0) {
+
+		$data['page_title'] = 'Default Settings';
+		
+		/* Back Link */
+		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
+		$data['coaching'] = $this->coaching_model->get_coaching ($coaching_id);
+		$data['country_list'] = $this->common_model->sys_country_list ();
+		$data['theme_list'] = $this->common_model->sys_themes ();
+		$data['default'] = $this->settings_model->get_default_settings ($coaching_id);
+		$data['settings'] = $this->settings_model->get_settings ($coaching_id);
+		$data['coaching_id'] = $coaching_id;
+		
+		$this->load->view(INCLUDE_PATH . 'header', $data);
+		$this->load->view('settings/default_settings', $data);
+		$this->load->view(INCLUDE_PATH . 'footer', $data);
+
+	}
+
+
 	
 	/* GENERAL SETTINGS PAGE */
 	public function general ($coaching_id=0) {

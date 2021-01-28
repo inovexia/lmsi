@@ -175,6 +175,7 @@ class Courses_model extends CI_Model {
 		$sql = $this->db->get('coaching_course_category');
 		return $sql->row_array();
 	}
+	
 	public function get_course_by_id ($course_id) {
 		$this->db->where('course_id', $course_id);
 		$this->db->order_by ('created_on', 'DESC');

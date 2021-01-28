@@ -6,23 +6,50 @@ class Vitals extends MX_Controller {
 
 	// Load Theme
 	public function load_theme () {
-		$theme_dir = THEME_DIR;
-		$template_dir = TEMPLATE_DIR;
 
-		$theme = DEFAULT_THEME;
-		$theme_path = $theme_dir . $theme;
-		$template_path = $template_dir . $theme;
+		$this->load->model ('coaching/settings_model');
+
+		// get coaching theme
+		if (! $this->session->userdata ('THEME_CSS')) {
+			
+			$coaching_id = $this->session->userdata ('coaching_id');
+
+			if ($row = $this->settings_model->get_default_theme ($coaching_id, 'theme')) {
+				$theme_path = $row['theme_path'];
+				$main_css  = $row['main_css'];
+				$theme_css = $theme_path . $main_css;
+			} else {
+				$theme_path = THEME_DIR . DEFAULT_THEME;
+				$main_css = 'assets/css/dore.light.blue.min.css';
+				$theme_css = $theme_path . $main_css;		
+			}
+
+			$this->session->set_userdata ('THEME_PATH', $theme_path);
+			$this->session->set_userdata ('THEME_CSS', $theme_css);
+
+		} else {
+			$theme_path = $this->session->userdata ('THEME_PATH');
+			$theme_css = $this->session->userdata ('THEME_CSS');
+		}
+
 		if (! defined ('THEME_PATH')) {
 			define ('THEME_PATH', $theme_path);
 		}
-		if (! defined ('TEMPLATE_PATH')) {
-			define ('TEMPLATE_PATH', $template_path);
-			define ('INCLUDE_PATH', TEMPLATE_PATH);
-		}
 
-		$this->session->set_userdata ('member_id', 1);
+		if (! defined ('THEME_CSS')) {
+			define ('THEME_CSS', $theme_css);
+		}
 	}
 
+
+	public function setup_login () {
+		if (! $this->session->userdata ('is_logged_in')) {
+			$set['is_logged_in'] = true;
+			$set['member_id'] = 1;
+			$set['coaching_id'] = 1;
+			$this->session->set_userdata ($set);
+		}
+	}
 
 	// Load default settings
 	public function load_defaults () {

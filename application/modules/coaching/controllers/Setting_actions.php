@@ -10,17 +10,17 @@ class Setting_actions extends MX_Controller {
 	}
 
 	public function update_account ($coaching_id=0) {
-		$this->form_validation->set_rules ('coaching_name', 'Coaching Name ', 'required');
-		$this->form_validation->set_rules ('address', 'Address ', 'required');
-		$this->form_validation->set_rules ('city', 'City ', 'required');
-		$this->form_validation->set_rules ('state', 'State ', 'required');
-		$this->form_validation->set_rules ('pin', 'Pin ', 'required');
+		$this->form_validation->set_rules ('coaching_name', 'Coaching Name ', 'required|htmlspecialchars|trim');
+		$this->form_validation->set_rules ('address', 'Address ', 'required|htmlspecialchars|trim');
+		$this->form_validation->set_rules ('city', 'City ', 'required|htmlspecialchars|trim');
+		$this->form_validation->set_rules ('state', 'State ', 'required|htmlspecialchars|trim');
+		$this->form_validation->set_rules ('pin', 'Pin ', 'required|htmlspecialchars|trim');
 		$this->form_validation->set_rules ('website', 'Website', 'valid_url');
 		
 		if ($this->form_validation->run () == true) {				
 			$id = $this->settings_model->update_account ($coaching_id);
 			$message = 'Information updated successfully';
-			$redirect = site_url('coaching/settings/index/'.$coaching_id);
+			$redirect = site_url('coaching/settings/account_settings/'.$coaching_id);
 			$this->message->set ($message, 'success', true) ;
 			$this->output->set_content_type("application/json");
 			$this->output->set_output(json_encode(array('status'=>true, 'message'=>$message, 'redirect'=>$redirect)));		
@@ -34,7 +34,7 @@ class Setting_actions extends MX_Controller {
 		$response = $this->settings_model->upload_logo ($coaching_id);
 		if ($response == false) {
 			$this->output->set_content_type("application/json");
-			$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Logo uploaded successfully', 'redirect'=>site_url('coaching/settings/index') )));
+			$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Logo uploaded successfully', 'redirect'=>site_url('coaching/settings/account_settings') )));
 		} else {
 			$this->output->set_content_type("application/json");
 			$this->output->set_output(json_encode(array('status'=>false, 'error'=>$response )));		
@@ -46,7 +46,7 @@ class Setting_actions extends MX_Controller {
 		$coaching_logo = $this->config->item ('coaching_logo');
 		$logo_path =  $coaching_dir . $coaching_logo;
 		unlink($logo_path);
-		redirect ('coaching/settings/index/'.$coaching_id);
+		redirect ('coaching/settings/account_settings/'.$coaching_id);
 	}
 
 	public function user_account ($coaching_id=0) {
@@ -83,13 +83,16 @@ class Setting_actions extends MX_Controller {
 	}
 
 	public function save_eula ($coaching_id=0) {
-		$response = $this->settings_model->save_eula ($coaching_id);
-		if ($response == true) {
+
+		$this->form_validation->set_rules ('eula_text', 'EULA ', 'required|htmlspecialchars|trim');
+
+		if ($this->form_validation->run () == true) {
+			$response = $this->settings_model->save_eula ($coaching_id);
 			$this->output->set_content_type("application/json");
 			$this->output->set_output(json_encode(array('status'=>true, 'message'=>'EULA saved successfully', 'redirect'=>'')));
 		} else {
 			$this->output->set_content_type("application/json");
-			$this->output->set_output(json_encode(array('status'=>false, 'error'=>'There was an error saving EULA' )));
+			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors () )));
 		}
 	}
 
@@ -97,13 +100,26 @@ class Setting_actions extends MX_Controller {
 		$this->form_validation->set_rules ('custom_text_login', 'Login message', 'max_length[250]|trim');
 		$this->form_validation->set_rules ('custom_text_register', 'Register message', 'max_length[250]|trim');
 		
-		if ($this->form_validation->run () == true) {				
+		if ($this->form_validation->run () == true) {
 			$response = $this->settings_model->save_custom_text ($coaching_id);
 			$this->output->set_content_type("application/json");
 			$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Message(s) saved successfully', 'redirect'=>'')));
 		} else {
 			$this->output->set_content_type("application/json");
-			$this->output->set_output(json_encode(array('status'=>false, 'error'=>'There was an error saving message(s)' )));		
+			$this->output->set_output(json_encode(array('status'=>false, 'error'=>'There was an error saving message(s)' )));
 		}
+	}
+
+
+	public function save_default_settings ($coaching_id=0) {
+		$this->settings_model->save_default_settings ($coaching_id);
+		$this->output->set_content_type("application/json");
+		$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Settings updated successfully')));
+	}
+
+	public function save_default_theme ($coaching_id=0) {
+		$this->settings_model->save_default_theme ($coaching_id);
+		$this->output->set_content_type("application/json");
+		$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Theme updated successfully', 'redirect'=>site_url ('coaching/settings/default_settings/'.$coaching_id))));
 	}
 }

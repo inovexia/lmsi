@@ -21,6 +21,14 @@ $hook['pre_controller'][] = array(
         'params'   => ''
 );
 
+$hook['pre_controller'][] = array(
+        'class'    => 'Vitals',
+        'filename' => 'Vitals.php',
+        'function' => 'setup_login',
+        'filepath' => 'hooks',
+        'params'   => ''
+);
+
 /*
 $hook['pre_controller'][] = array(
         'class'    => 'Vitals',

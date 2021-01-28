@@ -16,9 +16,9 @@ class Home extends MX_Controller {
 		$data['hide_titlebar'] = true;
 		$data['hide_sidemenu'] = true;
 
-		$this->load->view (TEMPLATE_PATH . 'header', $data);
+		$this->load->view (INCLUDE_PATH . 'header', $data);
 		$this->load->view ('index', $data);		
-		$this->load->view (TEMPLATE_PATH . 'footer', $data);
+		$this->load->view (INCLUDE_PATH . 'footer', $data);
 	}
 
 	public function teacher_register () {
@@ -26,10 +26,12 @@ class Home extends MX_Controller {
 		$data['hide_titlebar'] = true;
 		$data['hide_sidemenu'] = true;
 
+		$data['country'] = $this->common_model->get_user_geo_location ();
+		$data['country_list'] = $this->common_model->sys_country_list ();
 		$data['script'] = $this->load->view ('scripts/register', $data, true); 
-		$this->load->view (TEMPLATE_PATH . 'header', $data);
+		$this->load->view (INCLUDE_PATH . 'header', $data);
 		$this->load->view ('teacher_register', $data);		
-		$this->load->view (TEMPLATE_PATH . 'footer', $data);
+		$this->load->view (INCLUDE_PATH . 'footer', $data);
 	}
 
 	public function login () {
@@ -38,9 +40,9 @@ class Home extends MX_Controller {
 		$data['hide_sidemenu'] = true;
 
 		$data['script'] = $this->load->view ('scripts/register', $data, true); 
-		$this->load->view (TEMPLATE_PATH . 'header', $data);
+		$this->load->view (INCLUDE_PATH . 'header', $data);
 		$this->load->view ('login', $data);		
-		$this->load->view (TEMPLATE_PATH . 'footer', $data);
+		$this->load->view (INCLUDE_PATH . 'footer', $data);
 	}
 
 }

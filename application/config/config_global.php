@@ -17,11 +17,15 @@ define ('TEMPLATE_DIR', 			    'templates/');
 define ('CONTENT_DIR', 			        'contents/');
 define ('DEFAULT_THEME',                'dore/');
 
-//$config['upload_dir']					= 'contents/';
+define ('TEMPLATE_PATH', 				TEMPLATE_DIR);
+define ('INCLUDE_PATH', 				TEMPLATE_DIR . DEFAULT_THEME);
+
+$config['user_content']					= CONTENT_DIR . 'coaching/';
 $config['temp_dir']						= CONTENT_DIR . 'temp/';
 $config['sys_dir']						= CONTENT_DIR . 'system/';
 $config['system_logo']					= CONTENT_DIR . 'logo.png';
 $config['profile_picture_path']			= CONTENT_DIR . 'users/';
+
 define ('ANSWER_TEMPLATE', 			    TEMPLATE_DIR . 'answer_choices/');
 define ('SMS_TEMPLATE', 			    TEMPLATE_DIR . 'sms/');
 define ('EMAIL_TEMPLATE', 			    TEMPLATE_DIR . 'email/');
@@ -32,6 +36,10 @@ define ('BRANDING_TEXT', 				'LMS Made Easy - Instructors');
 define ('BRANDING_URL', 				'https://lmsmadeeasy.com');
 define ('CONTACT_EMAIL', 				'contact@lmsmadeeasy.com');
 define ('SITE_TITLE', 					'LMS Made Easy');
+
+
+// DEFAULT VALUES
+define ('DEFAULT_DIALING_CODE', 			91);
 
 /* MENU TYPES */
 define ('MENUTYPE_SIDEMENU', 				1);

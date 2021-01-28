@@ -1,9 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+
 class Slots extends MX_Controller {
 
-    var $toolbar_buttons;
+    var $toolbar_buttons = [];
 
     public function __construct() {
         // Load Config and Model files required throughout Users sub-module
@@ -11,16 +12,14 @@ class Slots extends MX_Controller {
         $models = ['courses_model', 'slots_model', 'users_model'];
         $this->common_model->autoload_resources($config, $models);
 
-        // Coaching Id
-        $cid = $this->uri->segment (4);
 
         // Toolbar buttons
-        $this->toolbar_buttons = [];
+        $coaching_id = $this->uri->segment (4);
         //$this->toolbar_buttons['add_new'] = ['<i class="iconsminds-add"></i> New Slot' => 'coaching/slots/create/'.$cid];
         $this->toolbar_buttons['actions'] = [
-            '<i class="simple-icon-list"></i> All Slots'=>'coaching/slots/index/'.$cid,
-            '<i class="iconsminds-check"></i> My Appointments'=>'coaching/slots/my_appointments/'.$cid,
-            //'<i class="fa fa-history"></i> History'=>'coaching/slots/history/'.$cid,
+            '<i class="simple-icon-list"></i> All Slots'=>'coaching/slots/index/'.$coaching_id,
+            '<i class="iconsminds-check"></i> My Appointments'=>'coaching/slots/my_appointments/'.$coaching_id,
+            //'<i class="fa fa-history"></i> History'=>'coaching/slots/history/'.$coaching_id,
         ];
     }
 

@@ -46,10 +46,13 @@ class Courses_actions extends MX_Controller {
 
 
 	public function create_course ($coaching_id=0, $category_id=0, $course_id=0) {
+		
 		$this->form_validation->set_rules('title', 'Title', 'required');
 		$this->form_validation->set_rules('price', 'Price', 'required');
+
 		if ($this->form_validation->run() == true) {
-			$upload_dir = $this->config->item ('upload_dir'). "coachings/$coaching_id/courses/$course_id/";
+
+			$upload_dir = $this->config->item ('user_content'). "coachings/$coaching_id/courses/$course_id/";
 			$upload_data = array();
 			$skip_feat_img = false;
 			if(isset($_FILES['feat_img'])){	

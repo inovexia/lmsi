@@ -1,4 +1,3 @@
-
 <h3><?php echo $lesson['title']; ?></h3>
 			
 <div class="row">
@@ -52,10 +51,4 @@
 		<?php
 	}
 	?>
-</div>
-
-<div class="row mb-2">
-	<div class="col-12">
-		<?php echo anchor ('coaching/lessons/add_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id, 'Add Page', ['class'=>'btn btn-primary btn-lg']); ?>
-	</div>
 </div>

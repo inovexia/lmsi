@@ -142,7 +142,6 @@ class Settings_model extends CI_Model {
 		$this->db->set ('eula_text', $eula_text);
 		$this->db->where ('coaching_id', $coaching_id);
 		$sql = $this->db->update ('coaching_settings');
-		return true;
 	}
 
 	public function save_custom_text ($coaching_id=0) {
@@ -156,4 +155,112 @@ class Settings_model extends CI_Model {
 		$sql = $this->db->update ('coaching_settings');
 		return true;
 	}
+
+	public function get_default_settings ($coaching_id=0, $name='') {
+		$data = [];
+		$this->db->select ('name, value');
+		$this->db->where ('coaching_id', $coaching_id);
+		if (! empty($name)) {
+			$this->db->where ('name', $name);
+		}
+		$sql = $this->db->get ('coaching_config');
+		if (! empty($name)) {
+			$row = $sql->row_array ();
+			$data[$row['name']] = $row['value'];
+		} else {
+			$result = $sql->result_array ();
+			if (! empty($result)) {
+				foreach ($result as $row) {
+					$data[$row['name']] = $row['value'];
+				}
+			}
+		}
+
+		return $data;
+	}
+
+
+	public function save_default_settings ($coaching_id=0) {
+
+		$currency = $this->input->post ('currency');
+
+		// Add/update currency
+		$this->db->select ('value');
+		$this->db->where ('name', 'currency');
+		$this->db->where ('coaching_id', $coaching_id);
+		$sql = $this->db->get ('coaching_config');
+		if ($sql->num_rows () == 0) {
+			$data['coaching_id'] = $coaching_id;
+			$data['name'] = 'currency';
+			$data['value'] = $currency;
+			$this->db->insert ('coaching_config', $data);
+		} else {
+			$this->db->set ('value', $currency);
+			$this->db->where ('name', 'currency');
+			$this->db->set ('coaching_id', $coaching_id);
+			$this->db->update ('coaching_config');
+		}
+
+		// Add/update dialing
+		$dialing = $this->input->post ('dialing');
+		$this->db->select ('value');
+		$this->db->where ('name', 'dialing');
+		$this->db->where ('coaching_id', $coaching_id);
+		$sql = $this->db->get ('coaching_config');
+		if ($sql->num_rows () == 0) {
+			$data['coaching_id'] = $coaching_id;
+			$data['name'] = 'dialing';
+			$data['value'] = $dialing;
+			$this->db->insert ('coaching_config', $data);
+		} else {
+			$this->db->set ('value', $dialing);
+			$this->db->where ('name', 'dialing');
+			$this->db->set ('coaching_id', $coaching_id);
+			$this->db->update ('coaching_config');
+		}
+
+	}
+
+	public function get_default_theme ($coaching_id=0) {
+		$data = [];
+		$this->db->select ('ST.*');
+		$this->db->from ('coaching_config CC');
+		$this->db->join ('sys_themes ST', 'CC.value=ST.id');
+		$this->db->where ('CC.name', 'theme');
+		$this->db->where ('CC.coaching_id', $coaching_id);
+		$sql = $this->db->get ('coaching_config');
+		$row = $sql->row_array ();
+		return $row;
+	}
+
+
+	public function save_default_theme ($coaching_id=0) {
+
+		$theme = $this->input->post ('theme');
+
+		// Add/update currency
+		$this->db->select ('value');
+		$this->db->where ('name', 'theme');
+		$this->db->where ('coaching_id', $coaching_id);
+		$sql = $this->db->get ('coaching_config');
+		if ($sql->num_rows () == 0) {
+			$data['coaching_id'] = $coaching_id;
+			$data['name'] = 'theme';
+			$data['value'] = $theme;
+			$this->db->insert ('coaching_config', $data);
+		} else {
+			$this->db->set ('value', $theme);
+			$this->db->where ('name', 'theme');
+			$this->db->set ('coaching_id', $coaching_id);
+			$this->db->update ('coaching_config');
+		}
+
+		$row = $this->common_model->get_theme ($theme);
+		$theme_path = $row['theme_path'];
+		$main_css = $row['main_css'];
+		$theme_css = $theme_path . $main_css;
+		$this->session->set_userdata ('THEME_PATH', $theme_path);
+		$this->session->set_userdata ('THEME_CSS', $theme_css);
+	}
+
 } 

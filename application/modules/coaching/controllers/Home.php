@@ -17,9 +17,9 @@ class Home extends MX_Controller {
 	public function dashboard () {
 		$data['page_title'] = "Dashboard";
 
-		$this->load->view (TEMPLATE_PATH . 'header', $data);
+		$this->load->view (INCLUDE_PATH . 'header', $data);
 		$this->load->view ('dashboard', $data);		
-		$this->load->view (TEMPLATE_PATH . 'footer', $data);
+		$this->load->view (INCLUDE_PATH . 'footer', $data);
 	}
 
 }

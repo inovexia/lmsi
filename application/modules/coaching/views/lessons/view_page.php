@@ -1,7 +1,7 @@
 <div class="card">
 	<div class="card-body">
 		<div class="form-group">
-			<p class="form-control-static"><?php echo $page['title']; ?></p>
+			<h4 class="form-control-static"><?php echo $page['title']; ?></h4>
 		</div>
 
 		<div class="form-group">
@@ -9,7 +9,7 @@
 		</div>
 		
 		
-		<div class="form-group row mb-1">
+		<div class="form-group row mb-1 d-none">
             <div class="col-12">
             	<?php if ($page['status'] == 1) { ?>
 	                <span class="badge badge-primary">Published</span>
@@ -40,7 +40,7 @@
 						?>
 						</span>
                     	<?php if ($att['att_type'] == LESSON_ATT_YOUTUBE) { ?>
-                    		<h3 class="mb-2 flex-grow-1"><?php echo $att['title']; ?></h3>
+                    		<p class="mb-2 flex-grow-1"><?php echo $att['title']; ?></p>
                     		<?php $youtubeURL = getYoutubeEmbedUrl($att['att_url']); ?>
 							<?php if ($youtubeURL !== null): ?>
 							<iframe class="w-100" src="<?php echo $youtubeURL; ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
