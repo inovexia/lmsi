@@ -13,6 +13,11 @@ class Courses extends MX_Controller {
 
 		// Toolbar buttons
 	    $coaching_id = $this->uri->segment (4);
+	    if ($this->coaching_model->is_coaching_setup () == false) {
+	    	$this->message->set ('Your account information is incomplete. You should complete your account information before using this module', 'warning', true);
+	    	redirect ('coaching/settings/setup_coaching_account');
+	    }
+
         $this->toolbar_buttons['add_new'] = ['<i class="iconsminds-add"></i> New Course' => 'coaching/courses/create/'.$coaching_id];
         $this->toolbar_buttons['actions'] = [
             '<i class="simple-icon-list"></i> All Courses'=>'coaching/courses/index/'.$coaching_id,

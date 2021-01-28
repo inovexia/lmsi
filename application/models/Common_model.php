@@ -108,7 +108,11 @@ class Common_model extends CI_Model {
 		if ($ip == '') {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
-		$country_code = geoip_country_code3_by_name ($ip);
+		if (function_exists('geoip_country_code3_by_name')) {
+			$country_code = geoip_country_code3_by_name ($ip);
+		} else {
+			$country_code = DEFAULT_COUNTRY_CODE;
+		}
 		$country = $this->get_country_by_code ($country_code);
 		return $country;
 	}
@@ -192,5 +196,11 @@ class Common_model extends CI_Model {
 		$this->email->subject($subject);
 		$this->email->message($message);
 		$this->email->send();
+	}
+
+	public function setup_login ($data='') {
+		if (is_array($data)) {
+			$this->session->set_userdata ($data);
+		}
 	}
 }

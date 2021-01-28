@@ -22,26 +22,40 @@ class Settings extends MX_Controller {
 	}
 
 	public function index ($coaching_id=0) {
-		if ($coaching_id == 0) {
-			$coaching_id = $this->session->userdata ('coaching_id');
-		}
 		$this->account_info ($coaching_id);
 	}
 
 	public function account_info ($coaching_id=0) {
 
-		$data['page_title'] = 'Account Information';
+		if ($coaching_id == 0) {
+			$this->setup_coaching_account ();
+		} else {
+			$data['page_title'] = 'Account Information';
+			
+			/* Back Link */
+			$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
+			$data['coaching'] = $this->coaching_model->get_coaching ($coaching_id);
+			$data['coaching_id'] = $coaching_id;
+			
+			$this->load->view(INCLUDE_PATH . 'header', $data);
+			$this->load->view('settings/account_info', $data);
+			$this->load->view(INCLUDE_PATH . 'footer', $data);			
+		}
+	}
+
+	public function setup_coaching_account () {
+
+		$data['page_title'] = 'Setup Your Account';
 		
 		/* Back Link */
-		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
-		$data['coaching'] = $this->coaching_model->get_coaching ($coaching_id);
-		$data['coaching_id'] = $coaching_id;
+		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard');
 		
 		$this->load->view(INCLUDE_PATH . 'header', $data);
-		$this->load->view('settings/account_info', $data);
-		$this->load->view(INCLUDE_PATH . 'footer', $data);
-
+		$this->load->view('settings/account_setup', $data);
+		$this->load->view(INCLUDE_PATH . 'footer', $data);			
 	}
+
+	
 
 	public function account_settings ($coaching_id=0) {
 

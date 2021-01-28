@@ -247,23 +247,23 @@
             <div class="scroll">            	
                 <ul class="list-unstyled">
                     <li class="<?php if ($controller == 'home') echo 'active'; ?>" >
-                        <a href="<?php echo site_url ('coaching/home/dashboard/1'); ?>">
+                        <a href="<?php echo site_url ('coaching/home/dashboard'); ?>">
                             <i class="simple-icon-screen-desktop"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li class="<?php if ($controller == 'courses') echo 'active'; ?>" >
-                        <a href="<?php echo site_url ('coaching/courses/index/1'); ?>">
+                        <a href="<?php echo site_url ('coaching/courses/index'); ?>">
                             <i class="simple-icon-book-open"></i> Courses
                         </a>
                     </li>
                     <li class="<?php if ($controller == 'users') echo 'active'; ?>" >
-                        <a href="<?php echo site_url ('coaching/users/index/1'); ?>">
+                        <a href="<?php echo site_url ('coaching/users/index'); ?>">
                             <i class="simple-icon-people"></i> Users
                         </a>
                     </li>
                     <li class="<?php if ($controller == 'slots') echo 'active'; ?>" >
-                        <a href="<?php echo site_url ('coaching/slots/index/1'); ?>">
+                        <a href="<?php echo site_url ('coaching/slots/index'); ?>">
                             <i class="simple-icon-calendar"></i> Slots
                         </a>
                     </li>
@@ -273,7 +273,7 @@
                         </a>
                     </li>
                     <li hidden="true">
-                        <a href="<?php echo site_url ('coaching/settings/index/1'); ?>">
+                        <a href="<?php echo site_url ('coaching/settings/index'); ?>">
                             <i class="simple-icon-settings"></i> Settings
                         </a>
                     </li>

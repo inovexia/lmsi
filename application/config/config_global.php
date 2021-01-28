@@ -40,6 +40,7 @@ define ('SITE_TITLE', 					'LMS Made Easy');
 
 // DEFAULT VALUES
 define ('DEFAULT_DIALING_CODE', 			91);
+define ('DEFAULT_COUNTRY_CODE', 			'IND');
 
 /* MENU TYPES */
 define ('MENUTYPE_SIDEMENU', 				1);

@@ -102,6 +102,7 @@ basicformSelector.addEventListener ('submit', e => {
 			$('#step-1').addClass ('d-none');
 			// Add OTP input box
 			$('#step-2').removeClass ('d-none');
+			$('#member_id').val (result.member_id);
 		} else {
 			toastr.error (result.error, '', {timeOut:3000});
 		}

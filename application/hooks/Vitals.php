@@ -43,12 +43,15 @@ class Vitals extends MX_Controller {
 
 
 	public function setup_login () {
-		if (! $this->session->userdata ('is_logged_in')) {
-			$set['is_logged_in'] = true;
-			$set['member_id'] = 1;
-			$set['coaching_id'] = 1;
-			$this->session->set_userdata ($set);
-		}
+		/*
+		unset ($_SESSION);
+		$data['member_id'] = 143;
+		$data['coaching_id'] = 0;
+		$data['is_logged_in'] = true;
+		$this->session->set_userdata ($data);
+		*/
+		$this->common_model->setup_login ();
+		// print_r ($_SESSION);
 	}
 
 	// Load default settings
