@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) { exit('No direct script access allowed'); }
+ <?php if (!defined('BASEPATH')) { exit('No direct script access allowed'); }
 
 class Lessons extends MX_Controller {
 
@@ -10,10 +10,14 @@ class Lessons extends MX_Controller {
 		$models = ['coaching_model', 'courses_model', 'lessons_model'];
 		$this->common_model->autoload_resources ($config, $models);
 
-		// Toolbar
-	    $cid = $this->uri->segment (4);
-        // $this->toolbar_buttons['<i class="fa fa-book"></i> All Courses']= 'coaching/courses/index/'.$cid;
-        // $this->toolbar_buttons['<i class="fa fa-plus-circle"></i> New Course']= 'coaching/courses/create_course/'.$cid;
+
+		// Toolbar buttons
+	    $coaching_id = $this->uri->segment (4);
+	    $course_id = $this->uri->segment (5);
+        $this->toolbar_buttons['add_new'] = ['<i class="iconsminds-add"></i> New Chapter' => 'coaching/lessons/create/'.$coaching_id.'/'.$course_id];
+        $this->toolbar_buttons['actions'] = [
+            '<i class="simple-icon-list"></i> All Chapters'=>'coaching/lessons/index/'.$coaching_id.'/'.$course_id,
+        ];
 	}
 
 	
@@ -43,10 +47,9 @@ class Lessons extends MX_Controller {
 		/* --==// Toolbar //==-- */
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
 		$data['toolbar_buttons']['<i class="fa fa-plus-circle"></i> New Chapter']= 'coaching/lessons/create/'.$coaching_id.'/'.$course_id;
-		// $data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
 
 		/* --==// Back //==-- */
-		$data['bc'] = ['Pages'=>'coaching/courses/manage/'.$coaching_id.'/'.$course_id];
+		$data['bc'] = ['Manage Course'=>'coaching/courses/manage/'.$coaching_id.'/'.$course_id];
 
 		$data['script'] = $this->load->view ('lessons/scripts/index', $data, true);
 		$data['right_sidebar'] = $this->load->view ('courses/inc/manage_course', $data, true);
@@ -88,17 +91,18 @@ class Lessons extends MX_Controller {
 		$data['coaching_id'] = $coaching_id;
 		$data['course_id'] = $course_id;
 		$data['lesson_id'] = $lesson_id;
-		$data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
 
 		/* --==// Back //==-- */
 		$data['bc'] = ['Lessons'=>'coaching/lessons/index/'.$coaching_id.'/'.$course_id];
 
-		$data['toolbar_buttons'] = ['<i class="fa fa-plus"></i> Add Page'=>'coaching/lessons/add_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id];
+		$data['toolbar_buttons']['add_new'] = ['<i class="simple-icon-plus"></i> Add Page'=>'coaching/lessons/add_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id];
+		$data['toolbar_buttons']['actions'] = ['<i class="simple-icon-list"></i> All Pages'=>'coaching/lessons/pages/'.$coaching_id.'/'.$course_id.'/'.$lesson_id];
 
 		$data['lesson'] = $this->lessons_model->get_lesson ($coaching_id, $course_id, $lesson_id);
 		$data['course'] = $this->courses_model->get_course_by_id ($course_id);
 		$data['pages'] = $this->lessons_model->get_all_pages ($coaching_id, $course_id, $lesson_id);
 		$data['right_sidebar'] = $this->load->view ('courses/inc/manage_course', $data, true);
+		$data['sub_title'] = $data['lesson']['title'];
 
 		$this->load->view(INCLUDE_PATH . 'header', $data);
 		$this->load->view("lessons/pages", $data);
@@ -116,17 +120,17 @@ class Lessons extends MX_Controller {
 		$data['course'] = $this->courses_model->get_course_by_id ($course_id);
 		$data['page'] = $this->lessons_model->get_page ($coaching_id, $course_id, $lesson_id, $page_id);
 		$data['attachments'] = $this->lessons_model->get_attachments ($coaching_id, $course_id, $lesson_id, $page_id);
-		$data['toolbar_buttons'] = array(
-			'<i class="fa fa-file"></i> Add New Page'=> 'coaching/lessons/add_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id
-		);
-		
-		$data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
+
+		$data['toolbar_buttons']['add_new'] = ['<i class="simple-icon-plus"></i> Add Page'=>'coaching/lessons/add_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id];
+		$data['toolbar_buttons']['actions'] = ['<i class="simple-icon-list"></i> All Pages'=>'coaching/lessons/pages/'.$coaching_id.'/'.$course_id.'/'.$lesson_id];
 
 		/* --==// Back //==-- */
 		$data['bc'] = ['Pages'=>'coaching/lessons/pages/'.$coaching_id.'/'.$course_id.'/'.$lesson_id];
 
 		$data['script'] = $this->load->view ("lessons/scripts/add_page", $data, true);
 		$data['right_sidebar'] = $this->load->view ('courses/inc/manage_course', $data, true);
+		$data['script_footer'] = ['assets/plugins/tinymce/tinymce.min.js', 'assets/js/tinymce.js'];
+
 		$this->load->view(INCLUDE_PATH . 'header', $data);
 		$this->load->view("lessons/add_page", $data);
 		$this->load->view(INCLUDE_PATH . 'footer', $data);
@@ -139,7 +143,6 @@ class Lessons extends MX_Controller {
 		$data['course_id'] = $course_id;
 		$data['lesson_id'] = $lesson_id;
 		$data['page_id'] = $page_id;
-		$data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
 
 		$data['course'] = $this->courses_model->get_course_by_id ($course_id);
 		$data['page'] = $this->lessons_model->get_page ($coaching_id, $course_id, $lesson_id, $page_id);
@@ -161,7 +164,6 @@ class Lessons extends MX_Controller {
 		$data['course_id'] = $course_id;
 		$data['lesson_id'] = $lesson_id;
 		$data['page_id'] = $page_id;
-		$data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
 
 		$data['course'] = $this->courses_model->get_course_by_id ($course_id);
 		$data['lesson'] = $this->lessons_model->get_lessons ($coaching_id, $course_id);
@@ -185,7 +187,6 @@ class Lessons extends MX_Controller {
 		$data['page_title'] = 'Lesson Categories';
 		$data['bc'] = array ('Test Plans'=>'admin/plans/index');
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
-		$data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
 		
 		// Get all test categories from MASTER database
 		$data['categories'] = $this->plans_model->its_test_plan_categories ();

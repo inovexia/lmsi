@@ -24,7 +24,7 @@
 						$checked = '';
 					}
 				?>
-                <div class="custom-switch custom-switch-primary mb-2 custom-switch-small">
+                <div class="custom-switch custom-switch-primary-inverse mb-2 custom-switch-small">
                     <input name="status" class="custom-switch-input" id="status" type="checkbox" <?php echo $checked; ?> value="1" >
                     <label class="custom-switch-btn" for="status"></label>
                 </div>
@@ -41,22 +41,26 @@
 				foreach ($attachments as $att) {
 					?>
 					<div class="d-flex flex-row mb-3 border-bottom justify-content-between">
-						<span class="img-thumbnail border-0 rounded-circle list-thumbnail align-self-center xsmall">
-	                    <?php
-							if ($att['att_type'] == LESSON_ATT_YOUTUBE) { 
-								echo '<i class="text-danger fab fa-youtube "></i>';
+						<div class="">
+                            <p class="font-weight-medium mb-0"><?php echo $att['title']; ?></p>
+		                    <?php 
+		                    if ($att['att_type'] == LESSON_ATT_YOUTUBE) { 
+								$youtubeURL = getYoutubeEmbedUrl($att['att_url']);
+								if ($youtubeURL !== null) {
+									?>
+	    							<iframe class="w-100" src="<?php echo $youtubeURL; ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	    							<?php 
+	    						} else { ?>
+	    							<div class="alert alert-info">Invalid YouTube URL.</div>
+	    							<?php 
+	    						} 
 							} else if ($att['att_type'] == LESSON_ATT_EXTERNAL) { 
 								echo '<i class="fa fa-link "></i>';
 							} else {
 								echo '<i class="fa fa-file "></i>';
 							}
-						?>
-						</span>
-	                    <div class="pl-3 flex-grow-1">
-	                        <a href="#">
-	                            <p class="font-weight-medium mb-0"><?php echo $att['title']; ?></p>
-	                        </a>
-	                    </div>
+							?>
+						</div>
 	                    <div class="comment-likes">
 	                        <?php
 								$msg = 'Delete this attachment?';

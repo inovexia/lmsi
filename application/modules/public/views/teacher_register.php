@@ -20,7 +20,17 @@
                         </label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="user_mobile">+91</span>
+                                <select name="dialing_code" class="input-group-text" id="user_mobile">
+                                    <?php 
+                                    if (! empty($country_list)) {
+                                        foreach ($country_list as $cl) {
+                                            ?>
+                                            <option value="<?php echo $cl['dialing_code']; ?>" <?php if ($cl['dialing_code'] == $country['dialing_code']) echo 'selected="selected"'; ?>><?php echo $cl['dialing_code']; ?></option>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
                             </div>
                             <input type="text" name="primary_contact" class="form-control digits required" required="required" value="<?php echo set_value ('primary_contact', ''); ?>" id="primary_contact" placeholder="Enter your mobile number" aria-describedby="user_mobile" />
                         </div>
@@ -78,7 +88,9 @@
                 <h2 class="mb-2">Step 2 - Setup your account</h2>
 
                 <?php echo form_open ('api/account_actions/validate_user_account', array('id'=>'account-info-form')); ?>
-                        
+                    
+                    <input type="hidden" name="member_id" id="member_id" value="0">
+
                     <div class="form-group mb-2">
                         <label class="">
                             Display Name<span class="text-danger">*</span>
@@ -109,7 +121,7 @@
                         <a href="<?php echo site_url ('coaching/home/dashboard'); ?>" class="btn btn-link">I will do this later</a>
                     </div>
                    
-                <?php echo form_close(); ?>                    
+                <?php echo form_close(); ?>
 
             </div>
         </div>

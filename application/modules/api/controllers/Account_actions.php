@@ -29,7 +29,7 @@ class Account_actions extends MX_Controller {
 			$contact 	= $this->input->post ('primary_contact');
 
 			if ($this->registration_model->teacher_account_exists ($contact) == true) {
-				$message = 'This mobile number number is already registered with an account. If this is your number try SignIn or Forgot Password';
+				$message = 'This mobile number number is already registered with an account. If this is your number try "Log-in" or "Forgot Password"';
 				$this->output->set_content_type("application/json");
 				$this->output->set_output(json_encode(array('status'=>false, 'error'=>$message)));
 			} else {
@@ -97,10 +97,10 @@ class Account_actions extends MX_Controller {
 			$this->sms_model->send_sms ($contact, $message);
 			$this->message->set ($message, 'success', true );
 			$this->output->set_content_type("application/json");
-			$this->output->set_output(json_encode(array('status'=>true, 'message'=>$message)));
+			$this->output->set_output(json_encode(array('status'=>true, 'message'=>$message, 'member_id'=>$member_id)));
 	    } else {
 			$this->output->set_content_type("application/json");
-			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors() )));
+			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors())));
 		}
 	}
 

@@ -90,6 +90,49 @@ class Common_model extends CI_Model {
 	}
 
 
+	public function sys_country_list ($status=1) {
+		$this->db->where ('status', $status);
+		$sql = $this->db->get ('sys_country_codes');
+		$result = $sql->result_array ();
+		return $result; 
+	}
+
+	public function get_country_by_code ($code='') {
+		$this->db->where ('country_code', $code);
+		$sql = $this->db->get ('sys_country_codes');
+		$result = $sql->row_array ();
+		return $result; 
+	}
+
+	public function get_user_geo_location ($ip='') {
+		if ($ip == '') {
+			$ip = $_SERVER['REMOTE_ADDR'];
+		}
+		if (function_exists('geoip_country_code3_by_name')) {
+			$country_code = geoip_country_code3_by_name ($ip);
+		} else {
+			$country_code = DEFAULT_COUNTRY_CODE;
+		}
+		$country = $this->get_country_by_code ($country_code);
+		return $country;
+	}
+
+
+	public function sys_themes ($status=1) {
+		$this->db->where ('status', $status);
+		$sql = $this->db->get ('sys_themes');
+		$result = $sql->result_array ();
+		return $result; 
+	}
+
+	public function get_theme ($id=0) {
+		$this->db->where ('id', $id);
+		$sql = $this->db->get ('sys_themes');
+		$row = $sql->row_array ();
+		return $row;
+	}
+
+
 	/* USER FUNCTIONS */
 	// Generate user token
 	public function generate_user_token ($member_id=0) {
@@ -153,5 +196,11 @@ class Common_model extends CI_Model {
 		$this->email->subject($subject);
 		$this->email->message($message);
 		$this->email->send();
+	}
+
+	public function setup_login ($data='') {
+		if (is_array($data)) {
+			$this->session->set_userdata ($data);
+		}
 	}
 }

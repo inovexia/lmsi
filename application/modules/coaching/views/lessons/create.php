@@ -48,7 +48,7 @@
 							$checked = '';
 						}
 					?>
-	                <div class="custom-switch custom-switch-primary mb-2 custom-switch-small">
+	                <div class="custom-switch custom-switch-primary-inverse mb-2 custom-switch-small">
 	                    <input name="status" class="custom-switch-input" id="status" type="checkbox" <?php echo $checked; ?> value="1" >
 	                    <label class="custom-switch-btn" for="status"></label>
 	                </div>

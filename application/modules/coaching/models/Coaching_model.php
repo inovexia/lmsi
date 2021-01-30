@@ -296,4 +296,18 @@ class Coaching_model extends CI_Model {
 		return $sql->result_array ();
 	}
 
+	public function is_coaching_setup () {
+		if ($this->session->userdata ('is_logged_in') == true) {
+			$coaching_id = $this->session->userdata ('coaching_id');
+			if ($coaching_id > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+		exit;
+	}
+
 }
