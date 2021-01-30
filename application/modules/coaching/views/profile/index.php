@@ -1,23 +1,23 @@
 <div class="row">
   <div class="col-12">
     <ul class="nav nav-tabs separator-tabs justify-content-center ml-0 mb-5" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="true">
+      <li class="nav-item mx-1">
+        <a class="nav-link mr-0 active" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="true">
           DETAIL
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" id="students-tab" data-toggle="tab" href="#students" role="tab" aria-controls="students" aria-selected="false">
+      <li class="nav-item mx-1">
+        <a class="nav-link mr-0" id="students-tab" data-toggle="tab" href="#students" role="tab" aria-controls="students" aria-selected="false">
           MY STUDENTS
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" id="videos-tab" data-toggle="tab" href="#videos" role="tab" aria-controls="videos" aria-selected="false">
+      <li class="nav-item mx-1">
+        <a class="nav-link mr-0" id="videos-tab" data-toggle="tab" href="#videos" role="tab" aria-controls="videos" aria-selected="false">
           MY VIDEOS
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" id="courses-tab" data-toggle="tab" href="#courses" role="tab" aria-controls="courses" aria-selected="false">
+      <li class="nav-item mx-1">
+        <a class="nav-link mr-0" id="courses-tab" data-toggle="tab" href="#courses" role="tab" aria-controls="courses" aria-selected="false">
           MY COURSES
         </a>
       </li>
@@ -75,7 +75,12 @@
               <div class="position-absolute card-top-buttons">
                 <button class="btn btn-outline-white icon-button"><i class="simple-icon-pencil"></i></button>
               </div>
-              <div class="d-flex align-items-center justify-content-center bg-primary" style="font-size:5rem;height:240px;">SA</div>
+              <div class="d-flex flex-column align-items-center justify-content-center bg-primary" style="height:240px;">
+                <h3 style="font-size:4rem;">
+                  <span class="d-inline-block border rounded-circle p-2" style="height:104px;width:104px;">SA</span>
+                </h3>
+                <p>Super Admin</p>
+              </div>
               <div class="card-body">
                 <p class="text-muted text-small mb-2">About</p>
                 <p class="mb-3">
@@ -158,12 +163,23 @@
         </div>
       </div>
       <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
-        <div class="row gallery gallery-page">
-          <?php for ($x = 1; $x <= 10; $x++) {?>
-          <div class="col-6 col-lg-2 col-md-4">
-            <a href="javascript:void(0);">
-              <img class="img-fluid border-radius" src="<?php echo "//via.placeholder.com/320x240.png?text=Video+$x"; ?>" />
-            </a>
+        <div class="row mx-n2">
+          <?php for ($i = 1; $i <= 10; $i++) {?>
+          <div class="col-lg-3 col-md-6 px-2">
+            <div class="card d-flex flex-row mb-3 overflow-hidden">
+              <a class="d-block position-relative" href="#">
+                <img src="//via.placeholder.com/113x85.png?text=Course+Image" class="border-0" />
+              </a>
+              <div class="d-flex flex-grow-1 min-width-zero">
+                <div class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
+                  <div class="min-width-zero">
+                    <a href="#">
+                      <p class="list-item-heading mb-1 truncate"><?php echo "Course $i"; ?></p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <?php }?>
         </div>
