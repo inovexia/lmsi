@@ -7,7 +7,7 @@ class Teachers extends MX_Controller
 {
   public function __construct()
   {
-    // Load Config and Model files required throughout Users sub-module
+    //? Load Config and Model files required throughout Users sub-module
     $config = ['config_student', 'config_teachers'];
     $models = ['teachers_model'];
     $this->common_model->autoload_resources($config, $models);
@@ -22,7 +22,7 @@ class Teachers extends MX_Controller
     $oneDay = 86400;
     $today = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
     if ($date == null) {
-      // Today's date
+      //? Today's date
       $date = $today;
       $data['active_tab'] = "courses_tab";
     } else {
