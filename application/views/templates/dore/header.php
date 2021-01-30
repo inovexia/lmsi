@@ -240,91 +240,94 @@
 	<?php } ?>
 
 	<?php
-		$controller = $this->uri->segment (2);
-	?>
-    <div class="menu">
-        <div class="main-menu">
-            <div class="scroll">            	
-                <ul class="list-unstyled">
-                    <li class="<?php if ($controller == 'home') echo 'active'; ?>" >
-                        <a href="<?php echo site_url ('coaching/home/dashboard'); ?>">
-                            <i class="simple-icon-screen-desktop"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="<?php if ($controller == 'courses') echo 'active'; ?>" >
-                        <a href="<?php echo site_url ('coaching/courses/index'); ?>">
-                            <i class="simple-icon-book-open"></i> Courses
-                        </a>
-                    </li>
-                    <li class="<?php if ($controller == 'users') echo 'active'; ?>" >
-                        <a href="<?php echo site_url ('coaching/users/index'); ?>">
-                            <i class="simple-icon-people"></i> Users
-                        </a>
-                    </li>
-                    <li class="<?php if ($controller == 'slots') echo 'active'; ?>" >
-                        <a href="<?php echo site_url ('coaching/slots/index'); ?>">
-                            <i class="simple-icon-calendar"></i> Slots
-                        </a>
-                    </li>
-                    <li class="<?php if ($controller == 'settings') echo 'active'; ?>" >
-                        <a href="#settings">
-                            <i class="simple-icon-settings"></i> Settings
-                        </a>
-                    </li>
-                    <li hidden="true">
-                        <a href="<?php echo site_url ('coaching/settings/index'); ?>">
-                            <i class="simple-icon-settings"></i> Settings
-                        </a>
-                    </li>
-                    
-                </ul>
-            </div>
-        </div>
+	if (isset($hide_sidemenu) && $hide_sidemenu == true) {
+	} else {
+		$controller = $this->uri->segment (2);		
+		?>
+	    <div class="menu">
+	        <div class="main-menu">
+	            <div class="scroll">            	
+	                <ul class="list-unstyled">
+	                    <li class="<?php if ($controller == 'home') echo 'active'; ?>" >
+	                        <a href="<?php echo site_url ('coaching/home/dashboard'); ?>">
+	                            <i class="simple-icon-screen-desktop"></i>
+	                            <span>Dashboard</span>
+	                        </a>
+	                    </li>
+	                    <li class="<?php if ($controller == 'courses') echo 'active'; ?>" >
+	                        <a href="<?php echo site_url ('coaching/courses/index'); ?>">
+	                            <i class="simple-icon-book-open"></i> Courses
+	                        </a>
+	                    </li>
+	                    <li class="<?php if ($controller == 'users') echo 'active'; ?>" >
+	                        <a href="<?php echo site_url ('coaching/users/index'); ?>">
+	                            <i class="simple-icon-people"></i> Users
+	                        </a>
+	                    </li>
+	                    <li class="<?php if ($controller == 'slots') echo 'active'; ?>" >
+	                        <a href="<?php echo site_url ('coaching/slots/index'); ?>">
+	                            <i class="simple-icon-calendar"></i> Slots
+	                        </a>
+	                    </li>
+	                    <li class="<?php if ($controller == 'settings') echo 'active'; ?>" >
+	                        <a href="#settings">
+	                            <i class="simple-icon-settings"></i> Settings
+	                        </a>
+	                    </li>
+	                    <li hidden="true">
+	                        <a href="<?php echo site_url ('coaching/settings/index'); ?>">
+	                            <i class="simple-icon-settings"></i> Settings
+	                        </a>
+	                    </li>
+	                    
+	                </ul>
+	            </div>
+	        </div>
 
-        <div class="sub-menu">
-            <div class="scroll">
-                <ul class="list-unstyled" data-link="settings">
-                    <li>
-                        <a href="<?php echo site_url ('coaching/settings/index/1'); ?>">
-                            <i class="iconsminds-information"></i> <span class="d-inline-block">Account Information</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo site_url ('coaching/settings/account_settings/1'); ?>">
-                            <i class="iconsminds-gears"></i> <span class="d-inline-block">Account Settings</span>
-                        </a>
-                    </li>
-                    <li hidden="true">
-                        <a href="<?php echo site_url ('coaching/settings/login_settings/1'); ?>">
-                            <i class="iconsminds-key"></i> <span class="d-inline-block">Login Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php echo site_url ('coaching/settings/default_settings/1'); ?>">
-                            <i class="iconsminds-data-cloud"></i> <span class="d-inline-block">Default Settings</span>
-                        </a>
-                    </li>
-                    <li hidden="true">
-                        <a href="<?php echo site_url ('coaching/settings/course_settings/1'); ?>">
-                            <i class="iconsminds-book"></i> <span class="d-inline-block">Course Settings</span>
-                        </a>
-                    </li>
-                    <li hidden="true">
-                        <a href="<?php echo site_url ('coaching/settings/user_settings/1'); ?>">
-                            <i class="iconsminds-user"></i> <span class="d-inline-block">User Settings</span>
-                        </a>
-                    </li>
-                    <li hidden="true">
-                        <a href="<?php echo site_url ('coaching/settings/slot_settings/1'); ?>">
-                            <i class="iconsminds-calendar-1"></i> <span class="d-inline-block">Slot Settings</span>
-                        </a>
-                    </li>
-                </ul>
-                
-            </div>
-        </div>
-    </div>
+	        <div class="sub-menu">
+	            <div class="scroll">
+	                <ul class="list-unstyled" data-link="settings">
+	                    <li>
+	                        <a href="<?php echo site_url ('coaching/settings/index/1'); ?>">
+	                            <i class="iconsminds-information"></i> <span class="d-inline-block">Account Information</span>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="<?php echo site_url ('coaching/settings/account_settings/1'); ?>">
+	                            <i class="iconsminds-gears"></i> <span class="d-inline-block">Account Settings</span>
+	                        </a>
+	                    </li>
+	                    <li hidden="true">
+	                        <a href="<?php echo site_url ('coaching/settings/login_settings/1'); ?>">
+	                            <i class="iconsminds-key"></i> <span class="d-inline-block">Login Settings</span>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="<?php echo site_url ('coaching/settings/default_settings/1'); ?>">
+	                            <i class="iconsminds-data-cloud"></i> <span class="d-inline-block">Default Settings</span>
+	                        </a>
+	                    </li>
+	                    <li hidden="true">
+	                        <a href="<?php echo site_url ('coaching/settings/course_settings/1'); ?>">
+	                            <i class="iconsminds-book"></i> <span class="d-inline-block">Course Settings</span>
+	                        </a>
+	                    </li>
+	                    <li hidden="true">
+	                        <a href="<?php echo site_url ('coaching/settings/user_settings/1'); ?>">
+	                            <i class="iconsminds-user"></i> <span class="d-inline-block">User Settings</span>
+	                        </a>
+	                    </li>
+	                    <li hidden="true">
+	                        <a href="<?php echo site_url ('coaching/settings/slot_settings/1'); ?>">
+	                            <i class="iconsminds-calendar-1"></i> <span class="d-inline-block">Slot Settings</span>
+	                        </a>
+	                    </li>
+	                </ul>
+	                
+	            </div>
+	        </div>
+	    </div>
+	<?php } ?>
 
     <main>
         <div class="container-fluid disable-text-selection">

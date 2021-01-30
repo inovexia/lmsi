@@ -15,14 +15,6 @@
                         <br> 
                         <a href="<?php echo site_url('login/user/register')?>" class="btn btn-light ">Register as a student</a>
                     </p>
-                    <?php if($website_link != ''){ ?>
-
-             
-                    <p class="white mb-0">
-                        <br> 
-                        <a href="<?php echo $website_link; ?>" class="text-white">Back to Website</a>
-                    </p>
-                <?php } ?>
                 </div>
             </div>
             <div class="form-side">
@@ -43,34 +35,23 @@
                         <input class="form-control" placeholder="Password" type="password" name="password">
                         <a href="<?php echo site_url ('login/user/reset_password'); ?>" class="text-info">Reset password</a>
                     </div>
-
-                    <div class="form-group mb-4">
-                        <?php if ($access_code != '' && $found == true) { ?>
-                            <input class="form-control" placeholder="Access Code" type="hidden" name="access_code" value="<?php echo $access_code; ?>" readonly>
-                        <?php } else { ?>
-                            <label class="">
-                                <span>Access Code</span>
-                            </label>
-                            <input class="form-control" placeholder="Access Code" type="text" name="access_code" value="<?php echo $access_code; ?>" >
-                            <a href="<?php echo site_url ('login/user/get_access_code'); ?>" class="text">Get Access Code</a>
-                        <?php } ?>
-                    </div>
-                    <div class="form-group mb-4 captcha">
-                     <label for="captcha" class="col-12 control-label px-0">Type captcha code</label>
-                     <div class="row">
-                     <div class="col-6">
-                        <input type="text" id="captcha" name="captcha" style="height:30px" class="form-control" required>
-                     </div>
-                     <div id="captImg" class="col-6 captcha-img img-responsive pl-2 mx-0">
-                            <?php echo $captcha; ?>
-                        </div>
                     
-                     </div>
-                     <p class="refresh-captcha pt-2">
-                     Click here for <a href="#" class="reload-captcha refreshCaptcha" ><i class="iconsminds-repeat-2" style="color:#0f3d64; font-weight:bold;"></i></a> captcha.
-                     </p>
-                     
+                    <div class="form-group mb-4 captcha">
+                        <label for="captcha" class="col-12 control-label px-0">Type captcha code</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="text" id="captcha" name="captcha" style="height:30px" class="form-control" required>
+                            </div>
+                            <div id="captImg" class="col-6 captcha-img img-responsive pl-2 mx-0">
+                                <?php echo $captcha; ?>
+                            </div>
+                        
+                        </div>
+                        <p class="refresh-captcha pt-2">
+                            Refresh Captcha <a href="#" class="reload-captcha refreshCaptcha" ><i class="iconsminds-repeat-2" style="color:#0f3d64; font-weight:bold;"></i></a>
+                        </p>                         
                     </div>
+
                     <div class="d-flex justify-content-between align-items-center">
                         <button class="btn btn-primary btn-lg btn-shadow" type="submit">LOGIN</button>
                     </div>
