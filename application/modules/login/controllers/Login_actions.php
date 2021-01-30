@@ -57,8 +57,7 @@ class Login_actions extends MX_Controller {
 					unset($_SESSION['captcha_key']);
 					unlink(base_url().'contents/captcha/'.$captcha_key['time'].'.jpg');
 					$this->output->set_content_type("application/json");
-					$this->output->set_output(json_encode(array('status'=>false, 'error'=>_AT_TEXT ('LOGIN_ERROR', 'msg'))));
-					
+					$this->output->set_output(json_encode(array('status'=>false, 'error'=>_AT_TEXT ('LOGIN_ERROR', 'msg'))));					
 				}
 			}
 			
@@ -323,6 +322,35 @@ class Login_actions extends MX_Controller {
 			$this->output->set_output(json_encode(array('status'=>false, 'message'=>'Error', 'redirect'=>$logout)));
 		}
 
+	}
+
+	/* Refresh captcha image */	
+	public function refresh_captcha() {
+
+		$captcha_dir = $this->config->item ('captcha_dir');
+
+		$vals = array (
+				'word'          => '',
+				'img_path'      => $captcha_dir,
+				'img_url'       => base_url ($captcha_dir),
+				'img_width'     => '125',
+				'img_height'    => 30,
+				'word_length'   => 6,
+				'font_size'     => 16,
+				'img_id'        => 'Imageid',
+				'pool'          => '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+			);
+		
+
+		$cap = create_captcha($vals);
+		$ip_address = $_SERVER['REMOTE_ADDR'];
+		$captcha_key = array('time' => $cap['time'], 'ip_address' => $ip_address, 'word' => $cap['word']);
+		$this->session->unset_userdata('captcha_key');
+		$this->session->set_userdata('captcha_key', $captcha_key);
+
+		// Display captcha image
+		$data['captcha'] = $cap['image'];
+		$this->load->view ('refresh_captcha', $data);
 	}
 
 	public function logout ($access_code='') {

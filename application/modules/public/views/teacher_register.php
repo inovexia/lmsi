@@ -118,7 +118,7 @@
 
                     <div class="d-flex align-items-center">
                         <input type="submit" class="btn btn-primary btn-lg btn-shadow" name="save" value="Setup Account">
-                        <a href="<?php echo site_url ('coaching/home/dashboard'); ?>" class="btn btn-link">I will do this later</a>
+                        <a href="<?php echo site_url ('login/teacher/index'); ?>" class="btn btn-link">I will do this later</a>
                     </div>
                    
                 <?php echo form_close(); ?>

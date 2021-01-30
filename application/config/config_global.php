@@ -25,6 +25,7 @@ $config['temp_dir']						= CONTENT_DIR . 'temp/';
 $config['sys_dir']						= CONTENT_DIR . 'system/';
 $config['system_logo']					= CONTENT_DIR . 'logo.png';
 $config['profile_picture_path']			= CONTENT_DIR . 'users/';
+$config['captcha_dir']					= CONTENT_DIR . 'captcha/';
 
 define ('ANSWER_TEMPLATE', 			    TEMPLATE_DIR . 'answer_choices/');
 define ('SMS_TEMPLATE', 			    TEMPLATE_DIR . 'sms/');
@@ -32,6 +33,7 @@ define ('EMAIL_TEMPLATE', 			    TEMPLATE_DIR . 'email/');
 
 /** BRANDING **/
 define ('APP_NAME', 					'LMEi');
+define ('APP_SHORT_NAME', 				'LMEi');
 define ('BRANDING_TEXT', 				'LMS Made Easy - Instructors');
 define ('BRANDING_URL', 				'https://lmsmadeeasy.com');
 define ('CONTACT_EMAIL', 				'contact@lmsmadeeasy.com');
