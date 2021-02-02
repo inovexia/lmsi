@@ -128,9 +128,22 @@ class Account_actions extends MX_Controller {
 
 		if ($this->form_validation->run () == true) {
 			if ($this->registration_model->is_unique_url () == true) {
-				$this->registration_model->setup_user_account ();
-				$this->output->set_content_type("application/json");
-				$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Account created successfully.', 'redirect'=>site_url ('coaching/home/dashboard'))));
+				$response = $this->registration_model->setup_user_account ();
+				if ($response > 0) {
+					if ($this->session->userdata ('is_logged_in')) {
+						$message = 'Account setup is complete now. You can now start using all the features';
+						$redirect = 'coaching/home/dashboard';
+					} else{
+						$message = 'Account setup is complete now. You can log-in to your account';
+						$redirect = 'login/teacher/index';
+					}
+					$this->message->set ($message, 'success', true);
+					$this->output->set_content_type("application/json");
+					$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Account created successfully.', 'redirect'=>site_url ($redirect))));
+				} else {
+					$this->output->set_content_type("application/json");
+					$this->output->set_output(json_encode(array('status'=>false, 'error'=>'This url is already taken by someone')));
+				}
 			} else {
 				$this->output->set_content_type("application/json");
 				$this->output->set_output(json_encode(array('status'=>false, 'error'=>'This url is already taken by someone')));

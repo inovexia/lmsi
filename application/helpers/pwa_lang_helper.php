@@ -7,6 +7,7 @@ function _AT_TEXT ($code='', $type='', $lang='en') {
 	$data = array ();
 	
 	$data['en'] = array ('msg'=>array(
+			'INVALID_CAPTCHA'=>'Incorrect captcha',
 			'INVALID_CREDENTIALS'=>'The username/password combination is incorrect',
 			'INVALID_USERNAME'=>'We don\'t recongnise you. Please check your username',
 			'INVALID_PASSWORD'=>'You have entered a wrong password',

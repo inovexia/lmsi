@@ -66,6 +66,7 @@ class Registration_model extends CI_Model {
 		$data['last_name'] = $last_name;
 		$password = $this->input->post ('password');
 		$data['role_id'] = USER_ROLE_TEACHER;
+		$data['status'] = USER_STATUS_ENABLED;
 		$data['password'] = password_hash ($password, PASSWORD_DEFAULT);
 		$data['primary_contact'] =  $this->input->post ('primary_contact');
 		$data['user_token'] =  '';
@@ -103,6 +104,36 @@ class Registration_model extends CI_Model {
 	}
 
 	public function setup_user_account ($member_id=0) {
+
+		$member_id = $this->input->post ('member_id');
+		
+		$data['coaching_name'] = $this->input->post ('display_name');
+		$data['coaching_url'] = $this->input->post ('url');
+		$data['email'] = $this->input->post ('email');
+
+		$this->db->select ('coaching_name');
+		$this->db->where ('coaching_url', $data['coaching_url']);
+		$sql = $this->db->get ('coachings');		
+		if ($sql->num_rows () == 0) {
+			$data['status'] = 1;
+			$data['created_by'] = $this->session->userdata ('member_id');
+			$data['creation_date'] = time ();
+			$this->db->insert ('coachings', $data);
+			$coaching_id = $this->db->insert_id ();
+
+			$this->db->set ('coaching_id', $coaching_id);
+			$this->db->where ('member_id', $member_id);
+			$this->db->update ('members');
+
+			if ($this->session->has_userdata ('is_logged_in')) {
+				$this->session->set_userdata ('coaching_id', $coaching_id);
+			}
+
+			return $coaching_id;
+		} else {
+			return 0;
+		}
+
 	}
 
 }

@@ -16,7 +16,7 @@ $(document).ready( function () {
 	});
 });
 
-const loaderSelector = document.getElementById('loader');
+//const loaderSelector = document.getElementById('loader');
 const formSelector = document.getElementById('login-form');
 const errorDiv = document.getElementById('error');
 
@@ -24,7 +24,7 @@ formSelector.addEventListener ('submit', e => {
 	e.preventDefault ();
 	const formURL = formSelector.getAttribute ('action');
 	var formData = new FormData(formSelector);
-	loaderSelector.style.display = 'block';		
+	//loaderSelector.style.display = 'block';		
 	toastr.info ('Please wait...');
 	fetch (formURL, {
 		method : 'POST',
@@ -46,7 +46,7 @@ formSelector.addEventListener ('submit', e => {
 		} else {
 			toastr.error (result.error);
 		}
-		loaderSelector.style.display = 'none';
+		//loaderSelector.style.display = 'none';
 	});
 });	
 

@@ -49,8 +49,8 @@ class Vitals extends MX_Controller {
 		$data['coaching_id'] = 0;
 		$data['is_logged_in'] = true;
 		$this->session->set_userdata ($data);
-		*/
 		$this->common_model->setup_login ();
+		*/
 		// print_r ($_SESSION);
 	}
 
@@ -85,16 +85,25 @@ class Vitals extends MX_Controller {
 		/* 
 			For PUBLIC module login is not required, user will not be redirected to Dashboard OR Logout page
 		*/
-		if ($module == 'public' || $module == 'login' || ($module == 'admin' && $controller == 'login') || ($module == 'admin' && $controller == 'login_actions')) {
+		if ($module == 'public' || $module == 'login' || $module == 'api') {
+			/*
+			if ($this->session->has_userdata ('is_logged_in') && $this->session->userdata ('is_logged_in') == true) {
+				$dashboard = $this->session->userdata ('dashboard');
+				// $this->message->set ('You must be logged in to access this page', 'danger', true);
+				redirect ($dashboard);
+			}
+			*/
 			// Do Nothing
 		} else {
 			// If session is not set, logout user
 			if (! $this->session->has_userdata ('is_logged_in')) {
-				$redirect = site_url ('login/login/index');
+				$this->message->set ('You must be logged in to access this page', 'danger', true);
+				$redirect = site_url ('public/home/index');
 				redirect ($redirect);
 			}
 
-			if ($module == 'coaching' && $this->session->userdata('role_id') == USER_ROLE_STUDENT) {
+			if (($module == 'coaching' || $module == 'admin') && $this->session->userdata('role_id') == USER_ROLE_STUDENT) {
+				$this->message->set ('You dont have enough privilege to access this page', 'danger', true);
 				redirect ('student/home/dashboard');
 			}
 		}

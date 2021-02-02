@@ -22,24 +22,24 @@
                 <h2 class="text-primary text-center mb-4"><?php echo $page_title; ?></h2>
                
                 <h4 class="text-center mb-4">Sign in with your credentials</h4>
-                <?php echo form_open ('login/login_actions/validate_login', array('id'=>'login-form')); ?>
+                <?php echo form_open ('login/teacher_actions/validate_login', array('id'=>'login-form')); ?>
                     <div class="form-group mb-4">
                         <label class="">
-                            <span>Mobile/Email</span>
+                            Mobile/Email<span class="text-danger">*</span>
                         </label>
-                        <input class="form-control" placeholder="Mobile No/Email-id" type="text" name="username">
+                        <input class="form-control" placeholder="Mobile No/Email-id" type="text" name="username" required="true">
                     </div>
 
                     <div class="form-group mb-4">
                         <label class="">
-                            <span>Password</span>
+                            Password<span class="text-danger">*</span>
                         </label>
-                        <input class="form-control" placeholder="Password" type="password" name="password">
-                        <a href="<?php echo site_url ('login/user/reset_password'); ?>" class="text-info">Forgot password?</a>
+                        <input class="form-control" placeholder="Password" type="password" name="password" required="true">
+                        <a href="<?php echo site_url ('login/teacher/reset_password'); ?>" class="text-info">Forgot password?</a>
                     </div>
                     
                     <div class="form-group mb-4 captcha">
-                        <label for="captcha" class="col-12 control-label px-0">Type captcha code</label>
+                        <label for="captcha" class="control-label px-0">Type captcha code<span class="text-danger">*</label>
                         <div class="row">
                             <div class="col-6">
                                 <input type="text" id="captcha" name="captcha" style="height:30px" class="form-control" required>

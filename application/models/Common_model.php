@@ -187,7 +187,7 @@ class Common_model extends CI_Model {
 		return $ref_id;
 	}
 
-	public function send_email ($send_to='', $subject=SITE_TITLE, $message='', $from=CONTACT_EMAIL, $title=SITE_TITLE) {
+	public function send_email ($send_to='', $subject=APP_NAME, $message='', $from=CONTACT_EMAIL, $title=APP_NAME) {
 		$this->load->library ('email');
 		$config['mailtype'] = 'html';
 		$this->email->initialize($config);

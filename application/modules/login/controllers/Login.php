@@ -21,7 +21,8 @@ class Login extends MX_Controller {
 	// For backward compatibility
 	public function logout () {
 		$this->session->sess_destroy ();
-		$redirect = site_url ('login/user/index');
+		$this->message->set ('You have successfully logged out', 'success', true);
+		$redirect = site_url ('public/home/index');
 		redirect ($redirect);
 	}
 

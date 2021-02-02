@@ -49,6 +49,8 @@ class Settings extends MX_Controller {
 		
 		/* Back Link */
 		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard');
+
+		$data['script'] = $this->load->view ('settings/scripts/setup_account', $data, true);
 		
 		$this->load->view(INCLUDE_PATH . 'header', $data);
 		$this->load->view('settings/account_setup', $data);

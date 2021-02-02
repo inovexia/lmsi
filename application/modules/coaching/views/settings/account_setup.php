@@ -4,9 +4,9 @@
             <div class="card-body">
                 <h2 class="mb-2">Setup your account</h2>
 
-                <?php echo form_open ('api/account_actions/validate_user_account', array('id'=>'account-info-form')); ?>
+                <?php echo form_open ('api/account_actions/validate_user_account', array('class'=>'validate-form', 'id'=>'account-info-form')); ?>
                     
-                    <input type="hidden" name="member_id" id="member_id" value="0">
+                    <input type="hidden" name="member_id" id="member_id" value="<?php echo $this->session->userdata ('member_id'); ?>">
 
                     <div class="form-group mb-2">
                         <label class="">

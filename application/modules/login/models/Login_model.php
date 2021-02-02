@@ -7,18 +7,11 @@ class Login_model extends CI_Model {
 		// based on the received username and password
 		$login		 	=  $this->input->post('username');
 		$password		=  $this->input->post('password');
-		$slug			=  $this->input->post('access_code');
 
-		$coaching 		= $this->coaching_model->get_coaching_by_slug ($slug);
-		if (! $coaching) {
-			$return['status'] = INVALID_USERNAME;
-		} else {
 			$return = array ();
 
-			$coaching_id 	= $coaching['id'];
-			$where = "(login='$login' OR adm_no='$login' OR email='$login' OR primary_contact='$login')"; 
+			$where = "(email='$login' OR primary_contact='$login')"; 
 			$this->db->where ($where);
-			$this->db->where ('coaching_id', $coaching_id);
 			$query = $this->db->get ("members");
 			$row	=	$query->row_array();
 			if ($query->num_rows() > 0) {
@@ -44,14 +37,12 @@ class Login_model extends CI_Model {
 					// Everything OK - Reset wrong passwords attempted, if any
 					$this->reset_wrong_password_attempts ($member_id);
 					// Save Session 
-					$this->save_login_session ($member_id, $role_id, $user_name, $coaching_id, $user_token, $slug);
+					$this->save_login_session ($member_id, $role_id, $user_name, $coaching_id, $user_token);
 					// Load menus 
 					$menus = $this->load_menu ($role_id);
 					$return['status'] 		= LOGIN_SUCCESSFUL;
 				} 
-			} else {
-				$return['status'] = INVALID_USERNAME;
-			}
+			
 		}
 		return $return;
 	}
@@ -83,7 +74,7 @@ class Login_model extends CI_Model {
 	}
 	
 
-	public function save_login_session ($member_id=0, $role_id=0, $user_name="", $coaching_id=0, $user_token='', $slug='') {
+	public function save_login_session ($member_id=0, $role_id=0, $user_name="", $coaching_id=0, $user_token='') {
 
 		// Session
 		$login_dt   	 = time ();
@@ -138,7 +129,6 @@ class Login_model extends CI_Model {
 						'site_title'	=> $site_title,
 						'coaching_id'	=> $coaching_id,
 						'profile_image'	=> $profile_image,
-						'access_code'	=> $slug,
 						);
 		$this->session->set_userdata ($options);
 	
@@ -149,26 +139,52 @@ class Login_model extends CI_Model {
 	}
 
 
-	public function check_registered_email ($email, $coaching_id='') {
-		$this->db->where ('email', $email);
-		if ( ! empty($login)) {
-			$this->db->where ('coaching_id', $coaching_id);		
-		}
+
+	public function contact_exists ($contact='') {
+		$this->db->select ('user_token');
+		$this->db->where ('primary_contact', $contact);
 		$this->db->from ('members');
 		$query = $this->db->get ();
 		if ($query->num_rows () > 0 ) {
-			return true;
+			$row = $query->row_array ();
+			return $row['user_token'];
 		} else {
 			return false;
-		}		
+		}
 	}
 
-	public function update_link_send_time ($login) {
-		$current_time   =   time();
-		$this->db->set('link_send_time', $current_time);
-		$this->db->where('login', $login);
-		$this->db->or_where('adm_no', $login);
-		$this->db->update('members'); 
+
+	public function email_exists ($email='') {
+		$this->db->select ('user_token');
+		$this->db->where ('email', $email);
+		$this->db->from ('members');
+		$query = $this->db->get ();
+		if ($query->num_rows () > 0 ) {
+			$row = $query->row_array ();
+			return $row['user_token'];
+		} else {
+			return false;
+		}
+	}
+
+	public function send_reset_link ($mode='mobile', $contact='', $user_token='') {
+		if ($mode == 'email') {
+			$data['sent_time'] = time ();
+			$data['token'] = $user_token;
+			$data['contact'] = $contact;
+			$this->db->insert('password_reset', $data);
+			// Load template
+			$message = $this->load->view (EMAIL_TEMPLATE . 'teacher/reset_password', $data, true);
+			$this->common_model->send_email ($contact, 'Reset Password', $message);
+		} else {
+			$data['sent_time'] = time ();
+			$data['token'] = $user_token;
+			$data['contact'] = $contact;
+			$this->db->insert('password_reset', $data);
+			// Load template
+			$message = $this->load->view (SMS_TEMPLATE . 'teacher/reset_password', $data, true);
+			$this->sms_model->send_sms ($contact, $message); 			
+		}
 	}
 
 

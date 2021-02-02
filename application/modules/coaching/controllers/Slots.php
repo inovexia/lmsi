@@ -10,12 +10,15 @@ class Slots extends MX_Controller {
         // Load Config and Model files required throughout Users sub-module
         $config = ['config_coaching', 'config_course'];
         $models = ['courses_model', 'slots_model', 'users_model'];
-        $this->common_model->autoload_resources($config, $models);
-
+        $this->common_model->autoload_resources ($config, $models);
 
         // Toolbar buttons
         $coaching_id = $this->uri->segment (4);
-        //$this->toolbar_buttons['add_new'] = ['<i class="iconsminds-add"></i> New Slot' => 'coaching/slots/create/'.$cid];
+        if ($this->coaching_model->is_coaching_setup () == false) {
+            $this->message->set ('Your account information is incomplete. You should complete your account information before using this module', 'warning', true);
+            redirect ('coaching/settings/setup_coaching_account');
+        }
+
         $this->toolbar_buttons['actions'] = [
             '<i class="simple-icon-list"></i> All Slots'=>'coaching/slots/index/'.$coaching_id,
             '<i class="iconsminds-check"></i> My Appointments'=>'coaching/slots/my_appointments/'.$coaching_id,

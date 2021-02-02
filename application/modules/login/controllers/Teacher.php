@@ -61,112 +61,23 @@ class Teacher extends MX_Controller {
 	}
 	
 	
-	/* Register Page */
-	public function register () {		
-
-		// Default settings
-		$access_code = '';
-		$logo_path = $this->config->item ('system_logo');
-		$logo = base_url ($logo_path);
-		$page_title = SITE_TITLE;
-		$found = false;
-
-		if (isset ($_GET['sub']) && ! empty ($_GET['sub']) && $_GET['sub'] != 'undefined') {
-    		$access_code = $_GET['sub'];
-		} else {
-			$access_code = ACCESS_CODE;
-		}
-
-		$coaching = $this->coaching_model->get_coaching_by_slug ($access_code);
-		if ($coaching) {
-			$coaching_dir = 'contents/coachings/' . $coaching['id'] . '/';
-			$coaching_logo = $this->config->item ('coaching_logo');
-			$logo_path =  $coaching_dir . $coaching_logo;
-			$logo = base_url ($logo_path);
-			$page_title = $coaching['coaching_name'];
-			$website_link = $coaching['website'];
-			$found = true;
-		}
-
-    	if (isset ($_GET['role']) && ! empty ($_GET['role'])) {
-    		$role_id = $_GET['role'];
-    	} else {
-    		$role_id = USER_ROLE_STUDENT;
-    	}
-
-		$data['access_code'] = $access_code;
-		$data['page_title'] = $page_title;
-		$data['logo'] = $logo;
-		$data['role_id'] = $role_id;
-		$data['found'] = $found;
-		$data['coaching'] = $coaching;
-		$data['website_link'] = $website_link;
-			
-
-		$vals = array(
-				'word'          => '',
-				'img_path'      => './contents/captcha/',
-				'img_url'       => base_url().'/contents/captcha/',
-				'img_width'     => '125',
-				'img_height'    => 30,
-				'word_length'   => 6,
-				'font_size'     => 16,
-				'img_id'        => 'Imageid',
-				'pool'          => '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-				
-
-				// White background and border, black text and red grid
-				'colors'        => array(
-						'background' => array(20, 83, 136),
-						'border' => array(255, 255, 255),
-						'text' => array(255,255,255),
-						'grid' => array(20, 83, 136)
-				)
-		);
-
-		$cap = create_captcha($vals);
-		$ip_address = $_SERVER['REMOTE_ADDR'];
-		$captcha_key = array('time' => $cap['time'], 'ip_address' => $ip_address, 'word' => $cap['word']);
-		$this->session->set_userdata('captcha_key', $captcha_key);
-		$data['captcha'] = $cap['image'];
-		
-		
-		$data['script'] = $this->load->view ('scripts/register', $data, true); 
-		$this->load->view (INCLUDE_PATH . 'header', $data);
-		$this->load->view ( 'register', $data); 
-		$this->load->view (INCLUDE_PATH . 'footer', $data);
-	}
-
-	
 	/* forgot password */
 	public function reset_password () {
+
 		// Default settings
-		$access_code = '';
 		$logo_path = $this->config->item ('system_logo');
 		$logo = base_url ($logo_path);
-		$page_title = SITE_TITLE;
-
-		if (isset ($_GET['sub']) && ! empty ($_GET['sub']) && $_GET['sub'] != 'undefined') {
-    		$access_code = $_GET['sub'];
-		} else {
-			$access_code = ACCESS_CODE;
-		}
-		$coaching = $this->coaching_model->get_coaching_by_slug ($access_code);
-		if ($coaching) {
-			$coaching_dir = 'contents/coachings/' . $coaching['id'] . '/';
-			$coaching_logo = $this->config->item ('coaching_logo');
-			$logo_path =  $coaching_dir . $coaching_logo;
-			$logo = base_url ($logo_path);
-			$page_title = $coaching['coaching_name'];
-		}
-
+		$page_title = APP_NAME;
+		
 		$data['page_title'] = $page_title;
 		$data['logo'] 		= $logo;
-		$data['access_code']= $access_code;
-		// $data['page_title'] = $page_title;
+		$data['hide_navbar'] = true;
+		$data['hide_sidemenu'] = true;
+		$data['hide_titlebar'] = true;
+
 		
 		$this->load->view (INCLUDE_PATH . 'header', $data);
-		$this->load->view ('reset_password');		
+		$this->load->view ('teacher/reset_password');		
 		$this->load->view (INCLUDE_PATH . 'footer', $data);
 	}
 

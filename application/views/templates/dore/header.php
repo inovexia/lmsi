@@ -218,12 +218,13 @@
 
 	            </div>
 
+	            <?php if ($this->session->userdata ('is_logged_in')) { ?>
 	            <div class="user d-inline-block">
 	                <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true"
 	                    aria-expanded="false">
-	                    <span class="name">Sarah Kortney</span>
+	                    <span class="name"><?php echo $this->session->userdata ('user_name'); ?></span>
 	                    <span>
-	                        <img alt="Profile Picture" src="img/profile-pic-l.jpg" />
+	                        <img alt="<?php echo $this->session->userdata ('user_name'); ?>" src="<?php echo base_url ($this->session->userdata ('profile_image')); ?>" class="img-thumbnail " />
 	                    </span>
 	                </button>
 
@@ -232,9 +233,10 @@
 	                    <a class="dropdown-item" href="#">Features</a>
 	                    <a class="dropdown-item" href="#">History</a>
 	                    <a class="dropdown-item" href="#">Support</a>
-	                    <a class="dropdown-item" href="#">Sign out</a>
+	                    <a class="dropdown-item" href="<?php echo site_url ('login/login/logout'); ?>">Sign out</a>
 	                </div>
 	            </div>
+	            <?php } ?>
 	        </div>
 	    </nav>
 	<?php } ?>
@@ -246,42 +248,32 @@
 		?>
 	    <div class="menu">
 	        <div class="main-menu">
-	            <div class="scroll">            	
-	                <ul class="list-unstyled">
-	                    <li class="<?php if ($controller == 'home') echo 'active'; ?>" >
-	                        <a href="<?php echo site_url ('coaching/home/dashboard'); ?>">
-	                            <i class="simple-icon-screen-desktop"></i>
-	                            <span>Dashboard</span>
-	                        </a>
-	                    </li>
-	                    <li class="<?php if ($controller == 'courses') echo 'active'; ?>" >
-	                        <a href="<?php echo site_url ('coaching/courses/index'); ?>">
-	                            <i class="simple-icon-book-open"></i> Courses
-	                        </a>
-	                    </li>
-	                    <li class="<?php if ($controller == 'users') echo 'active'; ?>" >
-	                        <a href="<?php echo site_url ('coaching/users/index'); ?>">
-	                            <i class="simple-icon-people"></i> Users
-	                        </a>
-	                    </li>
-	                    <li class="<?php if ($controller == 'slots') echo 'active'; ?>" >
-	                        <a href="<?php echo site_url ('coaching/slots/index'); ?>">
-	                            <i class="simple-icon-calendar"></i> Slots
-	                        </a>
-	                    </li>
-	                    <li class="<?php if ($controller == 'settings') echo 'active'; ?>" >
-	                        <a href="#settings">
-	                            <i class="simple-icon-settings"></i> Settings
-	                        </a>
-	                    </li>
-	                    <li hidden="true">
-	                        <a href="<?php echo site_url ('coaching/settings/index'); ?>">
-	                            <i class="simple-icon-settings"></i> Settings
-	                        </a>
-	                    </li>
-	                    
-	                </ul>
-	            </div>
+	        	<?php 
+	        	if ($this->session->userdata ('MAIN_MENU')) { 
+	        		$main_menu = $this->session->userdata ('MAIN_MENU');	        		
+	        		?>
+		            <div class="scroll">
+		                <ul class="list-unstyled">
+		                	<?php 
+		                	if (! empty ($main_menu)) {
+		                		foreach ($main_menu as $menu) {
+		                			$url = $menu['controller_path'].'/'.$menu['controller_nm'].'/'.$menu['action_nm'];
+		                			?>
+				                    <li class="<?php if ($controller == $menu['controller_nm']) echo 'active'; ?>" >
+				                        <a href="<?php echo site_url ($url); ?>">
+				                            <?php echo $menu['icon_img']; ?>
+				                            <span><?php echo $menu['menu_desc']; ?></span>
+				                        </a>
+				                    </li>
+		                			<?php
+		                		}
+		                	}
+		                	?>
+		                </ul>
+		            </div>
+        		<?php } else { ?>
+
+        		<?php } ?>
 	        </div>
 
 	        <div class="sub-menu">
