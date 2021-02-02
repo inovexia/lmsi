@@ -9,7 +9,7 @@ class Home extends MX_Controller
   public function __construct()
   {
     $config = ['config_student', 'config_virtual_class', 'config_course'];
-    $models = ['virtual_class_model', 'courses_model', 'lessons_model', 'tests_reports', 'tests_model', 'announcements_model', 'enrolment_model'];
+    $models = ['virtual_class_model', 'courses_model', 'lessons_model', 'slots_model', 'tests_reports', 'tests_model', 'announcements_model', 'enrolment_model'];
     $this->common_model->autoload_resources($config, $models);
     $cid = $this->uri->segment(4);
     //? Security step to prevent unauthorized access through url
@@ -37,6 +37,8 @@ class Home extends MX_Controller
     $data['courses'] = $courses = $this->courses_model->my_courses($coaching_id, $member_id);
     $data['catalog'] = $this->courses_model->get_courses();
     $data['classrooms'] = $this->virtual_class_model->my_classroom($coaching_id, $member_id);
+    $data['past_slots'] = $past_slots = $this->slots_model->past_slots($coaching_id, $member_id);
+    $data['upcoming_slots'] = $upcoming_slots = $this->slots_model->upcoming_slots($coaching_id, $member_id);
     $my_tests = [];
     if (!empty($courses)) {
       foreach ($courses as $row) {
