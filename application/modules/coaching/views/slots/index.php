@@ -3,8 +3,11 @@
         <form class="form-inline">
             <?php
             for ($i=0; $i<3; $i++) {
-                $dt = mktime (0, 0, 0, date ('m'), date('d')+$i, date ('Y'));
-                if ($dt == $date) {
+                $d = date ('d') + $i;
+                $m = date ('m');
+                $y = date ('Y');
+                $dt = $y.'-'.$m.'-'.$d;
+                if (strtotime($dt) == strtotime($date)) {
                     $selected = 'btn-dark';
                 } else {
                     $selected = 'btn-outline-dark';                    
@@ -12,9 +15,9 @@
                 $d = date ('D, d', strtotime('+'.$i.' days'));
                 echo '<a href="'.site_url ('coaching/slots/index/'.$coaching_id.'/'.$dt).'" class="btn btn-sm '.$selected.' mb-1 mr-1">'.$d.'</a>';
             }
-            $dt = mktime (0, 0, 0, date ('m'), date('d')+3, date ('Y'));
+            // $dt = mktime (0, 0, 0, date ('m'), date('d')+3, date ('Y'));
             ?>
-            <input type="date" name="" class="form-control my-2" min="<?php //echo date ('Y-m-d'); ?>" max="<?php echo date ('Y-m-d', strtotime('+90 days')); ?>" placeholder="Select date" value="<?php echo date ('Y-m-d', strtotime('+3 days')); ?>" onchange="change_date(<?php echo $dt; ?>)">
+            <input type="date" name="" class="form-control my-2" min="<?php //echo date ('Y-m-d'); ?>" max="<?php echo date ('Y-m-d', strtotime('+90 days')); ?>" placeholder="Select date" value="<?php echo date ('Y-m-d', strtotime($date)); ?>" onchange="change_date(this.value)">
         </form>
     </div>
 </div>
@@ -41,6 +44,12 @@
                                 </button>
                                 <?php
                             }
+                        } else {
+                            ?>
+                            <div class="text-danger">
+                                You have not created any slot yet
+                            </div>
+                            <?php
                         }
                         ?>
                         <div class="my-2 mt-2">
@@ -50,6 +59,12 @@
                 </div>
                 <?php
             }
+        } else {
+            ?>
+            <div class="alert alert-danger">
+                You have not created any course yet. Slots can me added inside a course only.
+            </div>
+            <?php
         }
         ?>
     </div>
@@ -78,12 +93,12 @@
 
                         <div class="form-group">
                             <label>Start Time</label>
-                            <input type="time" class="form-control" placeholder="" name="start_time" min="<?php echo date ('h:i a'); ?>" value="<?php echo date ('h:i a'); ?>">
+                            <input type="time" class="form-control" placeholder="" name="start_time" min="<?php echo date ('H:i'); ?>" value="<?php echo date ('H:i'); ?>">
                         </div>
 
                         <div class="form-group">
                             <label>End Time</label>
-                            <input type="time" class="form-control" placeholder="" name="end_time" min="<?php echo date ('h:i a'); ?>" value="<?php echo date ('h:i a', strtotime('+1 hour')); ?>">
+                            <input type="time" class="form-control" placeholder="" name="end_time" min="<?php echo date ('H:i'); ?>" value="<?php echo date ('H:i', strtotime('+1 hour')); ?>">
                         </div>
 
                         <div class="form-group">

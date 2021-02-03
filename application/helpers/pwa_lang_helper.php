@@ -8,7 +8,7 @@ function _AT_TEXT ($code='', $type='', $lang='en') {
 	
 	$data['en'] = array ('msg'=>array(
 			'INVALID_CAPTCHA'=>'Incorrect captcha',
-			'INVALID_CREDENTIALS'=>'The username/password combination is incorrect',
+			'INVALID_CREDENTIALS'=>'The login or password provided is incorrect',
 			'INVALID_USERNAME'=>'We don\'t recongnise you. Please check your username',
 			'INVALID_PASSWORD'=>'You have entered a wrong password',
 			'MAX_ATTEMPTS_REACHED'=>'Too many retry attempts. Try again after '.(LOCK_TIME/60).' minutes',

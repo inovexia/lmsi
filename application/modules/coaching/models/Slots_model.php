@@ -17,10 +17,11 @@ class Slots_model extends CI_Model {
             $from = mktime (0, 0, 0, $m, $d, $y);
             $to = mktime (23, 59, 59, $m, $d, $y);
         } else {
-            $from = $date;
+            list ($y, $m, $d) = explode ('-', $date);
+            $from = mktime (0, 0, 0, $m, $d, $y);
             // 24 hours from date
             $step = (24 * 60 * 60) - 1;
-            $to = $date + $step;
+            $to = $from + $step;
         }
         $where = 'CS.start_time >='.$from. ' AND CS.end_time <='.$to;
         $data = [];

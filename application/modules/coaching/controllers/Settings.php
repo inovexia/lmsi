@@ -1,6 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
 class Settings extends MX_Controller {
+
+	var $coaching_id = 0;
 	
 	public function __construct () { 
 	    $config = ['config_coaching'];
@@ -8,7 +10,13 @@ class Settings extends MX_Controller {
 	    $this->common_model->autoload_resources ($config, $models);
 	    $this->load->helper ('file');
 
-        $coaching_id = $this->uri->segment (4);
+	    if ($this->uri->segment (4)) {
+        	$coaching_id = $this->uri->segment (4);
+	    } else {
+	    	$coaching_id = $this->session->userdata ('coaching_id');
+	    }
+
+	   $this->coaching_id = $coaching_id;
         
         // Security step to prevent unauthorized access through url
         if ($this->session->userdata ('is_admin') == TRUE) {
@@ -22,28 +30,34 @@ class Settings extends MX_Controller {
 	}
 
 	public function index ($coaching_id=0) {
-		$this->account_info ($coaching_id);
+		$coaching_id = $this->coaching_id;
+		if ($coaching_id == 0) {
+			$this->setup_coaching_account ();
+		} else {
+			$this->account_info ($coaching_id);
+		}
 	}
 
 	public function account_info ($coaching_id=0) {
 
-		if ($coaching_id == 0) {
-			$this->setup_coaching_account ();
-		} else {
-			$data['page_title'] = 'Account Information';
-			
-			/* Back Link */
-			$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
-			$data['coaching'] = $this->coaching_model->get_coaching ($coaching_id);
-			$data['coaching_id'] = $coaching_id;
-			
-			$this->load->view(INCLUDE_PATH . 'header', $data);
-			$this->load->view('settings/account_info', $data);
-			$this->load->view(INCLUDE_PATH . 'footer', $data);			
-		}
+		$coaching_id = $this->coaching_id;
+
+		$data['page_title'] = 'Account Information';
+		
+		/* Back Link */
+		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
+		$data['coaching'] = $this->coaching_model->get_coaching ($coaching_id);
+		$data['coaching_id'] = $coaching_id;
+		
+		$this->load->view(INCLUDE_PATH . 'header', $data);
+		$this->load->view('settings/account_info', $data);
+		$this->load->view(INCLUDE_PATH . 'footer', $data);
+	
 	}
 
 	public function setup_coaching_account () {
+
+		$coaching_id = $this->coaching_id;
 
 		$data['page_title'] = 'Setup Your Account';
 		
@@ -61,6 +75,8 @@ class Settings extends MX_Controller {
 
 	public function account_settings ($coaching_id=0) {
 
+		$coaching_id = $this->coaching_id;
+
 		$data['page_title'] = 'Account Settings';
 		
 		/* Back Link */
@@ -76,6 +92,8 @@ class Settings extends MX_Controller {
 	}
 
 	public function default_settings ($coaching_id=0) {
+
+		$coaching_id = $this->coaching_id;
 
 		$data['page_title'] = 'Default Settings';
 		

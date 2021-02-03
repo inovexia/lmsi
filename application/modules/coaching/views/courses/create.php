@@ -1,4 +1,4 @@
-<div class="card">
+ <div class="card">
 		<div class="card-body">
 			<?php echo form_open('coaching/courses_actions/create_course/'.$coaching_id.'/'.$cat_id.'/'.$course_id, array('class'=>'validate-form')); ?>
 
@@ -23,7 +23,7 @@
 						<label for="price">Price</label>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
-								<div class="input-group-text"><?php echo $default['currency']; ?></div>
+								<div class="input-group-text"><?php echo $default['currency_code']; ?></div>
 							</div>
 							<input type="number" class="form-control" id="price" name="price" min="0" step="0.01" placeholder="Course Price" value="<?php echo (isset($course['price'])) ?  $course['price'] : 0; ?>"/>
 						</div>

@@ -4,6 +4,7 @@ class Users extends MX_Controller {
 	
     var $toolbar_buttons = []; 
     var $is_admin;
+	var $coaching_id = 0;
 
 	public function __construct () {
 
@@ -12,15 +13,22 @@ class Users extends MX_Controller {
 	    $models = ['users_model', 'coaching_model'];
 	    $this->common_model->autoload_resources ($config, $models);
 	    
-        $cid = $this->uri->segment (4);
-        $this->toolbar_buttons['add_new'] = ['<i class="simple-icon-plus"></i> Invite Users'=>'coaching/users/invite/'.$cid];
-        $this->toolbar_buttons['actions'] = ['<i class="simple-icon-list"></i> All Users'=>'coaching/users/index/'.$cid];
+	    if ($this->uri->segment (4)) {
+        	$coaching_id = $this->uri->segment (4);
+	    } else {
+	    	$coaching_id = $this->session->userdata ('coaching_id');
+	    }
+
+	    $this->coaching_id = $coaching_id;
+  
+        $this->toolbar_buttons['add_new'] = ['<i class="simple-icon-plus"></i> Invite Users'=>'coaching/users/invite/'.$coaching_id];
+        $this->toolbar_buttons['actions'] = ['<i class="simple-icon-list"></i> All Users'=>'coaching/users/index/'.$coaching_id];
 
         // Security step to prevent unauthorized access through url
         if ($this->session->userdata ('is_admin') == TRUE) {
         } else {
-            if ($cid == true && $this->session->userdata ('coaching_id') <> $cid) {
-                $this->message->set ('Direct url access not allowed', 'danger', true);
+            if ($coaching_id == true && $this->session->userdata ('coaching_id') <> $coaching_id) {
+                //$this->message->set ('Direct url access not allowed', 'danger', true);
                 // redirect ('coaching/home/dashboard');
             }
         }
@@ -33,9 +41,9 @@ class Users extends MX_Controller {
 	public function index ($coaching_id=0, $role_id=0, $status='-1', $batch_id=0, $sort=SORT_ALPHA_ASC) {
 		
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
-		if ($coaching_id == 0) {
-			$coaching_id = $this->session->userdata ('coaching_id');
-		}
+
+		$coaching_id = $this->coaching_id;
+
 		/* --==== GET USERS  ====-- */
 		$role_lvl 		 	= $this->session->userdata ('role_lvl');	
 		$data['results'] 	= $this->users_model->get_users ($coaching_id, $role_id, $status, $batch_id);
@@ -43,7 +51,7 @@ class Users extends MX_Controller {
 		$data['batches']	 	=  $this->users_model->get_batches ($coaching_id);
 		$data['user_status']	= $this->common_model->get_sys_parameters (SYS_USER_STATUS);
 		$data['coaching_id']	= $coaching_id;
-		$data['role_id'] 	= $role_id;
+		$data['role_id'] 		= $role_id;
 		switch ($role_id) {
 			case USER_ROLE_TEACHER:
 			$role_label = "Teacher";
@@ -151,6 +159,7 @@ class Users extends MX_Controller {
 		$data['bc'] = array ('Users'=>'coaching/users/index/'.$coaching_id);
 		$data['page_title'] = 'Invite Users';
 
+		$data['script'] = $this->load->view('users/scripts/invite', $data, true);
 		$this->load->view(INCLUDE_PATH . 'header', $data);
 		$this->load->view ('users/invite', $data);
 		$this->load->view(INCLUDE_PATH . 'footer', $data);

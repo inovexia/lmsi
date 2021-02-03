@@ -121,6 +121,13 @@ class Registration_model extends CI_Model {
 			$this->db->insert ('coachings', $data);
 			$coaching_id = $this->db->insert_id ();
 
+			// Set Access Code
+			$access_code = $this->common_model->generate_coaching_id ($coaching_id);
+			$this->db->set ('reg_no', $access_code);
+			$this->db->where ('id', $coaching_id);
+			$this->db->update ('coachings');
+
+			// Link user to coaching
 			$this->db->set ('coaching_id', $coaching_id);
 			$this->db->where ('member_id', $member_id);
 			$this->db->update ('members');

@@ -54,6 +54,13 @@ class Vitals extends MX_Controller {
 		// print_r ($_SESSION);
 	}
 
+	public function is_student () {
+		if (isset ($_GET['s'])) {
+			$slug = $_GET['s'];
+			redirect ('login/user/index/'.$slug);
+		}
+	}
+
 	// Load default settings
 	public function load_defaults () {
 		if ( ! $this->session->has_userdata('SITE_TITLE')) {			

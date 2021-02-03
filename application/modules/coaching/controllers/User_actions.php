@@ -526,7 +526,7 @@ class User_actions extends MX_Controller {
 		if ($this->form_validation->run () == true) {
 			if ($this->users_model->invite_by_mobile ($coaching_id)) {
 				$this->output->set_content_type("application/json");
-				$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Invitation sent')));				
+				$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Invitation sent', 'redirect'=>site_url ('coaching/users/invite/'.$coaching_id))));				
 			} else {
 				$this->output->set_content_type("application/json");
 					$this->output->set_output(json_encode(array('status'=>false, 'error'=>'Invitation already sent')));
@@ -535,5 +535,12 @@ class User_actions extends MX_Controller {
 			$this->output->set_content_type("application/json");
 			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors ())));
 		}
+	}
+
+	public function resend_invite ($coaching_id=0, $id=0, $type='mobile') {
+
+		$this->users_model->resend_invite ($coaching_id, $id, $type);
+		$this->output->set_content_type("application/json");
+		$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Invitation sent')));
 	}
 }

@@ -107,6 +107,7 @@
 	        </a>
 
 	        <div class="navbar-right">
+	        	<!--
 	            <div class="header-icons d-inline-block align-middle">
 	                <div class="d-none d-md-inline-block align-text-bottom mr-3">
 	                </div>
@@ -217,6 +218,7 @@
 	                </button>
 
 	            </div>
+	        	-->
 
 	            <?php if ($this->session->userdata ('is_logged_in')) { ?>
 	            <div class="user d-inline-block">
@@ -255,12 +257,19 @@
 		            <div class="scroll">
 		                <ul class="list-unstyled">
 		                	<?php 
+		                	$sm_list = [];
 		                	if (! empty ($main_menu)) {
 		                		foreach ($main_menu as $menu) {
-		                			$url = $menu['controller_path'].'/'.$menu['controller_nm'].'/'.$menu['action_nm'];
+		                			$sub_menu = $menu['sub_menu'];
+		                			if (! empty ($sub_menu)) {
+		                				$url = '#'.$menu['menu_id'];
+		                				$sm_list[$menu['menu_id']] = $sub_menu;
+		                			} else {
+		                				$url = site_url ($menu['controller_path'].'/'.$menu['controller_nm'].'/'.$menu['action_nm']);
+		                			}
 		                			?>
 				                    <li class="<?php if ($controller == $menu['controller_nm']) echo 'active'; ?>" >
-				                        <a href="<?php echo site_url ($url); ?>">
+				                        <a href="<?php echo $url; ?>">
 				                            <?php echo $menu['icon_img']; ?>
 				                            <span><?php echo $menu['menu_desc']; ?></span>
 				                        </a>
@@ -278,43 +287,32 @@
 
 	        <div class="sub-menu">
 	            <div class="scroll">
-	                <ul class="list-unstyled" data-link="settings">
-	                    <li>
-	                        <a href="<?php echo site_url ('coaching/settings/index/1'); ?>">
-	                            <i class="iconsminds-information"></i> <span class="d-inline-block">Account Information</span>
-	                        </a>
-	                    </li>
-	                    <li>
-	                        <a href="<?php echo site_url ('coaching/settings/account_settings/1'); ?>">
-	                            <i class="iconsminds-gears"></i> <span class="d-inline-block">Account Settings</span>
-	                        </a>
-	                    </li>
-	                    <li hidden="true">
-	                        <a href="<?php echo site_url ('coaching/settings/login_settings/1'); ?>">
-	                            <i class="iconsminds-key"></i> <span class="d-inline-block">Login Settings</span>
-	                        </a>
-	                    </li>
-	                    <li>
-	                        <a href="<?php echo site_url ('coaching/settings/default_settings/1'); ?>">
-	                            <i class="iconsminds-data-cloud"></i> <span class="d-inline-block">Default Settings</span>
-	                        </a>
-	                    </li>
-	                    <li hidden="true">
-	                        <a href="<?php echo site_url ('coaching/settings/course_settings/1'); ?>">
-	                            <i class="iconsminds-book"></i> <span class="d-inline-block">Course Settings</span>
-	                        </a>
-	                    </li>
-	                    <li hidden="true">
-	                        <a href="<?php echo site_url ('coaching/settings/user_settings/1'); ?>">
-	                            <i class="iconsminds-user"></i> <span class="d-inline-block">User Settings</span>
-	                        </a>
-	                    </li>
-	                    <li hidden="true">
-	                        <a href="<?php echo site_url ('coaching/settings/slot_settings/1'); ?>">
-	                            <i class="iconsminds-calendar-1"></i> <span class="d-inline-block">Slot Settings</span>
-	                        </a>
-	                    </li>
-	                </ul>
+	            	<?php
+	            	if (! empty($sm_list)) {
+	            		foreach ($sm_list as $id=>$sm_menu) {
+	            			?>
+			                <ul class="list-unstyled" data-link="<?php echo $id; ?>">
+			                	<?php 
+			                	if (! empty($sm_menu)) {
+			                		foreach ($sm_menu as $item) {
+		                				$url = site_url ($item['controller_path'].'/'.$item['controller_nm'].'/'.$item['action_nm']);
+			                			?>
+					                    <li>
+					                        <a href="<?php echo $url; ?>">
+					                            <?php echo $item['icon_img']; ?>
+					                            <span><?php echo $item['menu_desc']; ?></span>
+					                        </a>
+					                    </li>
+					                    <?php
+			                		}
+			                	}
+			                	?>
+			                </ul>
+	            			<?php
+	            		}
+	            	}
+	            	?>
+	                    
 	                
 	            </div>
 	        </div>

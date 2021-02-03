@@ -31,13 +31,29 @@ class Common_model extends CI_Model {
 		ACL MENU
 	*/
 	public function load_acl_menus ($role_id=0, $parent_id=0, $menu_type=MENUTYPE_SIDEMENU) {
+		$result = [];
 		$this->db->where ('group_id', $role_id);
 		$this->db->where ('parent_menu_id', $parent_id);
 		$this->db->where ('menu_type', $menu_type);
 		$this->db->where ('status', 1);
 		$this->db->order_by ('menu_order', 'ASC');
 		$sql = $this->db->get ('sys_menus');
-		return $sql->result_array ();
+		$main_menu = $sql->result_array ();
+		if (! empty($main_menu)) {
+			foreach ($main_menu as $menu) {
+				$this->db->where ('group_id', $role_id);
+				$this->db->where ('parent_menu_id', $menu['menu_id']);
+				$this->db->where ('menu_type', $menu_type);
+				$this->db->where ('status', 1);
+				$this->db->order_by ('menu_order', 'ASC');
+				$sql_sub = $this->db->get ('sys_menus');
+				$sub_menu = $sql_sub->result_array ();
+				$menu['sub_menu'] = $sub_menu;
+				$result[] = $menu;
+			}
+		}
+
+		return $result;
 	}
 
 

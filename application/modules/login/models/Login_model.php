@@ -3,47 +3,51 @@
 class Login_model extends CI_Model {
 
     public function validate_login ($admin_login=false) {
+
 		// this will validate if current user authentic to use resources
 		// based on the received username and password
 		$login		 	=  $this->input->post('username');
 		$password		=  $this->input->post('password');
 
-			$return = array ();
+		$return = array ();
 
-			$where = "(email='$login' OR primary_contact='$login')"; 
-			$this->db->where ($where);
-			$query = $this->db->get ("members");
-			$row	=	$query->row_array();
-			if ($query->num_rows() > 0) {
-				$member_id 	= $row['member_id'];
-				$role_id   	= $row['role_id'];
-				$user_token = $row['user_token'];
-				$user_name 	= $row['first_name'].' '.$row['last_name'];
-				$coaching_id = $row['coaching_id'];
-				$hashed_password = $row['password'];
-				
-				// This is a valid user,  check for status
-				if ($row['status'] <> USER_STATUS_ENABLED ) {
-					$return['status'] = ACCOUNT_DISABLED;
-				} else if (password_verify ($password, $hashed_password) == false) {
-					// User has input wrong password
-					$wrong_attempts = $this->wrong_password_attempted ($member_id);
-					if ($wrong_attempts >= MAX_WRONG_PASSWORD_ATTEMPTS) {
-						$return['status'] = MAX_ATTEMPTS_REACHED;
-					} else {
-						$return['status'] = INVALID_PASSWORD;
-					}
-				} else {
-					// Everything OK - Reset wrong passwords attempted, if any
-					$this->reset_wrong_password_attempts ($member_id);
-					// Save Session 
-					$this->save_login_session ($member_id, $role_id, $user_name, $coaching_id, $user_token);
-					// Load menus 
-					$menus = $this->load_menu ($role_id);
-					$return['status'] 		= LOGIN_SUCCESSFUL;
-				} 
+		$where = "(email='$login' OR primary_contact='$login')"; 
+		$this->db->where ($where);
+		$query = $this->db->get ("members");
+		$row	=	$query->row_array ();
+		if ($query->num_rows() > 0) {
+			$member_id 	= $row['member_id'];
+			$role_id   	= $row['role_id'];
+			$user_token = $row['user_token'];
+			$user_name 	= $row['first_name'].' '.$row['last_name'];
+			$coaching_id = $row['coaching_id'];
+			$hashed_password = $row['password'];
 			
+			// This is a valid user,  check for status
+			if ($row['status'] <> USER_STATUS_ENABLED ) {
+				$return['status'] = ACCOUNT_DISABLED;
+			} else if (password_verify ($password, $hashed_password) == false) {
+				// User has input wrong password
+				$wrong_attempts = $this->wrong_password_attempted ($member_id);
+				if ($wrong_attempts >= MAX_WRONG_PASSWORD_ATTEMPTS) {
+					$return['status'] = MAX_ATTEMPTS_REACHED;
+				} else {
+					$return['status'] = INVALID_PASSWORD;
+				}
+			} else {
+				// Everything OK - Reset wrong passwords attempted, if any
+				$this->reset_wrong_password_attempts ($member_id);
+				// Save Session 
+				$this->save_login_session ($member_id, $role_id, $user_name, $coaching_id, $user_token);
+				// Load menus 
+				$menus = $this->load_menu ($role_id);
+				$return['status'] 		= LOGIN_SUCCESSFUL;
+			} 
+		
+		} else {
+			$return['status'] = INVALID_CREDENTIALS;
 		}
+		
 		return $return;
 	}
 

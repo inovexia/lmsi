@@ -80,6 +80,10 @@
 		        </div>
     			<?php
     		}
+    	} else {
+    		?>
+    		<div class="alert alert-danger mt-4 ">No bookings found!</div>
+    		<?php
     	}
     	?>
     </div>

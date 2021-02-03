@@ -1,4 +1,4 @@
- <div class="row justify-content-center">
+<div class="row justify-content-center mb-4">
  	<div class="col-md-6">
 		<div class="card mb-4">
             <div class="card-body">
@@ -8,4 +8,4 @@
             </div>
         </div>
  	</div>
- </div>
+</div>

@@ -12,16 +12,14 @@
                         ALREADY HAVE AN ACCOUNT? <br>SIGN-IN
                     </p>
                     <p class="white mb-0">
-                        <a href="<?php echo site_url('login/user/index')?>" class="btn btn-light ">Sign In</a>
+                        <a href="<?php echo site_url('login/user/index/'.$slug)?>" class="btn btn-light ">Sign in as student</a>
                     </p>
-                    <?php if($website_link != ''){ ?>
-
-             
-                    <p class="white mb-0">
-                        <br> 
-                        <a href="<?php echo $website_link; ?>" class="text-white">Back to Website</a>
-                    </p>
-                <?php } ?>
+                    <?php if ($coaching['website'] != '') { ?>
+                        <p class="white mb-0">
+                            <br> 
+                            <a href="<?php echo $coaching['website']; ?>" class="text-white">Back to Website</a>
+                        </p>
+                    <?php } ?>
                 </div>
             </div>
 
@@ -30,15 +28,13 @@
                     <?php if ( read_file ($logo) != false) { ?>
                         <img src="<?php echo $logo; ?>" height="50" title="<?php echo $page_title; ?>" class="text-center mb-4" alt="<?php echo $page_title; ?>">
                     <?php } else { ?>
-                        <h2 class="text-white text-center mb-4"><?php echo $page_title; ?></h2>
+                        <h2 class="text-center mb-4"><?php echo $page_title; ?></h2>
                     <?php } ?>
                 </div>
-                <h4 class="text-center mb-4">Create a new <?php if ($role_id == USER_ROLE_TEACHER) echo 'teacher'; else echo 'student'; ?> account</h4>
-                <?php echo form_open ('login/login_actions/register', array('id'=>'validate-1')); ?>
-                    <input type="hidden" name="user_role" value="<?php echo $role_id; ?>">
-                    <input type="hidden" name="sr_no" value="">
-                    <input type="hidden" name="second_name" value="">
-                    <input type="hidden" name="user_batch" value="0">
+                <h4 class="text-center mb-4">Create a new student account</h4>
+                <?php echo form_open ('login/user_actions/register', array('id'=>'validate-1')); ?>
+                    <input type="hidden" name="user_role" value="<?php echo USER_ROLE_STUDENT; ?>">
+                    <input type="hidden" name="coaching_id" value="<?php echo $coaching['id']; ?>">
 
                     <div class="form-group mb-4">
                         <label class="">
@@ -74,18 +70,6 @@
                         </div>
                         <p class="text-muted">Minimum 8 characters. Choosing a strong password is recommended</p>
                     </div>
-
-                    <?php if ($access_code != '' && $found == true) { ?>
-                        <label class="form-group has-float-label mb-4">
-                          <input class="form-control" placeholder="Access Code" type="hidden" name="access_code" value="<?php echo $access_code; ?>" readonly>
-                        </label>
-                    <?php } else { ?>
-                        <label class="form-group has-float-label mb-4">
-                            <input class="form-control" placeholder="Access Code" type="text" name="access_code" value="<?php echo $access_code; ?>" >
-                            <span>Access Code</span>
-                            <p class="text-muted">If you don't have access code, contact your coaching-center/institution</p>
-                        </label>
-                    <?php } ?>
                     
                     <div class="my-2">
                         <?php 

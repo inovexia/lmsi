@@ -13,80 +13,36 @@ class User extends MX_Controller {
 		$this->load->helper('captcha');
 	}
 	
- 	public function index () {
+ 	public function index ($slug='') {
 
-    	// Default settings
-		$logo_path = $this->config->item ('system_logo');
-		$logo = base_url ($logo_path);
-		$page_title = 'Sign-In';
-		$found = false;
+ 		$coaching = $this->coaching_model->get_coaching_by_slug ($slug);
+ 		if ($coaching == false) {
 
-		$coaching = $this->coaching_model->get_coaching_by_slug ($access_code);
-		if ($coaching) {
-			$coaching_dir = 'contents/coachings/' . $coaching['id'] . '/';
-			$coaching_logo = $this->config->item ('coaching_logo');
-			$logo_path =  $coaching_dir . $coaching_logo;
+ 		} else {
+	    	// Load Coaching Settings
+			$logo_path = $this->config->item ('system_logo');
 			$logo = base_url ($logo_path);
 			$page_title = $coaching['coaching_name'];
-			$website_link = $coaching['website'];
-			$found = true;
-		}
 
-		$data['page_title'] = $page_title;
-		$data['website_link'] = $website_link;
-		$data['logo'] = $logo;
-		$data['access_code'] = $access_code;
-		$data['found'] = $found;
-		$data['coaching'] = $coaching;
+			$data['page_title'] = $page_title;
+			$data['logo'] = $logo;
+			$data['slug'] = $slug;
+			$data['hide_navbar'] = true;
+			$data['hide_sidemenu'] = true;
+			$data['hide_titlebar'] = true;
 
-		$vals = array(
-				'word'          => '',
-				'img_path'      => './contents/captcha/',
-				'img_url'       => base_url().'/contents/captcha/',
-				'img_width'     => '125',
-				'img_height'    => 30,
-				'word_length'   => 6,
-				'font_size'     => 16,
-				'img_id'        => 'Imageid',
-				'pool'          => '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-				
+			$captcha_dir = $this->config->item ('captcha_dir');
 
-				// White background and border, black text and red grid
-				'colors'        => array(
-						'background' => array(20, 83, 136),
-						'border' => array(255, 255, 255),
-						'text' => array(255,255,255),
-						'grid' => array(20, 83, 136)
-				)
-		);
-
-		$cap = create_captcha($vals);
-		$ip_address = $_SERVER['REMOTE_ADDR'];
-		$captcha_key = array('time' => $cap['time'], 'ip_address' => $ip_address, 'word' => $cap['word']);
-		$this->session->set_userdata('captcha_key', $captcha_key);
-		$data['captcha'] = $cap['image'];		
-		
-		$data['script'] = $this->load->view ('scripts/login', $data, true); 
-		$this->load->view (INCLUDE_PATH . 'header', $data);
-		$this->load->view ('login', $data);
-		$this->load->view (INCLUDE_PATH . 'footer', $data);
-	}
-	
-	/* Refresh captcha */
-	
-	public function refresh_captcha(){
-    // Captcha configuration
-		$vals = array(
+			$vals = array(
 					'word'          => '',
-					'img_path'      => './contents/captcha/',
-					'img_url'       => base_url().'/contents/captcha/',
+					'img_path'      => $captcha_dir,
+					'img_url'       => base_url ($captcha_dir),
 					'img_width'     => '125',
 					'img_height'    => 30,
 					'word_length'   => 6,
 					'font_size'     => 16,
 					'img_id'        => 'Imageid',
 					'pool'          => '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-					
 
 					// White background and border, black text and red grid
 					'colors'        => array(
@@ -96,149 +52,99 @@ class User extends MX_Controller {
 							'grid' => array(20, 83, 136)
 					)
 			);
-		$captcha = create_captcha($vals);
-		
 
-		$cap = create_captcha($vals);
+			$cap = create_captcha($vals);
 			$ip_address = $_SERVER['REMOTE_ADDR'];
 			$captcha_key = array('time' => $cap['time'], 'ip_address' => $ip_address, 'word' => $cap['word']);
-			$this->session->unset_userdata('captcha_key');
 			$this->session->set_userdata('captcha_key', $captcha_key);
-			$data['captcha'] = $cap['image'];
+			$data['captcha'] = $cap['image'];		
+			
+			$data['script'] = $this->load->view ('scripts/login', $data, true); 
 
-
-		// Display captcha image
-		// echo $cap['image'];
-		$this->load->view ('refresh_captcha', $data);
+			$this->load->view (INCLUDE_PATH . 'header', $data);
+			$this->load->view ('student/login', $data);
+			$this->load->view (INCLUDE_PATH . 'footer', $data); 		
+ 		}
 	}
 	
-	/* Register Page */
-	public function register () {		
+	
+	/* forgot password */
+	public function register ($slug='') {
 
-		// Default settings
-		$access_code = '';
-		$logo_path = $this->config->item ('system_logo');
-		$logo = base_url ($logo_path);
-		$page_title = SITE_TITLE;
-		$found = false;
+ 		$coaching = $this->coaching_model->get_coaching_by_slug ($slug);
+ 		if ($coaching == false) {
 
-		if (isset ($_GET['sub']) && ! empty ($_GET['sub']) && $_GET['sub'] != 'undefined') {
-    		$access_code = $_GET['sub'];
-		} else {
-			$access_code = ACCESS_CODE;
-		}
-
-		$coaching = $this->coaching_model->get_coaching_by_slug ($access_code);
-		if ($coaching) {
-			$coaching_dir = 'contents/coachings/' . $coaching['id'] . '/';
-			$coaching_logo = $this->config->item ('coaching_logo');
-			$logo_path =  $coaching_dir . $coaching_logo;
+ 		} else {
+	    	// Load Coaching Settings
+			$logo_path = $this->config->item ('system_logo');
 			$logo = base_url ($logo_path);
 			$page_title = $coaching['coaching_name'];
-			$website_link = $coaching['website'];
-			$found = true;
-		}
 
-    	if (isset ($_GET['role']) && ! empty ($_GET['role'])) {
-    		$role_id = $_GET['role'];
-    	} else {
-    		$role_id = USER_ROLE_STUDENT;
-    	}
+			$data['page_title'] = $page_title;
+			$data['logo'] = $logo;
+			$data['slug'] = $slug;
+			$data['coaching'] = $coaching;
+			$data['hide_navbar'] = true;
+			$data['hide_sidemenu'] = true;
+			$data['hide_titlebar'] = true;
 
-		$data['access_code'] = $access_code;
-		$data['page_title'] = $page_title;
-		$data['logo'] = $logo;
-		$data['role_id'] = $role_id;
-		$data['found'] = $found;
-		$data['coaching'] = $coaching;
-		$data['website_link'] = $website_link;
+			$captcha_dir = $this->config->item ('captcha_dir');
+
+			$vals = array(
+					'word'          => '',
+					'img_path'      => $captcha_dir,
+					'img_url'       => base_url ($captcha_dir),
+					'img_width'     => '125',
+					'img_height'    => 30,
+					'word_length'   => 6,
+					'font_size'     => 16,
+					'img_id'        => 'Imageid',
+					'pool'          => '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+
+					// White background and border, black text and red grid
+					'colors'        => array(
+							'background' => array(20, 83, 136),
+							'border' => array(255, 255, 255),
+							'text' => array(255,255,255),
+							'grid' => array(20, 83, 136)
+					)
+			);
+
+			$cap = create_captcha($vals);
+			$ip_address = $_SERVER['REMOTE_ADDR'];
+			$captcha_key = array('time' => $cap['time'], 'ip_address' => $ip_address, 'word' => $cap['word']);
+			$this->session->set_userdata('captcha_key', $captcha_key);
+			$data['captcha'] = $cap['image'];		
 			
+			$data['script'] = $this->load->view ('scripts/login', $data, true); 
 
-		$vals = array(
-				'word'          => '',
-				'img_path'      => './contents/captcha/',
-				'img_url'       => base_url().'/contents/captcha/',
-				'img_width'     => '125',
-				'img_height'    => 30,
-				'word_length'   => 6,
-				'font_size'     => 16,
-				'img_id'        => 'Imageid',
-				'pool'          => '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-				
-
-				// White background and border, black text and red grid
-				'colors'        => array(
-						'background' => array(20, 83, 136),
-						'border' => array(255, 255, 255),
-						'text' => array(255,255,255),
-						'grid' => array(20, 83, 136)
-				)
-		);
-
-		$cap = create_captcha($vals);
-		$ip_address = $_SERVER['REMOTE_ADDR'];
-		$captcha_key = array('time' => $cap['time'], 'ip_address' => $ip_address, 'word' => $cap['word']);
-		$this->session->set_userdata('captcha_key', $captcha_key);
-		$data['captcha'] = $cap['image'];
-		
-		
-		$data['script'] = $this->load->view ('scripts/register', $data, true); 
-		$this->load->view (INCLUDE_PATH . 'header', $data);
-		$this->load->view ( 'register', $data); 
-		$this->load->view (INCLUDE_PATH . 'footer', $data);
+			$this->load->view (INCLUDE_PATH . 'header', $data);
+			$this->load->view ('student/register', $data);
+			$this->load->view (INCLUDE_PATH . 'footer', $data); 		
+ 		}	
 	}
 
-	
 	/* forgot password */
 	public function reset_password () {
+
 		// Default settings
-		$access_code = '';
 		$logo_path = $this->config->item ('system_logo');
 		$logo = base_url ($logo_path);
-		$page_title = SITE_TITLE;
-
-		if (isset ($_GET['sub']) && ! empty ($_GET['sub']) && $_GET['sub'] != 'undefined') {
-    		$access_code = $_GET['sub'];
-		} else {
-			$access_code = ACCESS_CODE;
-		}
-		$coaching = $this->coaching_model->get_coaching_by_slug ($access_code);
-		if ($coaching) {
-			$coaching_dir = 'contents/coachings/' . $coaching['id'] . '/';
-			$coaching_logo = $this->config->item ('coaching_logo');
-			$logo_path =  $coaching_dir . $coaching_logo;
-			$logo = base_url ($logo_path);
-			$page_title = $coaching['coaching_name'];
-		}
-
+		$page_title = APP_NAME;
+		
 		$data['page_title'] = $page_title;
 		$data['logo'] 		= $logo;
-		$data['access_code']= $access_code;
-		// $data['page_title'] = $page_title;
+		$data['hide_navbar'] = true;
+		$data['hide_sidemenu'] = true;
+		$data['hide_titlebar'] = true;
+
 		
 		$this->load->view (INCLUDE_PATH . 'header', $data);
-		$this->load->view ('reset_password');		
+		$this->load->view ('teacher/reset_password');		
 		$this->load->view (INCLUDE_PATH . 'footer', $data);
 	}
 
-	/* forgot password */
-	public function get_access_code () {
-		// Default settings
-		$access_code = '';
-		$logo_path = $this->config->item ('system_logo');
-		$logo = base_url ($logo_path);
-		$page_title = SITE_TITLE;
-
-		$data['page_title'] = $page_title;
-		$data['logo'] 		= $logo;
-		$data['access_code']= $access_code;
-		$data['page_title'] = $page_title;
-		
-		$this->load->view (INCLUDE_PATH . 'header', $data);
-		$this->load->view ('get_access_code');		
-		$this->load->view (INCLUDE_PATH . 'footer', $data);
-	}
-
+	
 	/* create password for new user register */
 	public function create_password ($user_id='') {
 
@@ -288,40 +194,5 @@ class User extends MX_Controller {
 			$this->load->view ( 'password', $data);
 			$this->load->view ( INCLUDE_PATH . 'footer', $data);
 		}
-	}	
-
-	/* forget password */
-	public function _forgot_password (){
-		if ($this->session->userdata('is_logged_in')) {
-			$this->login_model->logout ();
-		}
-		if (isset ($_GET['sub']) && ! empty ($_GET['sub']) && $_GET['sub'] != 'undefined') {
-    		$access_code = $_GET['sub'];
-		} else {
-			$access_code = ACCESS_CODE;
-		}
-		$coaching = $this->coaching_model->get_coaching_by_slug ($slug);
-		if ($coaching) {
-			$coaching_dir = 'contents/coachings/' . $coaching['id'] . '/';
-			$coaching_logo = $this->config->item ('coaching_logo');
-			$logo_path =  $coaching_dir . $coaching_logo;				
-			$logo = base_url ($logo_path);
-
-			$page_title = 'Forgot Password ' . $coaching['coaching_name'];
-			$data['coaching_id'] = $coaching['id'];
-			$data['coaching'] 			= $coaching;
-		} else {
-			$slug = '';
-			$logo = base_url ($this->config->item('system_logo'));
-			$page_title = 'Forgot Password ' . SITE_TITLE;
-		}
-
-		$data['page_title'] 		= $page_title;
-		$data['slug'] = $slug;
-		$data['logo'] = $logo;
-		$this->load->view (INCLUDE_PATH . 'header', $data);
-		$this->load->view ('forgot_password');		
-		$this->load->view (INCLUDE_PATH . 'footer', $data);
-	}	
-
+	}
 }

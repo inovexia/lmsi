@@ -4,6 +4,7 @@
 class Courses extends MX_Controller {
 
 	var $toolbar_buttons = [];
+	var $coaching_id;
 
 	public function __construct() {
 		// Load Config and Model files required throughout Users sub-module
@@ -12,7 +13,14 @@ class Courses extends MX_Controller {
 		$this->common_model->autoload_resources($config, $models);
 
 		// Toolbar buttons
-	    $coaching_id = $this->uri->segment (4);
+	    if ($this->uri->segment (4)) {
+        	$coaching_id = $this->uri->segment (4);
+	    } else {
+	    	$coaching_id = $this->session->userdata ('coaching_id');
+	    }
+
+	    $this->coaching_id = $coaching_id;
+  
 	    if ($this->coaching_model->is_coaching_setup () == false) {
 	    	$this->message->set ('Your account information is incomplete. You should complete your account information before using this module', 'warning', true);
 	    	redirect ('coaching/settings/setup_coaching_account');
@@ -24,8 +32,9 @@ class Courses extends MX_Controller {
         ];
 	}
 
-	public function index ($coaching_id=0, $cat_id=0) {
+	public function index ($coaching_id=0, $cat_id='-1') {
 		
+		$coaching_id 		= $this->coaching_id;
 		$data['page_title'] = 'Courses';
 		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
 		$data['coaching_id'] = $coaching_id;
@@ -33,7 +42,7 @@ class Courses extends MX_Controller {
 
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
 		$data['courses'] = $this->courses_model->courses ($coaching_id, $cat_id);
-
+		
 		$data['script'] = $this->load->view('courses/scripts/index', $data, true);
 		$this->load->view(INCLUDE_PATH . 'header', $data);
 		$this->load->view('courses/index', $data);
@@ -44,7 +53,6 @@ class Courses extends MX_Controller {
 	
 	public function create ($coaching_id=0, $cat_id=-1, $course_id=0) {
 
-
 		$data['coaching_id'] = $coaching_id;
 		$data['cat_id'] = $cat_id;
 		$data['course_id'] = $course_id;
@@ -52,6 +60,8 @@ class Courses extends MX_Controller {
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
 		$data['course'] = $this->courses_model->get_course_by_id ($course_id);
 		$data['default'] = $this->settings_model->get_default_settings ($coaching_id, 'currency');
+		$data['country'] = $this->common_model->get_user_geo_location ();
+		$data['country_list'] = $this->common_model->sys_country_list ();
 
 		if ($course_id > 0) {
 			$data['page_title'] = 'Edit Course';

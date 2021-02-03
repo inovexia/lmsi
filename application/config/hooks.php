@@ -21,11 +21,18 @@ $hook['pre_controller'][] = array(
         'params'   => ''
 );
 
+$hook['pre_controller'][] = array(
+        'class'    => 'Vitals',
+        'filename' => 'Vitals.php',
+        'function' => 'is_student',
+        'filepath' => 'hooks',
+        'params'   => ''
+);
 
 $hook['pre_controller'][] = array(
         'class'    => 'Vitals',
-        'function' => 'validate_session',
         'filename' => 'Vitals.php',
+        'function' => 'validate_session',
         'filepath' => 'hooks',
         'params'   => ''
 );

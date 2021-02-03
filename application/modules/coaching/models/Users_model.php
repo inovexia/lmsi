@@ -5,27 +5,32 @@ class Users_model extends CI_Model {
     // Get all users
 	public function get_users ($coaching_id=0, $role_id=0, $status='-1', $batch_id=0) {
 
-	    $select = 'M.*, SR.description'; 
-	    
-	    $this->db->select ($select);
+		if ($coaching_id > 0) {
+		    $select = 'M.*, SR.description'; 
+		    
+		    $this->db->select ($select);
 
-	    if ($status > '-1') {
-	        $this->db->where ('M.status', $status);
-	    }
-	    $this->db->from ('members M');
-	    
-	    if ($role_id > 0) {
-	        $this->db->where ('M.role_id', $role_id);
-	    }
-        $this->db->join ('sys_roles SR', 'M.role_id=SR.role_id');
+		    if ($status > '-1') {
+		        $this->db->where ('M.status', $status);
+		    }
+		    $this->db->from ('members M');
+		    
+		    if ($role_id > 0) {
+		        $this->db->where ('M.role_id', $role_id);
+		    }
+	        $this->db->join ('sys_roles SR', 'M.role_id=SR.role_id');
 
-	    if ($batch_id > 0) {
-	        $this->db->join ('coaching_course_batch_users BU', 'M.member_id=BU.member_id AND BU.batch_id='.$batch_id);
-	    }
-	    $this->db->where ('M.coaching_id', $coaching_id);
-	    $this->db->order_by ('M.first_name, M.second_name, M.last_name', 'ASC');
-	    $sql = $this->db->get ();
-	    return $sql->result_array ();
+		    if ($batch_id > 0) {
+		        $this->db->join ('coaching_course_batch_users BU', 'M.member_id=BU.member_id AND BU.batch_id='.$batch_id);
+		    }
+		    $this->db->where ('M.coaching_id', $coaching_id);
+		    $this->db->order_by ('M.first_name, M.second_name, M.last_name', 'ASC');
+		    $sql = $this->db->get ();
+		    return $sql->result_array ();
+
+		} else {
+			return false;
+		}
 	}
 	
     
@@ -1003,13 +1008,13 @@ class Users_model extends CI_Model {
 	/* 
 	 *	SEND USER INVITATION 
 	 */
-	public function invite_by_email ($coaching_id=0) {
-		$email = $this->input->post ('email');
+	public function invite_by_email ($coaching_id=0, $email='') {
+		if ($email == '') {
+			$email = $this->input->post ('email');
+		}
 		$checksum = md5 ($email);
 
 		if ($this->invite_exists ($coaching_id, 'email', $email) == false) {
-			// Send invite
-			$this->send_invite ($coaching_id, 'email', $email, $checksum);
 			// Add record
 			$data['coaching_id'] = $coaching_id;
 			$data['email'] = $email;
@@ -1020,17 +1025,23 @@ class Users_model extends CI_Model {
 			$this->db->insert ('member_invites', $data);
 			return true;
 		} else {
-			return false;
+			$data['sent_time'] = time ();
+			$this->db->where ('coaching_id', $coaching_id);
+			$this->db->where ('email', $email);
+			$this->db->update ('member_invites', $data);
+			return true;
 		}
+		// Send invite
+		$this->send_invite ($coaching_id, 'email', $email, $checksum);
 	}
 
-	public function invite_by_mobile ($coaching_id=0) {
-		$mobile = $this->input->post ('mobile');
+	public function invite_by_mobile ($coaching_id=0, $mobile='') {
+		if ($mobile == '') {
+			$mobile = $this->input->post ('mobile');
+		}
 		$checksum = md5 ($mobile);
 
 		if ($this->invite_exists ($coaching_id, 'mobile', $mobile) == false) {
-			// Send invite
-			$this->send_invite ($coaching_id, 'mobile', $mobile, $checksum);
 			// Add record
 			$data['coaching_id'] = $coaching_id;
 			$data['checksum'] = $checksum;
@@ -1041,8 +1052,15 @@ class Users_model extends CI_Model {
 			$this->db->insert ('member_invites', $data);
 			return true;
 		} else {
-			return false;
+			$data['sent_time'] = time ();
+			$this->db->where ('coaching_id', $coaching_id);
+			$this->db->where ('mobile', $mobile);
+			$this->db->update ('member_invites', $data);
+			return true;
 		}
+
+		// Send invite
+		$this->send_invite ($coaching_id, 'mobile', $mobile, $checksum);
 	}
 
 	public function invite_exists ($coaching_id=0, $type='email', $str='') {
@@ -1052,7 +1070,7 @@ class Users_model extends CI_Model {
 		} else {
 			$this->db->where ('mobile', $str);
 		}
-		$sql = $this->db->get ('member_invites', $str);
+		$sql = $this->db->get ('member_invites');
 		if ($sql->num_rows () > 0) {
 			return true;
 		} else {
@@ -1081,5 +1099,17 @@ class Users_model extends CI_Model {
 		$this->db->order_by ('sent_time', 'DESC');
 		$sql = $this->db->get ('member_invites');
 		return $sql->result_array ();
+	}
+
+	public function resend_invite ($coaching_id=0, $id=0, $type='mobile') {
+		$this->db->select ('mobile, email');
+		$this->db->where ('invite_id', $id);
+		$sql = $this->db->get ('member_invites');
+		$row = $sql->row_array ();
+		if ($type == 'email') {
+			$this->invite_by_email ($coaching_id, $row['email']);
+		} else {
+			$this->invite_by_mobile ($coaching_id, $row['mobile']);
+		}
 	}
 }

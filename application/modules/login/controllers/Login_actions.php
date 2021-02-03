@@ -9,6 +9,7 @@ class Login_actions extends MX_Controller {
 	    $models = ['login_model', 'coaching/users_model', 'coaching/coaching_model', 'coaching/settings_model'];
 	    $this->common_model->autoload_resources ($config, $models);
 	    $this->load->helper ('string');
+		$this->load->helper('captcha');
 	}
 
     public function validate_login ($admin_login=false) {

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Teacher_actions extends MX_Controller {
+class User_actions extends MX_Controller {
 
 
 	public function __construct () {
@@ -14,7 +14,7 @@ class Teacher_actions extends MX_Controller {
 		$this->load->helper('captcha');
 	}
 
-    public function validate_login ($admin_login=false) {
+    public function validate_login () {
 	
 		$this->form_validation->set_rules ('username', 'Username', 'required|trim');
 		$this->form_validation->set_rules ('password', 'Password', 'required|trim');
@@ -28,7 +28,7 @@ class Teacher_actions extends MX_Controller {
 				$this->output->set_output(json_encode(array('status'=>false, 'error'=>_AT_TEXT ('INVALID_CAPTCHA', 'msg'))));
 			} else {
 
-				$response = $this->login_model->validate_login ($admin_login);
+				$response = $this->login_model->validate_login ();
 
 				if ($response['status'] == LOGIN_SUCCESSFUL) {
 					$redirect = $this->session->userdata ('dashboard');
@@ -60,7 +60,7 @@ class Teacher_actions extends MX_Controller {
 					$this->output->set_content_type("application/json");
 					$this->output->set_output(json_encode(array('status'=>false, 'error'=>_AT_TEXT ('LOGIN_ERROR', 'msg'))));					
 				}
-			}			
+			}
 			
 		} else {
 			$this->output->set_content_type("application/json");
@@ -124,62 +124,7 @@ class Teacher_actions extends MX_Controller {
 			}
 		}
 	}
-
-	public function get_access_code () {
-		$this->form_validation->set_rules('mobile', 'Mobile Number', 'required|numeric|max_length[15]|trim');
-
-		if ($this->form_validation->run () == true) {
-			// check if contact exists
-			$contact = $this->input->post ('mobile');
-			$user = $this->users_model->contact_exists ($contact);
-			if ($user == false) {
-				$this->output->set_content_type("application/json");
-				$this->output->set_output(json_encode(array('status'=>false, 'error'=>'This mobile number is not registered with any coaching' )));
-			} else {
-				$sms_msg = '';
-				$email_msg = '';
-				$send_email = false;
-				foreach ($user as $row) {
-
-					$data = [];
-					$coaching = $this->coaching_model->get_coaching ($row['coaching_id']);
-					$data['coaching_name'] = $coaching['coaching_name'];
-					$data['access_code'] = $coaching['reg_no'];
-					
-					// Send SMS
-					$sms_msg .= $this->load->view (SMS_TEMPLATE . 'get_access_code', $data, true);
-					
-					// Send Email
-					if ($row['email'] != '') {
-						$email = $row['email'];
-						$subject = 'Access Code';
-						$email_msg .= $this->load->view (EMAIL_TEMPLATE . 'get_access_code', $data, true);
-						$send_email = true;
-					}					
-				}
-				
-				// Send SMS
-				$this->sms_model->send_sms ($contact, $sms_msg);
-
-				// Send email
-				if ($send_email == true) {
-					$this->common_model->send_email ($email, $subject, $email_msg);
-				}
-
-				// Display Message
-				$msg = 'We have sent Access Code on your mobile and email';
-				
-				$this->message->set ($msg, 'success', true);
-				
-				$this->output->set_content_type("application/json");
-				$this->output->set_output(json_encode(array('status'=>true, 'message'=>$msg, 'redirect'=>site_url('login/user/index') )));
-			}
-		} else {
-			$this->output->set_content_type("application/json");
-			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors() )));
-		}
-	}
-
+	
 
 	public function update_session ($user_token='') {
 

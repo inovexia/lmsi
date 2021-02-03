@@ -5,6 +5,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Slots extends MX_Controller {
 
     var $toolbar_buttons = [];
+    var $coaching_id;
+
+  
 
     public function __construct() {
         // Load Config and Model files required throughout Users sub-module
@@ -12,8 +15,15 @@ class Slots extends MX_Controller {
         $models = ['courses_model', 'slots_model', 'users_model'];
         $this->common_model->autoload_resources ($config, $models);
 
+        if ($this->uri->segment (4)) {
+            $coaching_id = $this->uri->segment (4);
+        } else {
+            $coaching_id = $this->session->userdata ('coaching_id');
+        }
+
+        $this->coaching_id = $coaching_id;
+
         // Toolbar buttons
-        $coaching_id = $this->uri->segment (4);
         if ($this->coaching_model->is_coaching_setup () == false) {
             $this->message->set ('Your account information is incomplete. You should complete your account information before using this module', 'warning', true);
             redirect ('coaching/settings/setup_coaching_account');
@@ -28,12 +38,13 @@ class Slots extends MX_Controller {
 
     public function index ($coaching_id=0, $date="") {
 
+        $coaching_id = $this->coaching_id;
         $data['page_title'] = 'Slots';
         $data['bc'] = ['Dashboard' => 'coaching/home/dashboard/'];
         $data['toolbar_buttons'] = $this->toolbar_buttons;
 
         if ($date == "") {
-            $date = mktime (0, 0, 0, date ('m'), date('d'), date('Y'));
+            $date = date('Y-m-d');
         }
         $data['coaching_id'] = $coaching_id;
         $data['date'] = $date;

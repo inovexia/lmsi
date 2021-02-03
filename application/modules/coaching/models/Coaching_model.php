@@ -143,7 +143,7 @@ class Coaching_model extends CI_Model {
 	}
 
 	public function get_coaching ($coaching_id=0) {
-		$this->db->where ('coachings.id', $coaching_id);
+		$this->db->where ('id', $coaching_id);
 		$this->db->from ('coachings');
 		$sql = $this->db->get ();
 		if  ($sql->num_rows () > 0 ) {
@@ -174,7 +174,6 @@ class Coaching_model extends CI_Model {
 		$this->db->from ('coachings C');
 		$this->db->join ('coaching_settings CS', 'C.id=CS.coaching_id', 'left');
 		$this->db->where ('C.coaching_url', $coaching_slug);
-		$this->db->or_where ('C.reg_no', $coaching_slug);
 		$sql = $this->db->get ();
 		if  ($sql->num_rows () > 0 ) {
 			$result = $sql->row_array ();

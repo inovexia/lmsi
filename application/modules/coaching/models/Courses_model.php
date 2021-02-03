@@ -140,6 +140,7 @@ class Courses_model extends CI_Model {
 		}
 		return $courses;
 	}
+
 	public function member_courses_by_type($type = COURSE_ENROLMENT_DIRECT, $coaching_id, $cat_id=0, $status = CATEGORY_STATUS_ALL){
         $this->db->select(
         	array(
@@ -233,7 +234,7 @@ class Courses_model extends CI_Model {
 			$data['coaching_id'] = $coaching_id;
 			$data['cat_id'] = $category_id;			
 			$data['created_on'] = time();
-			$data['created_by'] = $this->session->userdata('member_id');
+			$data['created_by'] = $this->session->userdata ('member_id');
 			$this->db->insert('coaching_courses', $data);
 			$course_id = $this->db->insert_id ();
 		}

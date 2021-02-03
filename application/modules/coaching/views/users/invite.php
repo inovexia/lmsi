@@ -54,10 +54,10 @@
 		                        <p class="list-item-heading mb-0 truncate">
 		                        	<?php 
 		                        	if (! empty ($row['email'])) {
-		                        		$type = 'mobile';
+		                        		$type = 'email';
 		                        		echo $row['email'];
 		                        	} else {
-		                        		$type = 'email';
+		                        		$type = 'mobile';
 		                        		echo $row['mobile'];		                        		
 		                        	}
 		                        	?>

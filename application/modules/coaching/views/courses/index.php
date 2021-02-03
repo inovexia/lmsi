@@ -15,9 +15,9 @@
                     <div class="w-15 w-xs-100">
                         <?php 
                           if ($row['status'] == COURSE_STATUS_ACTIVE) {
-                            echo '<span class="badge badge-pill badge-primary">Published</span>';
+                            echo '<span class="badge badge-pill badge-success mb-1">Published</span>';
                           } else {
-                            echo '<span class="badge badge-pill badge-light">Unpublished</span>';
+                            echo '<span class="badge badge-pill badge-light mb-1">Unpublished</span>';
                           }
                         ?>
                     </div>
@@ -34,9 +34,8 @@
     } else {
       ?>
       <div class="alert alert-danger" role="alert">
-          <p class="">You have not created any course</p>
+          <div>You have not created any course</div>
       </div>
-      <?php echo anchor ('coaching/courses/create/'.$coaching_id.'/'.$cat_id, 'Create a new course', ['class'=>'btn btn-primary']); ?>
       <?php
     }
     ?>

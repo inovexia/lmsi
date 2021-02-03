@@ -164,16 +164,21 @@ class Settings_model extends CI_Model {
 			$this->db->where ('name', $name);
 		}
 		$sql = $this->db->get ('coaching_config');
-		if (! empty($name)) {
-			$row = $sql->row_array ();
-			$data[$row['name']] = $row['value'];
-		} else {
-			$result = $sql->result_array ();
-			if (! empty($result)) {
-				foreach ($result as $row) {
-					$data[$row['name']] = $row['value'];
+		if ($sql->num_rows () > 0) {		// Setting(s) found
+			if (! empty($name)) {
+				$row = $sql->row_array ();
+				$data[$row['name']] = $row['value'];
+			} else {
+				$result = $sql->result_array ();
+				if (! empty($result)) {
+					foreach ($result as $row) {
+						$data[$row['name']] = $row['value'];
+					}
 				}
-			}
+			}			
+		} else {							// No setting(s) found
+			$default = $this->common_model->get_country_by_code (DEFAULT_COUNTRY_CODE);
+			return $default;
 		}
 
 		return $data;
@@ -186,35 +191,36 @@ class Settings_model extends CI_Model {
 
 		// Add/update currency
 		$this->db->select ('value');
-		$this->db->where ('name', 'currency');
+		$this->db->where ('name', 'currency_code');
 		$this->db->where ('coaching_id', $coaching_id);
 		$sql = $this->db->get ('coaching_config');
 		if ($sql->num_rows () == 0) {
 			$data['coaching_id'] = $coaching_id;
-			$data['name'] = 'currency';
+			$data['name'] = 'currency_code';
 			$data['value'] = $currency;
 			$this->db->insert ('coaching_config', $data);
 		} else {
 			$this->db->set ('value', $currency);
-			$this->db->where ('name', 'currency');
+			$this->db->where ('name', 'currency_code');
 			$this->db->set ('coaching_id', $coaching_id);
 			$this->db->update ('coaching_config');
 		}
 
-		// Add/update dialing
 		$dialing = $this->input->post ('dialing');
+
+		// Add/update dialing
 		$this->db->select ('value');
-		$this->db->where ('name', 'dialing');
+		$this->db->where ('name', 'dialing_code');
 		$this->db->where ('coaching_id', $coaching_id);
 		$sql = $this->db->get ('coaching_config');
 		if ($sql->num_rows () == 0) {
 			$data['coaching_id'] = $coaching_id;
-			$data['name'] = 'dialing';
+			$data['name'] = 'dialing_code';
 			$data['value'] = $dialing;
 			$this->db->insert ('coaching_config', $data);
 		} else {
 			$this->db->set ('value', $dialing);
-			$this->db->where ('name', 'dialing');
+			$this->db->where ('name', 'dialing_code');
 			$this->db->set ('coaching_id', $coaching_id);
 			$this->db->update ('coaching_config');
 		}
