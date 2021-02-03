@@ -3,7 +3,7 @@ if (!defined('BASEPATH')) {
   exit('No direct script access allowed');
 }
 
-class Home extends MX_Controller
+class Slots extends MX_Controller
 {
   public function __construct()
   {
@@ -20,9 +20,9 @@ class Home extends MX_Controller
     }
   }
 
-  public function dashboard($coaching_id = 0, $member_id = 0)
+  public function my_appointments($coaching_id = 0, $member_id = 0)
   {
-    $data['page_title'] = 'Dashboard';
+    $data['page_title'] = 'My Appointments';
     if ($coaching_id == 0) {
       $coaching_id = $this->session->userdata('coaching_id');
     }
@@ -33,24 +33,10 @@ class Home extends MX_Controller
     $data['coaching_id'] = $coaching_id;
     $data['member_id'] = $member_id;
     $data['role_id'] = $role_id;
-    $data['courses'] = $courses = $this->courses_model->my_courses($coaching_id, $member_id);
-    $data['catalog'] = $this->courses_model->get_courses();
-    $data['classrooms'] = $this->virtual_class_model->my_classroom($coaching_id, $member_id);
     $data['past_slots'] = $past_slots = $this->slots_model->past_slots($coaching_id, $member_id);
     $data['upcoming_slots'] = $upcoming_slots = $this->slots_model->upcoming_slots($coaching_id, $member_id);
-    $my_tests = [];
-    if (!empty($courses)) {
-      foreach ($courses as $row) {
-        $tests = $this->tests_model->get_all_tests($coaching_id, $row['course_id']);
-        $row['tests'] = $tests;
-        $my_tests[] = $row;
-      }
-    }
-    $data['my_tests'] = $my_tests;
-    $data['annc'] = $this->announcements_model->get_announcements($coaching_id);
-    $data['dashboard_menu'] = $this->common_model->load_acl_menus($role_id, 0, MENUTYPE_DASHBOARD);
     $this->load->view(INCLUDE_PATH . 'header', $data);
-    $this->load->view('home/dashboard', $data);
+    $this->load->view('slots/my_appointments', $data);
     $this->load->view(INCLUDE_PATH . 'footer', $data);
   }
 }
