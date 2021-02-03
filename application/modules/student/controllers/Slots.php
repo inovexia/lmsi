@@ -20,6 +20,11 @@ class Slots extends MX_Controller
     }
   }
 
+
+  public function index ($coaching_id = 0, $member_id = 0) {
+    $this->my_appointments ($coaching_id, $member_id);
+  }
+
   public function my_appointments($coaching_id = 0, $member_id = 0)
   {
     $data['page_title'] = 'My Appointments';
