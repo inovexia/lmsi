@@ -97,14 +97,10 @@
 	                </svg>
 	            </a>
 
+	            <h4 class="ml-2 pt-2"><?php echo $this->session->userdata ('site_title'); ?></h4>
 
 	        </div>
-
-
-	        <a class="navbar-logo" href="Dashboard.Default.html">
-	            <span class="logo d-none d-xs-block"></span>
-	            <span class="logo-mobile d-block d-xs-none"></span>
-	        </a>
+	       
 
 	        <div class="navbar-right">
 	        	<!--

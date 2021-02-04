@@ -59,7 +59,22 @@ class Teacher extends MX_Controller {
 		$this->load->view ('teacher/login', $data);
 		$this->load->view (INCLUDE_PATH . 'footer', $data);
 	}
+
 	
+	public function register () {
+		$data['hide_navbar'] = true;
+		$data['hide_titlebar'] = true;
+		$data['hide_sidemenu'] = true;
+
+		$data['country'] = $this->common_model->get_user_geo_location ();
+		$data['country_list'] = $this->common_model->sys_country_list ();
+		$data['script'] = $this->load->view ('scripts/register', $data, true); 
+		$this->load->view (INCLUDE_PATH . 'header', $data);
+		$this->load->view ('teacher/register', $data);		
+		$this->load->view (INCLUDE_PATH . 'footer', $data);
+	}
+
+
 	
 	/* forgot password */
 	public function reset_password () {

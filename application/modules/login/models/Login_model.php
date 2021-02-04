@@ -111,7 +111,7 @@ class Login_model extends CI_Model {
 			$site_title = $coaching['coaching_name'];
 		} else {
 			$logo = base_url ($this->config->item('system_logo'));
-			$site_title = SITE_TITLE;
+			$site_title = APP_NAME;
 		}
 
 		// User profile image

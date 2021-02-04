@@ -17,7 +17,7 @@ class User extends MX_Controller {
 
  		$coaching = $this->coaching_model->get_coaching_by_slug ($slug);
  		if ($coaching == false) {
-
+ 			echo 'Not found!! This feature is still under development.';
  		} else {
 	    	// Load Coaching Settings
 			$logo_path = $this->config->item ('system_logo');
@@ -116,7 +116,9 @@ class User extends MX_Controller {
 			$this->session->set_userdata('captcha_key', $captcha_key);
 			$data['captcha'] = $cap['image'];		
 			
-			$data['script'] = $this->load->view ('scripts/login', $data, true); 
+			$data['country'] = $this->common_model->get_user_geo_location ();
+			$data['country_list'] = $this->common_model->sys_country_list ();
+			$data['script'] = $this->load->view ('scripts/student/register', $data, true); 
 
 			$this->load->view (INCLUDE_PATH . 'header', $data);
 			$this->load->view ('student/register', $data);

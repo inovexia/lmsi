@@ -14,9 +14,8 @@ class Courses extends MX_Controller
     $this->common_model->autoload_resources($config, $models);
   }
 
-  public function index($coaching_id = 0, $member_id = 0, $cat_id = '-1')
-  {
-    $data['page_title'] = 'Course Catalog';
+  public function index($coaching_id = 0, $member_id=0, $cat_id='-1') {
+    $data['page_title'] = 'Courses';
     if ($coaching_id == 0) {
       $coaching_id = $this->session->userdata('coaching_id');
     }

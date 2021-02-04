@@ -69,7 +69,7 @@ function validate_otp (otp) {
 				// Show success message
 				toastr.success (result.message, '', {timeOut:3000});
 				// Disable button
-				$('#user_mobile').prop ('readonly', true);
+				$('#primary_contact').prop ('readonly', true);
 				$('#mobile-otp').prop ('disabled', true);
 				$('#btn-send-otp').addClass ('d-none');
 				// Add OTP input box

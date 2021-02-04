@@ -28,7 +28,7 @@ class Account_actions extends MX_Controller {
 
 			$contact 	= $this->input->post ('primary_contact');
 
-			if ($this->registration_model->teacher_account_exists ($contact) == true) {
+			if ($this->registration_model->account_exists ($contact) == true) {
 				$message = 'This mobile number number is already registered with an account. If this is your number try "Log-in" or "Forgot Password"';
 				$this->output->set_content_type("application/json");
 				$this->output->set_output(json_encode(array('status'=>false, 'error'=>$message)));
@@ -66,7 +66,7 @@ class Account_actions extends MX_Controller {
 	}
 
 	
-	public function register_teacher () {
+	public function register () {
 		$this->form_validation->set_rules ('first_name', 'Name', 'required|trim|alpha_numeric_spaces|min_length[3]', 
 				['min_length'=>'Name is too short. Should be atleast 3 characters']);
 		$this->form_validation->set_rules ('primary_contact', 'Mobile Number', 'required|is_natural|min_length[10]|max_length[15]');
@@ -78,26 +78,45 @@ class Account_actions extends MX_Controller {
 			$contact 	= $this->input->post ('primary_contact');
 			$user_name 	= $this->input->post ('first_name');
 			$email 		= $this->input->post ('email');
+			$role_id	= $this->input->post ('role_id');
+			$coaching_id	= $this->input->post ('coaching_id');
 
+			// Get coaching details
+			$coaching = $this->coaching_model->get_coaching ($coaching_id);
 			// Save user details
-			$member_id = $this->registration_model->create_teacher_account ();
+			$member_id = $this->registration_model->create_account ();
 				
+			// Send SMS to user
+			$data['name'] = $user_name;
+			$data['coaching'] = $coaching;
+			if ($role_id == USER_ROLE_TEACHER) {
+				$message = $this->load->view (SMS_TEMPLATE . 'create_teacher_account', $data, true);
+			} else {
+				$message = $this->load->view (SMS_TEMPLATE . 'create_student_account', $data, true);
+			}
+			$this->sms_model->send_sms ($contact, $message);
+
 			// Notification Email to teacher
 			if ($email != '') {
 				$to = $email;
 				$subject = 'Welcome to '.APP_NAME;
-				$data['name'] = $user_name;
-				$message = $this->load->view (EMAIL_TEMPLATE . 'create_teacher_account', $data, true);
+				if ($role_id == USER_ROLE_TEACHER) {
+					$message = $this->load->view (EMAIL_TEMPLATE . 'create_teacher_account', $data, true);
+				} else {
+					$message = $this->load->view (EMAIL_TEMPLATE . 'create_student_account', $data, true);					
+				}
 				$this->common_model->send_email ($to, $subject, $message);
-			}					
-					
-			// Send SMS to user
-			$data['name'] = $user_name;
-			$message = $this->load->view (SMS_TEMPLATE . 'create_teacher_account', $data, true);
-			$this->sms_model->send_sms ($contact, $message);
+			}
+
+			if ($role_id == USER_ROLE_STUDENT) {
+				$redirect = site_url ('login/user/index/'.$coaching['coaching_url']);
+			} else {
+				$redirect = '';
+			}
+
 			$this->message->set ($message, 'success', true );
 			$this->output->set_content_type("application/json");
-			$this->output->set_output(json_encode(array('status'=>true, 'message'=>$message, 'member_id'=>$member_id)));
+			$this->output->set_output(json_encode(array('status'=>true, 'message'=>$message, 'member_id'=>$member_id, 'redirect'=>$redirect)));
 	    } else {
 			$this->output->set_content_type("application/json");
 			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors())));

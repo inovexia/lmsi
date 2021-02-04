@@ -8,10 +8,10 @@ class Registration_model extends CI_Model {
 	}
 
 
-	public function teacher_account_exists ($contact='') {
+	public function account_exists ($contact='') {
 		$this->db->select ('member_id');
 		$this->db->where ('primary_contact', $contact);
-		$this->db->where ('role_id', USER_ROLE_TEACHER);
+		//$this->db->where ('role_id', USER_ROLE_TEACHER);
 		$sql = $this->db->get ('members');
 		if ($sql->num_rows () > 0) {
 			return true;
@@ -54,7 +54,7 @@ class Registration_model extends CI_Model {
 		}
 	}
 
-	public function create_teacher_account () {
+	public function create_account () {
 		$name = explode (" ", $this->input->post ('first_name'));
 		$first_name = $name[0];
 		if (isset ($name[1])) {
@@ -65,7 +65,8 @@ class Registration_model extends CI_Model {
 		$data['first_name'] = $first_name;
 		$data['last_name'] = $last_name;
 		$password = $this->input->post ('password');
-		$data['role_id'] = USER_ROLE_TEACHER;
+		$data['role_id'] = $this->input->post ('role_id');
+		$data['coaching_id'] = $this->input->post ('coaching_id');
 		$data['status'] = USER_STATUS_ENABLED;
 		$data['password'] = password_hash ($password, PASSWORD_DEFAULT);
 		$data['primary_contact'] =  $this->input->post ('primary_contact');
@@ -89,11 +90,6 @@ class Registration_model extends CI_Model {
 		$this->db->set ('adm_no', $user_id);
 		$this->db->where ('member_id', $member_id);
 		$this->db->update ('members');
-
-		$sl['is_logged_in'] = true;
-		$sl['member_id'] = $member_id;
-		$sl['coaching_id'] = 0;
-		$this->common_model->setup_login ($sl);
 
 		return $member_id;
 
