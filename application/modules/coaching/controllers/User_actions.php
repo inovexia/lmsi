@@ -513,7 +513,7 @@ class User_actions extends MX_Controller {
 		if ($this->form_validation->run () == true) {
 			$this->users_model->invite_by_email ($coaching_id);
 			$this->output->set_content_type("application/json");
-			$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Invitation sent')));
+			$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Invitation sent', 'redirect'=>site_url ('coaching/users/invite/'.$coaching_id))));
 		} else {
 			$this->output->set_content_type("application/json");
 			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors ())));
