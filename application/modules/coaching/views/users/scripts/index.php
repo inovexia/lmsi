@@ -14,7 +14,9 @@ $(document).ready (function () {
 		var url = '<?php echo site_url ('coaching/users/index/'.$coaching_id); ?>/'+role_id+'/<?php echo $status.'/'.$batch_id; ?>';
 		$(location).attr('href', url);
 	});
-	
+	$('#checkAll2, #checkAll').on ('change', function () {
+    $('#checkAll, #checkAll2').trigger('click');
+  });
 	$('#search-batch').on ('change', function () {
 		var batch_id = $(this).val ();
 		var url = '<?php echo site_url ('coaching/users/index/'.$coaching_id.'/'.$role_id.'/'.$status); ?>/'+batch_id;
