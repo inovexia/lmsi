@@ -182,7 +182,7 @@ class Tests_model extends CI_Model {
 				'max_marks'  	  	=>0, 
 				'num_takes'      	=>$this->input->post('num_takes'),
 				'pass_marks'      	=>$this->input->post('pass_marks'),
-				'release_result'	=>$this->input->post('release_result'),
+				'release_result'	=>0,
 				'course_id'      	=>($course_id==0)? null : $course_id,
 				'unique_test_id' 	=> $this->generate_reference_id($coaching_id, $course_id, $tid),
 				'test_mode'      	=>$test_mode,

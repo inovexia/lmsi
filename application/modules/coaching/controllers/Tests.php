@@ -1,8 +1,9 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+ <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
 class Tests extends MX_Controller {
 	
     var $toolbar_buttons = []; 
+	var $coaching_id;
 
 	public function __construct () {
 	    // Load Config and Model files required throughout Users sub-module
@@ -11,37 +12,34 @@ class Tests extends MX_Controller {
 	    $this->common_model->autoload_resources ($config, $models);
 	    
 		// Toolbar buttons
-	    $coaching_id = $this->uri->segment (4);
+	    if ($this->uri->segment (4)) {
+        	$coaching_id = $this->uri->segment (4);
+	    } else {
+	    	$coaching_id = $this->session->userdata ('coaching_id');
+	    }
+
+	    $this->coaching_id = $coaching_id;
+  
 	    if ($this->coaching_model->is_coaching_setup () == false) {
 	    	$this->message->set ('Your account information is incomplete. You should complete your account information before using this module', 'warning', true);
 	    	redirect ('coaching/settings/setup_coaching_account');
 	    }
 
+
 	    $course_id = $this->uri->segment (5);
 
+        $this->toolbar_buttons['add_new'] = ['<i class="iconsminds-add"></i> New Course' => 'coaching/courses/create/'.$coaching_id];
+        $this->toolbar_buttons['actions'] = [
+            '<i class="simple-icon-list"></i> All Courses'=>'coaching/courses/index/'.$coaching_id,
+        ];
+
+        /*
         $this->toolbar_buttons['<i class="fa fa-puzzle-piece"></i> All Tests']= 'coaching/tests/index/'.$coaching_id.'/'.$course_id;
         $this->toolbar_buttons['<i class="fa fa-plus-circle"></i> New Test']= 'coaching/tests/create_test/'.$coaching_id.'/'.$course_id;
         $this->toolbar_buttons['<i class="fa fa-import"></i> Import Free Tests From EasyLMS']= 'coaching/indiatests/index/'.$coaching_id.'/'.$course_id;
         $this->toolbar_buttons['<i class="fa fa-import"></i> Buy Tests From EasyLMS']= 'coaching/indiatests/index/'.$coaching_id.'/'.$course_id.'/1';
-        
-        if ($this->session->userdata ('is_admin') == TRUE) {
-        } else {
-
-        	// Security step to prevent unauthorized access through url
-            if ($coaching_id == true && $this->session->userdata ('coaching_id') <> $coaching_id) {
-                $this->message->set ('Direct url access not allowed', 'danger', true);
-                // redirect ('coaching/home/dashboard');
-            }
-
-        	// Check subscription plan expiry
-            // $coaching = $this->subscription_model->get_coaching_subscription ($coaching_id);
-            $today = time ();
-            $current_plan = $coaching['subscription_id'];
-            if ($today > $coaching['ending_on']) {
-            	$this->message->set ('Your subscription has expired. Choose a plan to upgrade', 'danger', true);
-            	// redirect ('coaching/subscription/browse_plans/'.$coaching_id.'/'.$current_plan);
-            }
-        }
+        */
+      
 	}
 	
 	// Categories
@@ -93,7 +91,6 @@ class Tests extends MX_Controller {
 		$data['type'] 	 	 = $type;
 		$data['member_id'] 	 = $member_id = $this->session->userdata ('member_id');
 		$data['course'] = $this->courses_model->get_course_by_id ($course_id);
-		$data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
 
 		/*---=== Coaching Tests ===---*/
 		$data['tests'] = $tests = $this->tests_model->get_all_tests ($coaching_id, $course_id, $status, $type);
