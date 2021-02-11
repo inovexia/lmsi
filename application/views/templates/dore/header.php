@@ -386,7 +386,7 @@
 	                    ?>
 	                    <div class="separator mb-3"></div>
 		        	<?php } ?>
-
+              <?php echo (isset ($filter_block))? $filter_block : null; ?>
 					<div class="row justify-content-center">
 						<div class="col-md-6">
                 			<?php echo $this->message->display (); ?>

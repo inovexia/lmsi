@@ -53,40 +53,44 @@
       const slot_id = $(this).data('slot_id');
       const booking_date = $('#booking_date').data('value');
       const formData = new FormData();
-      formData.append('course_id', course_id);
-      formData.append('slot_id', slot_id);
-      formData.append('booking_date', booking_date);
-      toastr.clear();
-      toastr.info("Please wait...");
-      clickedButton.prop('disabled', true);
-      fetch(action, {
-          method: "POST",
-          body: formData,
-        })
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(result) {
-          toastr.clear();
-          console.log(result);
-          if (result.status == true) {
-            toastr.success(result.message, "", {
+      if (clickedButton.hasClass('btn-primary')) {
+        formData.append('course_id', course_id);
+        formData.append('slot_id', slot_id);
+        formData.append('booking_date', booking_date);
+        toastr.clear();
+        toastr.info("Please wait...");
+        clickedButton.tooltip('hide');
+        clickedButton.prop('disabled', true);
+        fetch(action, {
+            method: "POST",
+            body: formData,
+          })
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(result) {
+            toastr.clear();
+            console.log(result);
+            if (result.status == true) {
+              toastr.success(result.message, "", {
+                timeOut: 3000
+              });
+              clickedButton.removeClass("btn-primary book-slot").addClass("btn-danger disabled");
+              clickedButton.prop('disabled', false);
+            } else {
+              toastr.error(result.message, "", {
+                timeOut: 3000
+              });
+              clickedButton.prop('disabled', false);
+            }
+          })
+          .catch(function(error) {
+            toastr.info(error.message, "", {
               timeOut: 3000
             });
             clickedButton.prop('disabled', false);
-          } else {
-            toastr.error(result.message, "", {
-              timeOut: 3000
-            });
-            clickedButton.prop('disabled', false);
-          }
-        })
-        .catch(function(error) {
-          toastr.info(error.message, "", {
-            timeOut: 3000
           });
-          clickedButton.prop('disabled', false);
-        });
+      }
     });
   });
 })(jQuery);
