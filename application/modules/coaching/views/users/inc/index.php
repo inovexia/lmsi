@@ -1,11 +1,51 @@
+<?php
+function is_404($url) {
+    $handle = curl_init($url);
+    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+
+    /* Get the HTML or whatever is linked in $url. */
+    $response = curl_exec($handle);
+
+    /* Check for 404 (file not found). */
+    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+    curl_close($handle);
+
+    /* If the document has loaded successfully without any redirection or error */
+    if ($httpCode >= 200 && $httpCode < 300) {
+        return false;
+    } else {
+        return true;
+    }
+}
+?>
 <?php if ( ! empty ($results)): ?>
 <?php foreach ($results as $i => $row): ?>
 <div class="card d-flex flex-row mb-3">
-  <div class="d-flex flex-grow-1 min-width-zero">
+  <div class="d-flex flex-grow-1 min-width-zero pl-3">
+
+    <label class="custom-control custom-checkbox mb-1 align-self-center pr-1">
+
+      <input type="checkbox" name="mycheck[]" value="<?php echo $row['member_id']; ?>"
+        class="custom-control-input user-check" />
+      <span class="custom-control-label">&nbsp;</span>
+    </label>
+    <span class="align-self-center heading-icon px-1" style="font-size:0.8rem;"><?php echo $i+1; ?>-</span>
     <div
-      class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+      class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center pl-0">
       <div class=" w-30 w-xs-100 truncate d-block d-md-flex">
-        <div class="heading-icon media-left pr-2" style="font-size:0.8rem;"><?php echo $i+1; ?> - </div>
+        <div class="heading-icon media-left pr-2 d-none" style="font-size:0.8rem;"><?php echo $i+1; ?> - </div>
+        <div class="media-left pr-2">
+          <?php
+          if(is_404(site_url ('contents/users/pi_'.$row['member_id'].'.gif'))){ ?>
+          <img src="<?php echo site_url ('contents/users/default.png'); ?>" alt="User Avatar"
+            class="img-thumbnail border-0 rounded-circle list-thumbnail align-self-center xsmall" />
+          <?php } else { ?>
+          <img src="<?php echo site_url ('contents/users/pi_'.$row['member_id'].'.gif'); ?>" alt=""
+            class="img-thumbnail border-0 rounded-circle list-thumbnail align-self-center xsmall" />
+          <?php }
+        ?>
+
+        </div>
         <div class="media-right">
           <a class="list-item-heading mb-0 truncate btn-link"
             href="<?php echo site_url ('coaching/users/edit/'.$coaching_id.'/'.$row['role_id'].'/'.$row['member_id']); ?>">
@@ -14,17 +54,18 @@
           <br />
           <p class="m-0"><?php echo $row['adm_no']; ?></p>
         </div>
+
       </div>
       <p class="mb-0 w-20 w-xs-100 mb-2 m-md-0">
         <i class="iconsminds-mail-link pr-1"></i>
 
         <?php
-        if($row['email'] == ""){
-          echo "Not Updated";
-        }
-        else{
-echo $row['email'];
-        }
+          if($row['email'] == ""){
+            echo "Not Updated";
+          }
+          else{
+              echo $row['email'];
+          }
 
         ?>
       </p>
@@ -69,10 +110,7 @@ echo $row['email'];
         </div>
       </div>
     </div>
-    <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
-      <input type="checkbox" name="mycheck[]" value="<?php echo $row['member_id']; ?>" class="custom-control-input" />
-      <span class="custom-control-label">&nbsp;</span>
-    </label>
+
   </div>
 </div>
 <?php endforeach;?>
