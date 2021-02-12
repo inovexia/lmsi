@@ -252,7 +252,7 @@ class Courses_actions extends MX_Controller {
 			if ($this->input->post ('switch_to_course')) {
 				$redirect = site_url ("coaching/courses/manage/$coaching_id/$new_course_id");
 			} else {
-				$redirect = "";
+				$redirect = site_url ("coaching/courses/manage/$coaching_id/$course_id");
 			}
 			$this->output->set_content_type("application/json");
 			$this->output->set_output(json_encode(array('status'=>true, 'message'=>$message, 'redirect'=>$redirect)));

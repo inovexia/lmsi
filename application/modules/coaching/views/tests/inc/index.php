@@ -20,21 +20,21 @@
 								</div>
 								<p class="mb-0 text-muted w-10 w-xs-100 d-none">
 								<?php 
-										$param = $this->common_model->sys_parameter_name(SYS_TEST_TYPE, $row['test_type']);
-										echo $param['paramval'];
-										?>
+									$param = $this->common_model->sys_parameter_name(SYS_TEST_TYPE, $row['test_type']);
+									echo $param['paramval'];
+								?>
 								</p>
 								<p class="mb-0 text-muted w-15 w-xs-100 text-left text-md-center">
 									<?php echo $duration = $row['time_min'] . ' mins'; ?>
 								</p>
 								<div class="w-15 w-xs-100 text-left text-md-center">
 								<?php 
-										if ($row['finalized'] == 1) {
-											echo '<span class="badge badge-success">Published</span>';
-										} else {
-											echo '<span class="badge badge-danger">Un-published</span>';
-										}
-										?>
+									if ($row['finalized'] == 1) {
+										echo '<span class="badge badge-success">Published</span>';
+									} else {
+										echo '<span class="badge badge-danger">Un-published</span>';
+									}
+								?>
 								</div>
 								<div class="mb-0 w-10 w-xs-100">
 									<div class="custom-switch custom-switch-primary-inverse mb-2 custom-switch-small">
@@ -58,14 +58,12 @@
 				} 
 			} else {
 				?>
-					<div class="alert alert-primary" role="alert">
-						<div>
-							<p class="text-danger">No tests found. You can</p>
-							<ul class="list-unstyled">
-								<li><?php echo anchor ('coaching/tests/create_test/'.$coaching_id.'/'.$course_id, 'Create Test', array('class'=>'btn btn-lg btn-primary')); ?></li>
-							</ul>
-						</div>
+				<div class="card">
+					<div class="card-body text-center">
+						<h4 class="card-title">No tests found</h4>
+						<?php echo anchor ('coaching/tests/create_test/'.$coaching_id.'/'.$course_id, 'Create Test', array('class'=>'btn btn-primary')); ?>
 					</div>
+				</div>
 				<?php
 			}
 			?>

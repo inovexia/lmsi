@@ -77,9 +77,8 @@ class Teacher_actions extends MX_Controller {
 				// check if contact exists
 				$email = $this->input->post ('email');
 				if ($user_token = $this->login_model->email_exists ($email)) {
-					
-					$this->login_model->send_reset_link ($mode, $email, $user_token);				
-					
+
+					$this->login_model->send_reset_link ($mode, $email, $user_token);							
 					// Display Message
 					$msg = 'We have sent you a link to create new password. If you do not recieve the email, please try again in 5 minutes';
 					

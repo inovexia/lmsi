@@ -22,16 +22,16 @@
                
                 <h4 class="text-center mb-4">Reset Password</h4>
 
-            	<div class="alert alert-info">
+            	<div class="border-info text-info p-3 h6">
             		You will recieve a link on your registered mobile number and email (if provided) to create a new password. After creating new password, you can login using the new password.
             	</div>
 
                 <?php echo form_open ('login/teacher_actions/reset_password/mobile', array('class'=>'validate-form')); ?>
                     <div class="input-group my-3">
-                        <input type="text" name="mobile" class="form-control" placeholder="Registered mobile number"
-                            aria-label="Registered mobile number" aria-describedby="mobile-number" required="true">
+                        <input type="text" name="mobile" class="form-control" placeholder="Enter mobile number"
+                            aria-label="Enter mobile number" aria-describedby="mobile-number" required="true">
                         <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <button class="btn btn-primary" type="submit">Send Link</button>
                         </div>
                     </div>
                 <?php echo form_close(); ?>
@@ -40,10 +40,10 @@
 
                 <?php echo form_open ('login/teacher_actions/reset_password/email', array('class'=>'validate-form')); ?>
                     <div class="input-group mb-3">
-                        <input type="text" name="email" class="form-control" placeholder="Registered email id"
-                            aria-label="Registered email id" aria-describedby="email-id" required="true">
+                        <input type="text" name="email" class="form-control" placeholder="Enter email id"
+                            aria-label="Enter email id" aria-describedby="email-id" required="true">
                         <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <button class="btn btn-primary" type="submit">Send Link</button>
                         </div>
                     </div>
                 <?php echo form_close(); ?>

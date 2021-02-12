@@ -217,23 +217,22 @@
 	        	-->
 
 	            <?php if ($this->session->userdata ('is_logged_in')) { ?>
-	            <div class="user d-inline-block">
-	                <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true"
-	                    aria-expanded="false">
-	                    <span class="name"><?php echo $this->session->userdata ('user_name'); ?></span>
-	                    <span>
-	                        <img alt="<?php echo $this->session->userdata ('user_name'); ?>" src="<?php echo base_url ($this->session->userdata ('profile_image')); ?>" class="img-thumbnail " />
-	                    </span>
-	                </button>
+		            <div class="user d-inline-block">
+		                <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                    <span class="name"><?php echo $this->session->userdata ('user_name'); ?></span>
+		                    <span>
+		                        <img alt="<?php echo $this->session->userdata ('user_name'); ?>" src="<?php echo base_url ($this->session->userdata ('profile_image')); ?>" class="img-thumbnail " />
+		                    </span>
+		                </button>
 
-	                <div class="dropdown-menu dropdown-menu-right mt-3">
-	                    <a class="dropdown-item" href="#">Account</a>
-	                    <a class="dropdown-item" href="#">Features</a>
-	                    <a class="dropdown-item" href="#">History</a>
-	                    <a class="dropdown-item" href="#">Support</a>
-	                    <a class="dropdown-item" href="<?php echo site_url ('login/login/logout'); ?>">Sign out</a>
-	                </div>
-	            </div>
+		                <div class="dropdown-menu dropdown-menu-right mt-3">
+		                    <a class="dropdown-item" href="#">Account</a>
+		                    <a class="dropdown-item" href="#">Features</a>
+		                    <a class="dropdown-item" href="#">History</a>
+		                    <a class="dropdown-item" href="#">Support</a>
+		                    <a class="dropdown-item" href="<?php echo site_url ('login/login/logout'); ?>">Sign out</a>
+		                </div>
+		            </div>
 	            <?php } ?>
 	        </div>
 	    </nav>
