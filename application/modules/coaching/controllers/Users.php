@@ -33,8 +33,6 @@ class Users extends MX_Controller {
             }
         }
 	}
-	
-	
 	/* LIST USERS
 		Function to list all or selected users
 	*/

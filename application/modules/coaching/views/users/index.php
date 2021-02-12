@@ -25,7 +25,7 @@
   <div class="btn-group" role="group">
     <div class="btn btn-primary btn-lg pl-4 pr-0 check-button">
       <label class="custom-control custom-checkbox mb-0 d-inline-block">
-        <input type="checkbox" class="custom-control-input" id="checkAll">
+        <input type="checkbox" class="custom-control-input" id="checkAll2">
         <span class="custom-control-label">&nbsp;</span>
       </label>
     </div>
