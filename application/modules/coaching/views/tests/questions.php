@@ -79,10 +79,11 @@
 		}
 	} else { 
 		?>
-		<div class="alert alert-danger">
-			<h4> <?php echo 'No questions added in test'; ?></h4>
-			<p>You can <?php echo anchor ('coaching/tests/question_group_create/'.$coaching_id.'/'.$course_id.'/'.$test_id, 'Create Questions', array ('class'=>'btn btn-sm btn-primary') ); ?>  in this test.
-			</p>
+		<div class="card">
+			<div class="card-body text-center">
+				<h4> <?php echo 'No questions added in test'; ?></h4>
+				<?php echo anchor ('coaching/tests/question_group_create/'.$coaching_id.'/'.$course_id.'/'.$test_id, 'Create Questions', array ('class'=>'btn btn-sm btn-success') ); ?>
+			</div>
 		</div>
 	<?php } ?>
 	</form>

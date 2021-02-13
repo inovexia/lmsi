@@ -161,8 +161,7 @@ class Login_model extends CI_Model {
 	public function email_exists ($email='') {
 		$this->db->select ('user_token');
 		$this->db->where ('email', $email);
-		$this->db->from ('members');
-		$query = $this->db->get ();
+		$query = $this->db->get ('members');
 		if ($query->num_rows () > 0 ) {
 			$row = $query->row_array ();
 			return $row['user_token'];
@@ -174,7 +173,7 @@ class Login_model extends CI_Model {
 	public function send_reset_link ($mode='mobile', $contact='', $user_token='') {
 		if ($mode == 'email') {
 			$data['sent_time'] = time ();
-			$data['token'] = $user_token;
+			$data['user_token'] = $user_token;
 			$data['contact'] = $contact;
 			$this->db->insert('password_reset', $data);
 			// Load template
@@ -182,7 +181,7 @@ class Login_model extends CI_Model {
 			$this->common_model->send_email ($contact, 'Reset Password', $message);
 		} else {
 			$data['sent_time'] = time ();
-			$data['token'] = $user_token;
+			$data['user_token'] = $user_token;
 			$data['contact'] = $contact;
 			$this->db->insert('password_reset', $data);
 			// Load template

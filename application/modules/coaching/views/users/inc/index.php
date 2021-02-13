@@ -20,11 +20,9 @@ function is_404($url) {
 ?>
 <?php if ( ! empty ($results)): ?>
 <?php foreach ($results as $i => $row): ?>
-<div class="card d-flex flex-row mb-3">
-  <div class="d-flex flex-grow-1 min-width-zero pl-3">
-
+<div class="card d-flex flex-row mb-3 pl-1">
+  <div class="d-flex flex-grow-1 min-width-zero pl-4">
     <label class="custom-control custom-checkbox mb-1 align-self-center pr-1">
-
       <input type="checkbox" name="mycheck[]" value="<?php echo $row['member_id']; ?>"
         class="custom-control-input user-check" />
       <span class="custom-control-label">&nbsp;</span>
@@ -121,7 +119,6 @@ function is_404($url) {
         </div>
       </div>
     </div>
-
   </div>
 </div>
 <?php endforeach;?>

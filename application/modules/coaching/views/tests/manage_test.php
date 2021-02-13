@@ -1,4 +1,4 @@
-<div class="row mb-4 app-row">
+<div class="row mb-4 ">
 	<!-- Prepare -->
     <div class="col-md-6 mb-4">
         <div class="card">
@@ -70,6 +70,7 @@
             </div>
         </div>
     </div>
+    
 	<!-- Submissions -->
     <div class="col-md-6 mb-4">
         <div class="card">

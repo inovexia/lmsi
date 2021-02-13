@@ -1,7 +1,6 @@
 <div class="row justify-content-center">
 	<div class="col-md-12">
 		<div class="card">
-			
 			<div class="card-body">
 				<?php echo form_open('coaching/tests_actions/create_test/'.$coaching_id.'/'.$course_id.'/'.$test_id, array('class'=>'form-horizontal row-border', 'class'=>'validate-form')); ?>
 					<div class="form-row">
@@ -55,7 +54,7 @@
                             <small class="form-text text-muted">Enter test duration in minutes. Enter 0 (zero) for no limit</small>
                         </div>
 					</div>
-					<div class="form-row">
+					<div class="form-row d-none">
 						<div class="form-group col-md-6 mb-3">
 							<?php echo form_label('Release Results', '', array('class'=>'control-label')); ?>
 							<div class="d-block">
