@@ -42,11 +42,5 @@ $(document).ready(function() {
       $(".input-user-limit").fadeIn();
     }
   });
-  if ($('.single-type').prop("checked")) {
-    $(".input-user-limit").fadeOut();
-  } else {
-    $(".input-user-limit").fadeIn();
-  }
-
 });
 </script>

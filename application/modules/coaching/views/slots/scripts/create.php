@@ -58,7 +58,7 @@
           <?php if ($result['slot_type'] == APPOINTMENT_TYPE_MULTIPLE) { echo 'checked="checked"';} ?>>
         <label class="custom-control-label" for="customCheck2">Multiple</label>
         <p class="text-muted">More than one user can book this slot</p>
-        <div class="input-user-limit" style="">
+        <div class="input-user-limit" style="display:none">
           <label class="form-label">Maximum users </label>
           <input type="number" min="0" length="6" value="<?php echo $max_appointment; ?>" class="form-control"
             name="max_appointment">

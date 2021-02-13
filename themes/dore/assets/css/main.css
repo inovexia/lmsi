@@ -64,6 +64,7 @@ body.show-spinner::after {
   text-align: center;
   vertical-align: middle;
 }
+
 @media (max-width: 767px) {
   .menu .main-menu ul li span:last-child {
     font-size: 11px;
