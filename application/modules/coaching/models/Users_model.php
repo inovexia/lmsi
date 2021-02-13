@@ -1112,4 +1112,11 @@ class Users_model extends CI_Model {
 			$this->invite_by_mobile ($coaching_id, $row['mobile']);
 		}
 	}
+
+  // Delete Invitation
+  	public function delete_invite ($coaching_id=0, $invite_id=0) {
+		$this->db->where ("invite_id", $invite_id);
+		$this->db->delete ("member_invites");
+		return true;
+	}
 }

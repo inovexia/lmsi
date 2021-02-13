@@ -4,9 +4,9 @@ html {
 html * {
   -moz-user-select: none;
   -webkit-user-select: none;
-  -ms-user-select:none;
-  user-select:none;
-  -o-user-select:none;
+  -ms-user-select: none;
+  user-select: none;
+  -o-user-select: none;
 }
 body {
   overflow-x: hidden !important;
@@ -19,12 +19,12 @@ body.show-spinner > main {
 }
 
 /* Hide everything under body tag */
-body.show-spinner > *{
+body.show-spinner > * {
   opacity: 0;
 }
 
 /* Spinner */
-body.show-spinner::after{
+body.show-spinner::after {
   content: " ";
   display: inline-block;
   width: 50px;
@@ -40,30 +40,38 @@ body.show-spinner::after{
   z-index: 1;
 }
 .menu-sub-hidden .main-menu {
-    box-shadow: 0 3px 30px rgba(0,0,0,.1), 0 3px 20px rgba(0,0,0,.1);
+  box-shadow: 0 3px 30px rgba(0, 0, 0, 0.1), 0 3px 20px rgba(0, 0, 0, 0.1);
 }
-.select2-container{
+.select2-container {
   width: 100% !important;
 }
 .custom-file .custom-file-label::after {
-    max-height: 36px;
-    background-color: #ffffff;
+  max-height: 36px;
+  background-color: #ffffff;
 }
 .card-body img:not(.list-thumbnail) {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
-.app-menu .heading-icon[class*="iconsminds-"]{
-  margin-right: 4px!important;
+.app-menu .heading-icon[class*="iconsminds-"] {
+  margin-right: 4px !important;
 }
-@media (max-width: 767px){
-  .menu .main-menu ul li span:last-child{
+.default-avatar {
+  width: 40px;
+  height: 40px;
+  display: table-cell;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+}
+@media (max-width: 767px) {
+  .menu .main-menu ul li span:last-child {
     font-size: 11px;
   }
 }
-@media (max-width: 399px){
+@media (max-width: 399px) {
   .navbar-logo .logo {
-      max-width: 64px;
+    max-width: 64px;
   }
 }
 @keyframes spin {

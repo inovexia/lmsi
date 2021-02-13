@@ -36,9 +36,19 @@ function is_404($url) {
         <div class="heading-icon media-left pr-2 d-none" style="font-size:0.8rem;"><?php echo $i+1; ?> - </div>
         <div class="media-left pr-2">
           <?php
+         
           if(is_404(site_url ('contents/users/pi_'.$row['member_id'].'.gif'))){ ?>
-          <img src="<?php echo site_url ('contents/users/default.png'); ?>" alt="User Avatar"
-            class="img-thumbnail border-0 rounded-circle list-thumbnail align-self-center xsmall" />
+          <span class="badge-info text-white default-avatar text-uppercase" style="line-height:normal">
+            <?php 
+            $fname = $row['first_name'];
+            $lname = $row['last_name'];
+            if($lname == ""){
+              echo substr($fname, 0, 2); 
+            }
+            else{
+              echo $fname[0].''.$lname[0]; 
+            }
+          ?></span>
           <?php } else { ?>
           <img src="<?php echo site_url ('contents/users/pi_'.$row['member_id'].'.gif'); ?>" alt=""
             class="img-thumbnail border-0 rounded-circle list-thumbnail align-self-center xsmall" />
@@ -57,6 +67,7 @@ function is_404($url) {
 
       </div>
       <p class="mb-0 w-20 w-xs-100 mb-2 m-md-0">
+
         <i class="iconsminds-mail-link pr-1"></i>
 
         <?php

@@ -206,7 +206,8 @@ class User_actions extends MX_Controller {
 			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors() )));
 		} 
 	} 
-	
+
+
 	
 	/* DELETE ACCOUNT
 		Function to delete existing user accounts
@@ -542,5 +543,11 @@ class User_actions extends MX_Controller {
 		$this->users_model->resend_invite ($coaching_id, $id, $type);
 		$this->output->set_content_type("application/json");
 		$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Invitation sent')));
+	}
+  public function delete_invite ($coaching_id=0, $invite_id=0) {
+		$this->users_model->delete_invite ($coaching_id, $invite_id);
+    $this->message->set('Invitation deleted successfully','success',true);
+    redirect('coaching/users/invite/'.$coaching_id,'refresh');
+    
 	}
 }
