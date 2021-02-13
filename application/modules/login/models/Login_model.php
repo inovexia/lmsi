@@ -170,13 +170,49 @@ class Login_model extends CI_Model {
 		}
 	}
 
-	public function send_reset_link ($mode='mobile', $contact='', $user_token='') {
+	public function is_valid_request ($user_token='', $time='') {
+		$this->db->select ('M.member_id, M.first_name, R.sent_time');
+		$this->db->from ('password_reset R');
+		$this->db->join ('members M', 'R.user_token=M.user_token');
+		$this->db->where ('M.user_token', $user_token);
+		$this->db->where ('R.sent_time >', $time);
+		$this->db->order_by ('R.sent_time', 'DESC');
+		$this->db->limit ('1');
+		$query = $this->db->get ();
+		if ($query->num_rows () > 0 ) {
+			$row = $query->row_array ();
+			return $row;
+		} else {
+			return false;
+		}
+	}
+
+	public function change_password ($user_token='') {		
+		$data['user_token'] = $user_token = $this->input->post ('user_token');
+		$password = $this->input->post ('password');
+		$password = password_hash ($password, PASSWORD_DEFAULT);
+		$this->db->set ('password', $password);
+		$this->db->where ('user_token', $user_token);
+		$query = $this->db->update ('members');
+
+		$this->flush_password_reset ($user_token);
+	}
+
+	public function flush_password_reset ($user_token='') {
+		$this->db->where ('user_token', $user_token);
+		$query = $this->db->delete ('password_reset');
+	}
+
+
+
+	public function send_reset_link ($mode='mobile', $contact='', $user_token='', $slug='') {
 		if ($mode == 'email') {
 			$data['sent_time'] = time ();
 			$data['user_token'] = $user_token;
 			$data['contact'] = $contact;
 			$this->db->insert('password_reset', $data);
 			// Load template
+			$data['slug'] = $slug;
 			$message = $this->load->view (EMAIL_TEMPLATE . 'teacher/reset_password', $data, true);
 			$this->common_model->send_email ($contact, 'Reset Password', $message);
 		} else {
@@ -185,6 +221,7 @@ class Login_model extends CI_Model {
 			$data['contact'] = $contact;
 			$this->db->insert('password_reset', $data);
 			// Load template
+			$data['slug'] = $slug;
 			$message = $this->load->view (SMS_TEMPLATE . 'teacher/reset_password', $data, true);
 			$this->sms_model->send_sms ($contact, $message); 			
 		}

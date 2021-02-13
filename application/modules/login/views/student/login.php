@@ -43,7 +43,7 @@
                                 Password<span class="text-danger">*</span>
                             </label>
                             <input class="form-control" placeholder="Password" type="password" name="password" required="true">
-                            <a href="<?php echo site_url ('login/student/reset_password'); ?>" class="text-info">Forgot password?</a>
+                            <a href="<?php echo site_url ('login/user/reset_password/'.$slug); ?>" class="text-info">Forgot password?</a>
                         </div>
                         
                         <div class="form-group mb-4 captcha">

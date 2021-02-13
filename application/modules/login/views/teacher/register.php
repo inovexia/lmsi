@@ -25,16 +25,17 @@
             <div class="input-group-prepend">
               <select name="dialing_code" class="input-group-text" id="user_mobile">
                 <?php 
-                                    if (! empty($country_list)) {
-                                        foreach ($country_list as $cl) {
-                                            ?>
-                <option value="<?php echo $cl['dialing_code']; ?>"
-                  <?php if ($cl['dialing_code'] == $country['dialing_code']) echo 'selected="selected"'; ?>>
-                  <?php echo $cl['dialing_code']; ?></option>
-                <?php
-                                        }
-                                    }
-                                    ?>
+                if (! empty($country_list)) {
+                  foreach ($country_list as $cl) {
+                    ?>
+                    <option value="<?php echo $cl['dialing_code']; ?>"
+                    <?php if ($cl['dialing_code'] == $country['dialing_code']) echo 'selected="selected"'; ?>>
+                      <?php echo $cl['dialing_code']; ?>
+                    </option>
+                    <?php
+                  }
+                }
+                ?>
               </select>
             </div>
             <input type="text" name="primary_contact" class="form-control digits required" required="required"
@@ -82,9 +83,7 @@
           </div>
 
           <div class="my-2">
-            <?php 
-                                $href = '#';
-                            ?>
+            <?php $href = '#'; ?>
             <div class="custom-control custom-checkbox mb-3 ">
               <input type="checkbox" class="custom-control-input required" id="terms-condition" name="agree">
               <label class="custom-control-label" for="terms-condition">I agree to the Terms And Conditions</label>
