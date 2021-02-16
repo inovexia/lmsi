@@ -70,6 +70,9 @@ class User_actions extends MX_Controller {
 
 	
 	public function reset_password ($mode='mobile') {
+
+		$slug = $this->input->post ('slug');
+
 		if ($mode == 'email') {
 			$this->form_validation->set_rules('email', 'Email id', 'required|valid_email');
 
@@ -77,16 +80,15 @@ class User_actions extends MX_Controller {
 				// check if contact exists
 				$email = $this->input->post ('email');
 				if ($user_token = $this->login_model->email_exists ($email)) {
-					
-					$this->login_model->send_reset_link ($mode, $email, $user_token);				
-					
+
+					$this->login_model->send_reset_link ($mode, $email, $user_token, $slug);					
 					// Display Message
 					$msg = 'We have sent you a link to create new password. If you do not recieve the email, please try again in 5 minutes';
 					
 					$this->message->set ($msg, 'success', true);
 					
 					$this->output->set_content_type("application/json");
-					$this->output->set_output(json_encode(array('status'=>true, 'message'=>$msg, 'redirect'=>site_url('login/teacher/index') )));
+					$this->output->set_output(json_encode(array('status'=>true, 'message'=>$msg, 'redirect'=>site_url('login/user/index/'.$slug) )));
 				} else {
 					$this->output->set_content_type("application/json");
 					$this->output->set_output(json_encode(array('status'=>false, 'error'=>'This email id is not registered with us')));
@@ -105,7 +107,7 @@ class User_actions extends MX_Controller {
 				$contact = $this->input->post ('mobile');
 				if ($user_token = $this->login_model->contact_exists ($contact)) {
 					
-					$this->login_model->send_reset_link ($mode, $contact, $user_token);				
+					$this->login_model->send_reset_link ($mode, $contact, $user_token, $slug);				
 					
 					// Display Message
 					$msg = 'We have sent you a link to create new password. If you do not recieve the sms, please try again in 5 minutes';
@@ -113,7 +115,7 @@ class User_actions extends MX_Controller {
 					$this->message->set ($msg, 'success', true);
 					
 					$this->output->set_content_type("application/json");
-					$this->output->set_output(json_encode(array('status'=>true, 'message'=>$msg, 'redirect'=>site_url('login/teacher/index') )));
+					$this->output->set_output(json_encode(array('status'=>true, 'message'=>$msg, 'redirect'=>site_url('login/user/index/'.$slug) )));
 				} else {
 					$this->output->set_content_type("application/json");
 					$this->output->set_output(json_encode(array('status'=>false, 'error'=>'This mobile number is not registered with us')));
@@ -125,6 +127,38 @@ class User_actions extends MX_Controller {
 		}
 	}
 	
+
+	public function create_password () {
+
+		$slug = $this->input->post ('slug');
+
+		$this->form_validation->set_rules('password', 'Password', 'required|min_length[8]|trim');
+		$this->form_validation->set_rules('repeat_password', 'Repeat Password', 'required|matches[password]|trim');
+
+		if ($this->form_validation->run () == true) {
+
+			$user_token = $this->input->post ('user_token');
+		
+			$now = time ();
+			$time = $now - (30 * 60); // 30 minutes from now
+			$request = $this->login_model->is_valid_request ($user_token, $time);
+			if ($request) {
+				$this->login_model->change_password ();
+				// Display Message
+				$msg = 'Password changed successfully. Login with your new password';				
+				$this->message->set ($msg, 'success', true);
+				
+				$this->output->set_content_type("application/json");
+				$this->output->set_output(json_encode(array('status'=>true, 'message'=>$msg, 'redirect'=>site_url('login/user/index/'.$slug) )));
+			} else {
+				$this->output->set_content_type("application/json");
+				$this->output->set_output(json_encode(array('status'=>false, 'error'=>'Invalid request or this link has expired')));
+			}
+		} else {
+			$this->output->set_content_type("application/json");
+			$this->output->set_output(json_encode(array('status'=>false, 'error'=>validation_errors ())));
+		}
+	}
 
 	public function update_session ($user_token='') {
 

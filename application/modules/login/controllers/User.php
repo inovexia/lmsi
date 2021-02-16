@@ -127,7 +127,7 @@ class User extends MX_Controller {
 	}
 
 	/* forgot password */
-	public function reset_password () {
+	public function reset_password ($slug='') {
 
 		// Default settings
 		$logo_path = $this->config->item ('system_logo');
@@ -136,65 +136,47 @@ class User extends MX_Controller {
 		
 		$data['page_title'] = $page_title;
 		$data['logo'] 		= $logo;
+		$data['slug'] 		= $slug;
 		$data['hide_navbar'] = true;
 		$data['hide_sidemenu'] = true;
 		$data['hide_titlebar'] = true;
 
 		
 		$this->load->view (INCLUDE_PATH . 'header', $data);
-		$this->load->view ('teacher/reset_password');		
+		$this->load->view ('student/reset_password');
 		$this->load->view (INCLUDE_PATH . 'footer', $data);
 	}
 
 	
 	/* create password for new user register */
-	public function create_password ($user_id='') {
+	public function create_password ($slug='', $user_token='') {
 
+    	// Default settings
+		$logo_path = $this->config->item ('system_logo');
+		$logo = base_url ($logo_path);
+		$page_title = APP_NAME;
 
-		if (isset ($_GET['sub']) && ! empty ($_GET['sub']) && $_GET['sub'] != 'undefined') {
-    		$access_code = $_GET['sub'];
+		$data['page_title'] = $page_title;
+		$data['logo'] = $logo;
+		$data['slug'] = $slug;
+		$data['hide_navbar'] = true;
+		$data['hide_sidemenu'] = true;
+		$data['hide_titlebar'] = true;
+		$data['user_token'] = $user_token;
+
+		$now = time ();
+		$time = $now - (30 * 60); // 30 minutes from now
+		if ( ! ($user = $this->login_model->is_valid_request ($user_token, $time))) {
+			$valid_request = false;
 		} else {
-			$access_code = ACCESS_CODE;
+			$valid_request = true;
 		}
 
-		$coaching = $this->coachings_model->get_coaching_by_slug ($access_code);
-		if ($coaching) {
-			$coaching_dir = 'contents/coachings/' . $coaching['id'] . '/';
-			$coaching_logo = $this->config->item ('coaching_logo');
-			$logo_path =  $coaching_dir . $coaching_logo;
-			$logo = base_url ($logo_path);
-			$page_title = 'Create Password ' . $coaching['coaching_name'];
-		} else {
-			$access_code = '';
-			$logo = base_url ($this->config->item('system_logo'));
-			$page_title = 'Create Password ' . SITE_TITLE;
-		}
-
-    	if ( empty ($access_code)) {
-			$this->message->set ('Direct registration not allowed', 'danger', true);
-			redirect ('login/user/index');    		
-    	}
-
-		$result			=	$this->login_model->get_member_by_md5login ($user_id);
-		$coaching_id	=	$result['coaching_id'];
-		
-		$link_send_time	=	$result['link_send_time'];
-		$difference		=	time() - $link_send_time;
-		if ($difference > 3600*48) {		// Email link is valid only for 48 hours
-			echo 'This link has expired. Please '.anchor ('login/user/forgot_password', 'Try again');
-		} else {
-			$coaching = $this->coachings_model->get_coaching($coaching_id );
-			$data['coaching_id'] 		= $coaching_id;
-			$data['coaching'] 			= $coaching;
-			$data['member_id'] 			= $result['member_id'];
-			$data['result'] 			= $result;
-			$data['hide_left_sidebar'] 	= true;
-			$data['page_title'] = $page_title;
-			$data['slug'] = $slug;
-			$data['logo'] = $logo;
-			$this->load->view ( INCLUDE_PATH . 'header', $data);
-			$this->load->view ( 'password', $data);
-			$this->load->view ( INCLUDE_PATH . 'footer', $data);
-		}
+		$data['valid_request'] = $valid_request;
+		$data['user'] = $user;
+		//$data['script'] = $this->load->view ('scripts/login', $data, true); 
+		$this->load->view ( INCLUDE_PATH . 'header', $data);
+		$this->load->view ( 'student/create_password', $data);
+		$this->load->view ( INCLUDE_PATH . 'footer', $data);
 	}
 }

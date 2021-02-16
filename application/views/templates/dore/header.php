@@ -227,9 +227,6 @@
 
 		                <div class="dropdown-menu dropdown-menu-right mt-3">
 		                    <a class="dropdown-item" href="#">Account</a>
-		                    <a class="dropdown-item" href="#">Features</a>
-		                    <a class="dropdown-item" href="#">History</a>
-		                    <a class="dropdown-item" href="#">Support</a>
 		                    <a class="dropdown-item" href="<?php echo site_url ('login/login/logout'); ?>">Sign out</a>
 		                </div>
 		            </div>
@@ -306,9 +303,7 @@
 	            			<?php
 	            		}
 	            	}
-	            	?>
-	                    
-	                
+	            	?>                
 	            </div>
 	        </div>
 	    </div>
@@ -321,7 +316,7 @@
 		        	<?php if (isset ($hide_titlebar)) { ?>
 
 		        	<?php } else  { ?>
-	                    <div class="mb-2">
+	                    <div class="mb-2 d-flex justify-content-between">
 		                    <h1>
 		                    	<?php
 		                    	if (isset ($bc)) {
@@ -331,25 +326,27 @@
 		                    	<span class="ml-1"><?php if (isset($page_title)) echo $page_title; ?></span>
 	                    	</h1>
 
-	                    	<div class="top-right-button-container">
+	                    	<div class="_top-right-button-container">
 	                    		<?php if (isset ($toolbar_buttons)) { ?>
-		                            <div class="btn-group">
-		                            	<?php 
+	                    			<div class="btn-group mb-1">
+	                    				<?php 
 		                            	if (isset ($toolbar_buttons['add_new'])) {
 		                            		$add_new = $toolbar_buttons['add_new'];
 		                            		?>
-			                                <a class="btn btn-primary btn-lg pl-4 pr-2" href="<?php echo base_url (current($add_new)); ?>">
+			                                <a class="btn btn-primary btn-sm " href="<?php echo base_url (current($add_new)); ?>">
 			                                    <?php echo key ($add_new); ?>
 			                                </a>
-		                            	<?php } else { ?>
-			                                <a class="btn btn-primary btn-lg pl-4 pr-2" href="#">
+			                            <?php } else { ?>
+			                                <a class="btn btn-primary btn-sm " href="#">
 			                                    Actions
 			                                </a>
-		                            	<?php } ?>
-		                                <button type="button" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			                            <?php } ?>
+		                                <button type="button" class="btn btn-xs btn-primary dropdown-toggle dropdown-toggle-split"
+		                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		                                    <span class="sr-only">Toggle Dropdown</span>
 		                                </button>
-		                                <?php 
+
+	                                    <?php 
 		                                if (! empty($toolbar_buttons['actions'])) { 
 		                            		$actions = $toolbar_buttons['actions'];
 		                                	?>
@@ -362,8 +359,7 @@
 			                                </div>
 		                                <?php } ?>
 		                            </div>
-	                    		<?php } ?>
-	                           
+		                        <?php } ?>	                           
 	                        </div>
 
 	                    	<?php if (isset ($sub_title)) { ?>
@@ -385,7 +381,8 @@
 	                    ?>
 	                    <div class="separator mb-3"></div>
 		        	<?php } ?>
-              <?php echo (isset ($filter_block))? $filter_block : null; ?>
+
+	                <?php //echo (isset ($filter_block))? $filter_block : null; ?>
 					<div class="row justify-content-center">
 						<div class="col-md-6">
                 			<?php echo $this->message->display (); ?>
