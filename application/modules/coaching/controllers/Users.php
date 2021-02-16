@@ -93,11 +93,10 @@ class Users extends MX_Controller {
 		}
 		
 		$data['page_title'] = 'Users';
-		$data['sub_title']  = 'All Users';
 		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
 
 		$data['script'] = $this->load->view ('users/scripts/index', $data, true);
- 		$data['filter_block']  = $this->load->view ('users/inc/index_filters', $data, true);
+ 		$data['filter_template']  = $this->load->view ('users/inc/index_filters', $data, true);
 
 		$this->load->view(INCLUDE_PATH . 'header', $data);
 		$this->load->view('users/index', $data);

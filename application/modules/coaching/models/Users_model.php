@@ -1081,7 +1081,7 @@ class Users_model extends CI_Model {
 	public function send_invite ($coaching_id=0, $type='email', $to='', $checksum='') {
 		$coaching = $this->coaching_model->get_coaching ($coaching_id);
 		$url = base_url ($coaching['coaching_url']);
-		$data['url'] = $url . '?c='.$checksum;		
+		$data['url'] = $url . '?s='.$checksum;		
 		$data['name'] = $coaching['coaching_name'];
 		$subject = $data['name'];
 
