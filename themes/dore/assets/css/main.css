@@ -2,11 +2,19 @@ html {
   width: 100%;
 }
 html * {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -o-user-select: none;
+  -moz-user-select: auto !important;
+  -webkit-user-select: auto !important;
+  -ms-user-select: auto !important;
+  user-select: auto !important;
+  -o-user-select: auto !important;
+}
+body .disable-text-selection {
+  -webkit-touch-callout: auto !important;
+  -webkit-user-select: auto !important;
+  -khtml-user-select: auto !important;
+  -moz-user-select: auto !important;
+  -ms-user-select: auto !important;
+  user-select: auto !important;
 }
 body {
   overflow-x: hidden !important;
@@ -63,6 +71,10 @@ body.show-spinner::after {
   border-radius: 50%;
   text-align: center;
   vertical-align: middle;
+}
+.page-action-menu .dropdown-menu {
+  left: auto;
+  transform: translate3d(-64%, 27px, 0px);
 }
 
 @media (max-width: 767px) {

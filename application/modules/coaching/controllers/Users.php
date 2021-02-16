@@ -155,6 +155,9 @@ class Users extends MX_Controller {
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
 		$data['bc'] = array ('Users'=>'coaching/users/index/'.$coaching_id);
 		$data['page_title'] = 'Invite Users';
+    $data['country'] = $this->common_model->get_user_geo_location ();
+		$data['country_list'] = $this->common_model->sys_country_list ();
+     
 
 		$data['script'] = $this->load->view('users/scripts/invite', $data, true);
 		$this->load->view(INCLUDE_PATH . 'header', $data);

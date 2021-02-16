@@ -28,7 +28,24 @@
         <h4 class="card-title">Send Invite By Mobile</h4>
 
         <div class="input-group">
-          <input type="text" class="form-control" name="mobile" required="true" placeholder="Enter mobile number">
+          <div class="input-group-prepend">
+            <select name="dialing_code" class="input-group-text" id="user_mobile">
+              <?php 
+                if (! empty($country_list)) {
+                  foreach ($country_list as $cl) {
+                    ?>
+              <option value="<?php echo $cl['dialing_code']; ?>"
+                <?php if ($cl['dialing_code'] == $country['dialing_code']) echo 'selected="selected"'; ?>>
+                <?php echo $cl['dialing_code']; ?>
+              </option>
+              <?php
+                  }
+                }
+                ?>
+            </select>
+          </div>
+          <input type="text" class="form-control" name="mobile" required="true" placeholder="Enter mobile number"
+            aria-describedby="user_mobile">
           <div class="input-group-append ">
             <button type="submit" class="btn btn-primary default">
               Invite
@@ -36,6 +53,7 @@
           </div>
           <?php echo form_close (); ?>
         </div>
+
       </div>
     </div>
   </div>
@@ -67,11 +85,12 @@
           <p class="mb-0 text-muted text-small w-100 w-md-40">Last sent on <br>
             <?php echo date ('d-m-Y', $row['sent_time']); ?> at <?php echo date ('h:i a', $row['sent_time']); ?></p>
           <div class="w-100 w-md-30 text-left text-md-right mt-3 mt-md-0">
-            <a class="btn btn-sm btn-outline-danger mr-2" href="#"
-              onclick="show_confirm ('Do you want to delete this invitation?', '<?php echo site_url('coaching/user_actions/delete_invite/'.$coaching_id.'/'.$row['invite_id']); ?>')">Delete</a>
-
-            <a class="btn btn-sm btn-outline-primary" href="#"
+            <a class="btn btn-sm btn-outline-primary mr-2" href="#"
               onclick="resend_invitation (<?php echo $row['invite_id']; ?>, '<?php echo $type; ?>')">Resend</a>
+            <a class="btn btn-sm btn-outline-danger" href="#"
+              onclick="show_confirm ('Do you want to delete this invitation?', '<?php echo site_url('coaching/user_actions/delete_invite/'.$coaching_id.'/'.$row['invite_id']); ?>')">Remove</a>
+
+
           </div>
         </div>
       </div>
