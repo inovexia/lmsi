@@ -310,4 +310,5 @@ class Users extends MX_Controller {
 			$this->users_model->file_download($file_name);
 		}
 	}
+ 
 }

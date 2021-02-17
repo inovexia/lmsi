@@ -1,23 +1,3 @@
-<?php
-function is_404($url) {
-    $handle = curl_init($url);
-    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
-
-    /* Get the HTML or whatever is linked in $url. */
-    $response = curl_exec($handle);
-
-    /* Check for 404 (file not found). */
-    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-    curl_close($handle);
-
-    /* If the document has loaded successfully without any redirection or error */
-    if ($httpCode >= 200 && $httpCode < 300) {
-        return false;
-    } else {
-        return true;
-    }
-}
-?>
 <?php if ( ! empty ($results)): ?>
 <?php foreach ($results as $i => $row): ?>
 <div class="card d-flex flex-row mb-3 pl-1">
@@ -35,23 +15,18 @@ function is_404($url) {
         <div class="media-left pr-2">
           <?php
          
-          if(is_404(site_url ('contents/users/pi_'.$row['member_id'].'.gif'))){ ?>
+          if($row['user_dp'] === 404){ ?>
           <span class="badge-info text-white default-avatar text-uppercase" style="line-height:normal">
             <?php 
-            $fname = $row['first_name'];
-            $lname = $row['last_name'];
-            if($lname == ""){
-              echo substr($fname, 0, 2); 
-            }
-            else{
-              echo $fname[0].''.$lname[0]; 
-            }
-          ?></span>
+            echo $row['user_initials'];
+          ?>
+          </span>
           <?php } else { ?>
-          <img src="<?php echo site_url ('contents/users/pi_'.$row['member_id'].'.gif'); ?>" alt=""
+          <img src="<?php echo $row['user_dp']; ?>" alt=""
             class="img-thumbnail border-0 rounded-circle list-thumbnail align-self-center xsmall" />
           <?php }
         ?>
+
 
         </div>
         <div class="media-right">
