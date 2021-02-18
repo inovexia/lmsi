@@ -19,6 +19,9 @@ class Teachers extends MX_Controller
     $data['bc'] = [
       'Dashboard' => 'student/home/dashboard/' . $coaching_id,
     ];
+    if($coaching_id == 0){
+      $coaching_id = $this->session->userdata('coaching_id');
+    }
     $oneDay = 86400;
     $today = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
     if ($date == null) {

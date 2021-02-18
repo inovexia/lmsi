@@ -1185,4 +1185,24 @@ class Users_model extends CI_Model {
 		}
 	}
 
+  	// Delete Invitation
+  	public function delete_invite ($coaching_id=0, $invite_id=0) {
+		$this->db->where ("invite_id", $invite_id);
+		$this->db->delete ("member_invites");
+		return true;
+	}
+
+  	// Profile Image Initial Name
+  	public function profile_image_initial ($member_id=0, $coaching_id=0){
+	    $user_details	=	$this->get_user ($member_id);
+			$f_name = $user_details['first_name'];
+	    $l_name = $user_details['last_name'];
+	    if($l_name == ""){
+	      $initial_name =  substr($f_name, 0, 2); 
+	    }
+	    else{
+	      $initial_name =  $f_name[0].''.$l_name[0]; 
+	    }
+	    return $initial_name;
+  	} 
 }

@@ -1,22 +1,3 @@
-<style>
-#courses button span {
-  position: relative;
-}
-
-#courses button span:first-child::after {
-  content: "\02937";
-  position: absolute;
-  left: 0;
-  top: 100%;
-}
-
-#courses button span:last-child::before {
-  content: "\02935";
-  position: absolute;
-  right: 0;
-  bottom: 100%;
-}
-</style>
 <div class="row justify-content-center">
   <div class="col-12">
     <ul class="nav nav-tabs separator-tabs ml-0 mb-5" role="tablist">

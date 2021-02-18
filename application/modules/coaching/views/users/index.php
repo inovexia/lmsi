@@ -7,7 +7,8 @@
         <span class="custom-control-label">&nbsp;</span>
       </label>
     </div>
-    <button class="btn btn-primary rounded-0 do-action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" name="action" value="delete">
+    <button class="btn btn-primary rounded-0 do-action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false" type="button" name="action" value="delete">
       <span class="action-label">Delete</span>
     </button>
     <div class="dropdown-menu">
@@ -37,7 +38,8 @@
         <span class="custom-control-label">&nbsp;</span>
       </label>
     </div>
-    <button class="btn btn-primary rounded-0 do-action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" name="action" value="delete">
+    <button class="btn btn-primary rounded-0 do-action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false" type="button" name="action" value="delete">
       <span class="action-label">Delete</span>
     </button>
     <div class="dropdown-menu">

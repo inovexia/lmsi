@@ -133,7 +133,7 @@ $(document).ready(function() {
     $(`input[name='mycheck[]']:checked`).each(function(i) {
       formData.append("mycheck[]", $(this).val());
     });
-    formData.append('action', actionValue.val());
+    formData.append('action', actionValue);
     if (doAction) {
       // Todo: Do AJAX Action
       doBulkAction(formData);
