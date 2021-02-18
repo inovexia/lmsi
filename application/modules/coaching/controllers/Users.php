@@ -123,7 +123,7 @@ class Users extends MX_Controller {
 		$data['result'] 	= $user = $this->users_model->get_user ($member_id);
 		$user['role']	 	= $this->users_model->user_role_name ($user['role_id']);
 		$data['num_users']  = $this->coaching_model->num_users ($coaching_id);
-		//$data['max_users'] 	= $subscription['max_users'];
+		// $data['max_users'] 	= $subscription['max_users'];
 
 
 		$role_lvl 		 	= $this->session->userdata ('role_lvl');

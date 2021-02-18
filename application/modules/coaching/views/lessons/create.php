@@ -65,8 +65,7 @@
   </div>
 
   <div class="card-footer">
-    <input type="submit" name="submit" class="btn btn-primary" value="Save" data-toggle="tooltip" data-placement="right"
-      title="Save">
+    <input type="submit" name="submit" class="btn btn-primary" value="Save" title="Save">
     <a href="#"
       onclick="show_confirm ('Delete this chapter? Please note that this is a permanent action and cannot be un-do.', '<?php echo site_url ('coaching/lesson_actions/delete_lesson/'.$coaching_id.'/'.$course_id.'/'.$lesson_id); ?>')"
       class="btn btn-link text-danger ">Delete Chapter</a>
