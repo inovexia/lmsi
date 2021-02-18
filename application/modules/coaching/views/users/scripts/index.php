@@ -56,9 +56,9 @@ $(document).ready(function() {
       $('#checkAll2').trigger('click');
     }
   });
-  $('.user-check').on('change', function() {
-    if ($('.user-check:checked').length) {
-      if ($('.user-check').length === $('.user-check:checked').length) {
+  $('#users-list .custom-control-input').on('change', function() {
+    if ($('#users-list .custom-control-input:checked').length) {
+      if ($('#users-list .custom-control-input').length === $('#users-list .custom-control-input:checked').length) {
         $('#checkAll2').prop({
           'indeterminate': false,
           'checked': true

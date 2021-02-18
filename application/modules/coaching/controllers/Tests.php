@@ -103,7 +103,7 @@ class Tests extends MX_Controller {
 			$status_label = "Published";
 				break;
 			default:
-			$status_label = "All";
+			$status_label = "All Status";
 				break;
 		}
 		$data['status_label'] 	= $status_label;
@@ -128,7 +128,7 @@ class Tests extends MX_Controller {
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
 		
 		$data['script'] = $this->load->view ('tests/scripts/index', $data, true);
-		$data['filter_block']  = $this->load->view ('tests/inc/index_filters', $data, true);
+		$data['filter_template']  = $this->load->view ('tests/inc/index_filters', $data, true);
 		$data['right_sidebar'] = $this->load->view ('courses/inc/manage_course', $data, true);
 		
 		$this->load->view ( INCLUDE_PATH  . 'header', $data);

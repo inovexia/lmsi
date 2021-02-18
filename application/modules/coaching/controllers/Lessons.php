@@ -45,7 +45,7 @@ class Lessons extends MX_Controller {
 			$status_label = "Published";
 				break;
 			default:
-			$status_label = "All";
+			$status_label = "All Status";
 				break;
 		}
 		$data['status_label'] 	= $status_label;
@@ -59,7 +59,7 @@ class Lessons extends MX_Controller {
 
 		$data['script'] = $this->load->view ('lessons/scripts/index', $data, true);
 		$data['right_sidebar'] = $this->load->view ('courses/inc/manage_course', $data, true);
-		$data['filter_block']  = $this->load->view ('lessons/inc/index_filters', $data, true);
+		$data['filter_template']  = $this->load->view ('lessons/inc/index_filters', $data, true);
 		$this->load->view(INCLUDE_PATH . 'header', $data);
 		$this->load->view('lessons/index', $data);
 		$this->load->view(INCLUDE_PATH . 'footer', $data);

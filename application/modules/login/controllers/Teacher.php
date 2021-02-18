@@ -128,4 +128,10 @@ class Teacher extends MX_Controller {
 		$this->load->view ( INCLUDE_PATH . 'footer', $data);
 	}	
 
+  public function logout () {
+		$this->session->sess_destroy ();
+		$this->message->set ('You have successfully logged out', 'success', true);
+		$redirect = site_url ('public/home/index');
+		redirect ($redirect);
+	}
 }
