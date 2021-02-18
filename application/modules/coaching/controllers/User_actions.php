@@ -173,26 +173,30 @@ class User_actions extends MX_Controller {
 		
 		if ($this->form_validation->run() == true) {
 			$password = $this->input->post ('password');
+			$inform_user = $this->input->post ('inform_user');
 			$this->users_model->update_password ($member_id, $password); 
 			$user = $this->users_model->get_user ($member_id);
+			$coaching = $this->coaching_model->get_coaching ($coaching_id);
+
+			if ($inform_user) {
+				// Send SMS
+				$data = [];
+				$contact = $user['primary_contact'];
+				$data['coaching_name'] = $coaching['coaching_name'];
+				$message = $this->load->view (SMS_TEMPLATE . 'changed_password', $data, true);
+				$this->sms_model->send_sms ($contact, $message);
+
+				// Send Email
+				if ($user['email'] != '') {
+					$email = $user['email'];
+					$subject = "Password Changed";
+					$message = $this->load->view (EMAIL_TEMPLATE . 'changed_password', $data, true);
+					$this->common_model->send_email ($email, $subject, $message );
+				}
+			}
 
 			// Display message
-			$this->message->set('Password changed successfully', 'success', true);			
-
-			// // Send SMS
-			// $data = [];
-			// $contact = $user['primary_contact'];
-			// $message = $this->load->view (SMS_TEMPLATE . 'change_password', $data, true);
-			// $this->sms_model->send_sms ($contact, $message);
-
-			// // Send Email
-			// if ($user['email'] != '') {
-			// 	$data = [];
-			// 	$email = $user['email'];
-			// 	$subject = "Password Changed";
-			// 	$message = $this->load->view (EMAIL_TEMPLATE . 'change_password', $data, true);
-			// 	$this->common_model->send_email ($email, $subject, $message );				
-			// }
+			$this->message->set('Password changed successfully', 'success', true);
 
 			if ($member_id == $this->session->userdata ('member_id')) {
 				$redirect = site_url ('coaching/users/my_account/'.$coaching_id.'/'.$member_id);
@@ -478,10 +482,8 @@ class User_actions extends MX_Controller {
 
 		// Load the download helper and send the file to your desktop
 		$this->load->helper('download');
-		force_download($filename, $csv_data);		
-
-	}
-	
+		force_download($filename, $csv_data);
+	}	
 	
 
 	public function send_otp ($coaching_id=0, $member_id=0) {
@@ -506,6 +508,24 @@ class User_actions extends MX_Controller {
 	
 		$this->output->set_content_type("application/json");
 		$this->output->set_output(json_encode(array('status'=>true, 'message'=>'OTP sent on user mobile', 'redirect'=>'')));
+	}
+
+	public function create_password_link ($coaching_id=0, $member_id=0) {
+		
+		$this->load->model ('login/login_model');
+
+		$user = $this->users_model->get_user ($member_id);
+		$coaching = $this->coaching_model->get_coaching ($coaching_id);
+
+		$contact = $user['primary_contact'];
+		$user_token = $user['user_token'];
+		$slug = $coaching['coaching_url'];
+
+		$this->login_model->send_reset_link ('mobile', $contact, $user_token, $slug);
+		$this->login_model->send_reset_link ('email', $contact, $user_token, $slug);
+	
+		$this->output->set_content_type("application/json");
+		$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Link sent to user', 'redirect'=>'')));
 	}
 
 	public function invite_by_email ($coaching_id=0) {
@@ -539,15 +559,14 @@ class User_actions extends MX_Controller {
 	}
 
 	public function resend_invite ($coaching_id=0, $id=0, $type='mobile') {
-
 		$this->users_model->resend_invite ($coaching_id, $id, $type);
 		$this->output->set_content_type("application/json");
 		$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Invitation sent')));
 	}
-  public function delete_invite ($coaching_id=0, $invite_id=0) {
+  	
+  	public function delete_invite ($coaching_id=0, $invite_id=0) {
 		$this->users_model->delete_invite ($coaching_id, $invite_id);
-    $this->message->set('Invitation deleted successfully','success',true);
-    redirect('coaching/users/invite/'.$coaching_id,'refresh');
-    
+    	$this->message->set('Invitation deleted successfully','success',true);
+    	redirect('coaching/users/invite/'.$coaching_id,'refresh');    
 	}
 }

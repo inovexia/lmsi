@@ -120,7 +120,7 @@ class Users extends MX_Controller {
 
 		// Reference Id
 		// $subscription = $this->subscription_model->get_coaching_subscription ($coaching_id);
-		$data['profile_image'] 	= $this->users_model->view_profile_image ($member_id, $coaching_id);
+		$data['pi'] 		= $this->users_model->view_profile_image ($member_id, $coaching_id);
 		$data['result'] 	= $user = $this->users_model->get_user ($member_id);
 		$user['role']	 	= $this->users_model->user_role_name ($user['role_id']);
 		$data['num_users']  = $this->coaching_model->num_users ($coaching_id);
@@ -193,7 +193,7 @@ class Users extends MX_Controller {
 	*/
 	public function change_password ($coaching_id=0, $member_id=0) {	
 		$data['result'] = $this->users_model->get_user ($member_id);
-		$data['profile_image'] = $this->users_model->view_profile_image ($member_id);
+		$data['pi'] 		= $this->users_model->view_profile_image ($member_id, $coaching_id);
 		$data['page_title'] = 'Change Password'; 
 		$data['sub_title']  = $data['result']['first_name']; 
 		$data['member_id']  = $member_id;
@@ -262,7 +262,7 @@ class Users extends MX_Controller {
 		
         $data['courses'] = $courses = $this->courses_model->my_courses ($coaching_id, $member_id);
 		$result 				= $this->users_model->get_user ($member_id);
-		$data['profile_image']	= $this->users_model->view_profile_image ($member_id);
+		$data['pi']	= $this->users_model->view_profile_image ($member_id);
 		$data['result'] 		= $result;
 		$data['coaching_id'] 		= $coaching_id;
 		$data['role_id'] 		= $role_id;

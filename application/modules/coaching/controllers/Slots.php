@@ -5,9 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Slots extends MX_Controller {
 
     var $toolbar_buttons = [];
-    var $coaching_id;
-
-  
+    var $coaching_id;  
 
     public function __construct() {
         // Load Config and Model files required throughout Users sub-module
@@ -29,6 +27,7 @@ class Slots extends MX_Controller {
             redirect ('coaching/settings/setup_coaching_account');
         }
 
+        $this->toolbar_buttons['add_new'] = ['Create Slot'=>'coaching/slots/create/'.$coaching_id];
         $this->toolbar_buttons['actions'] = [
             '<i class="simple-icon-list"></i> All Slots'=>'coaching/slots/index/'.$coaching_id,
             '<i class="iconsminds-check"></i> My Appointments'=>'coaching/slots/my_appointments/'.$coaching_id,

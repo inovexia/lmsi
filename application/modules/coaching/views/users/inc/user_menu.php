@@ -2,18 +2,32 @@
   <div class="card-body">
     <div class="text-center">
 
+      <?php 
+        if ($pi['type'] == 'avatar') {
+          ?>
+            <div class="rounded-circle m-0 align-self-center list-thumbnail-letters ">
+              <?php echo $pi['path']; ?>
+            </div>
+          </a>
+          <?php
+        } else {
+          ?>
+          <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>" class="img-thumbnail border-0 rounded-circle mb-4 border" alt="<?php echo $this->session->userdata ('user_name'); ?>" />
+          <?php
+        }
+      ?>
 
-      <img alt="Profile" src="<?php echo base_url($profile_image); ?>"
-        class="img-thumbnail border-0 rounded-circle mb-4 border" width="200">
-      <h4 class="list-item-heading mb-1"><?php echo $result['first_name'].' '.$result['last_name']; ?></h4>
-      <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#add_image"><i
-          class="fa fa-edit"></i> Edit</button>
+      <h4 class="list-item-heading mb-1">
+        <?php echo $result['first_name'].' '.$result['last_name']; ?>
+      </h4>
+      <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#add_image"><i class="fa fa-edit"></i> Edit</button>
     </div>
   </div>
+
   <ul class="list-group list-group-menu">
     <li class="list-group-item border-left-0 border-right-0">
       <a class="d-block"
-        href="<?php echo site_url ('coaching/users/create/'.$coaching_id.'/'.$role_id.'/'.$member_id); ?>">Profile</a>
+        href="<?php echo site_url ('coaching/users/create/'.$coaching_id.'/'.$role_id.'/'.$member_id); ?>">Basic Details</a>
     </li>
 
     <li class="list-group-item border-left-0 border-right-0">
@@ -64,8 +78,20 @@
           <div class="form-group col-12">
             <div id="profile_messages"></div>
             <div id="image_preview" class="text-center">
-              <img src="<?php echo base_url ($profile_image); ?>" alt="Profile Image"
-                class="img-fluid rounded-circle" />
+              <?php 
+                if ($pi['type'] == 'avatar') {
+                  ?>
+                    <div class="rounded-circle m-0 align-self-center list-thumbnail-letters ">
+                      <?php echo $pi['path']; ?>
+                    </div>
+                  </a>
+                  <?php
+                } else {
+                  ?>
+                  <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>" class="img-thumbnail border-0 rounded-circle mb-4 border" alt="<?php echo $this->session->userdata ('user_name'); ?>" />
+                  <?php
+                }
+              ?>
             </div>
             <?php echo form_label('Upload Image', '', array('class'=>'control-label')); ?>
             <div class="input-group mb-3">

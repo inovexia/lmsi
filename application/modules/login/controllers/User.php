@@ -140,7 +140,6 @@ class User extends MX_Controller {
 		$data['hide_navbar'] = true;
 		$data['hide_sidemenu'] = true;
 		$data['hide_titlebar'] = true;
-
 		
 		$this->load->view (INCLUDE_PATH . 'header', $data);
 		$this->load->view ('student/reset_password');

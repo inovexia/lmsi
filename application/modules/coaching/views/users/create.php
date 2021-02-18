@@ -8,65 +8,15 @@
 			<div class="card-body">
 				<?php echo form_open ('coaching/user_actions/create_account/'.$coaching_id.'/'.$role_id.'/'.$member_id, array ('class'=>'form-horizontal validate-form', 'id'=>'validate-1')); ?>
 					
-				    <?php if ($member_id > 0) { ?>
-						<div class="form-group row">
-							<div class="col-md-4">
-								<?php echo form_label('User Id <span class="text-danger">*</span>', '', array('class'=>'', 'for' =>"adm_no")); ?>
-								<?php 
-								$option = array('name'=>'adm_no','class'=>'form-control','readonly'=>'true','id'=>'adm_no','value'=>set_value('adm_no', $result['adm_no']));
-								echo form_input($option);
-								?>
-							</div>
-						</div>
+					<input type="hidden" name="user_role" value="<?php echo USER_ROLE_STUDENT; ?>" >
+
+				    <?php
+				    $readonly = '';
+				    if ($member_id > 0) { 
+				    	$readonly = 'readonly="true"';
+				    	?>
+						<input type="hidden" name="adm_no" value="<?php echo $result['adm_no']; ?>" id="adm_no">
 					<?php } ?>
-
-					<div class="form-group row">
-						<div class="col-md-4">
-							<label class="form-label"><?php echo 'User Role'; ?></label>
-							<select class="form-control select2-single" name="user_role">
-								<?php 
-								if ($member_id > 0) {
-									$select_role_id = $result['role_id'];
-								} else {
-									if ($role_id > 0) {
-										$select_role_id = $role_id;		
-										
-									} else if ($this->session->userdata ('role_id') == USER_ROLE_SUPER_ADMIN) {
-										$select_role_id = USER_ROLE_ADMIN;
-									} else {
-										$select_role_id = USER_ROLE_STUDENT;
-									}
-								}
-								if ( ! empty ($roles)) {
-									foreach ($roles as $row) {
-										?>
-										<option value=<?php echo $row['role_id'];?> <?php if ($row['role_id'] == $select_role_id) echo 'selected="selected"'; ?> >
-											<?php echo $row['description']; ?> 
-										</option>
-										<?php
-									}
-								}
-								?>
-							</select>
-						</div>
-
-						<div class="col-md-4">
-							<label class="form-label"><?php echo 'Status'; ?></label>
-							<select name="status" class="form-control select2-single" id="search-status" >
-								<option value="<?php echo USER_STATUS_ENABLED; ?>" <?php if ($row['status']==USER_STATUS_ENABLED) echo 'selected="selected"'; ?> >Enabled</option>
-								<option value="<?php echo USER_STATUS_DISABLED; ?>" <?php if ($row['status']==USER_STATUS_DISABLED) echo 'selected="selected"'; ?> >Disabled</option>
-								<option value="<?php echo USER_STATUS_UNCONFIRMED; ?>" <?php if ($row['status']==USER_STATUS_UNCONFIRMED) echo 'selected="selected"'; ?> >Pending</option>
-							</select>
-						</div>
-
-						<div class="col-md-4">
-							<?php echo form_label('Serial No', '', array('class'=>'', 'for' =>"sr_no")); ?>
-							<div class="">
-								<?php echo form_input(array('name'=>'sr_no', 'class'=>'form-control', 'id'=>'sr_no', 'value'=>set_value('sr_no', $result['sr_no'])));?>
-							</div>
-						</div>
-
-					</div>
 
 					<div class="form-group ">
 						<label for="first_name" class="">Name <span class="text-danger">*</span></label>
@@ -82,20 +32,38 @@
 							</div>
 						</div>
 					</div>
-						
+
 					<div class="form-group row">
 						<div class="col-md-6">
 							<?php echo form_label('Contact No<span class="text-danger">*</span>', '', array('class'=>'')); ?>
-							<?php echo form_input(array('name'=>'primary_contact', 'class'=>'form-control digits ', 'value'=>set_value('primary_contact', $result['primary_contact']) ));?>
+							<input type="text" name="primary_contact" class="form-control digits" value="<?php echo set_value('primary_contact', $result['primary_contact']); ?>" <?php echo $readonly; ?>>
 						</div>
 
 						<div class="col-md-6 mt-3 mt-md-0">
 							<?php echo form_label('E-mail <span class="text-danger"></span>', '', array('class'=>'', 'for' =>"email")); ?>
-							<?php echo form_input(array('name'=>'email', 'class'=>'form-control email  ', 'value'=>set_value('email', $result['email']), 'id'=>'email')); ?>
+							<input type="text" name="email" class="form-control email" value="<?php echo set_value('email', $result['email']); ?>" <?php echo $readonly; ?>>
 						</div>
 						
 					</div>
 
+						
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label class="form-label"><?php echo 'Status'; ?></label>
+							<select name="status" class="form-control select2-single" id="search-status" >
+								<option value="<?php echo USER_STATUS_ENABLED; ?>" <?php if ($result['status']==USER_STATUS_ENABLED) echo 'selected="selected"'; ?> >Enabled</option>
+								<option value="<?php echo USER_STATUS_DISABLED; ?>" <?php if ($result['status']==USER_STATUS_DISABLED) echo 'selected="selected"'; ?> >Disabled</option>
+								<option value="<?php echo USER_STATUS_UNCONFIRMED; ?>" <?php if ($result['status']==USER_STATUS_UNCONFIRMED) echo 'selected="selected"'; ?> >Pending</option>
+							</select>
+						</div>
+
+						<div class="col-md-6">
+							<?php echo form_label('Serial No', '', array('class'=>'', 'for' =>"sr_no")); ?>
+							<div class="">
+								<?php echo form_input(array('name'=>'sr_no', 'class'=>'form-control', 'id'=>'sr_no', 'value'=>set_value('sr_no', $result['sr_no'])));?>
+							</div>
+						</div>
+					</div>
 					
 					<div class="form-group row ">
 						<div class="col-md-6">
@@ -125,9 +93,9 @@
 							?>
 							<div class="d-block">
 								<div class="btn-group-toggle gender-toggle" data-toggle="buttons">
-									<label class="btn position-relative btn-light default p-1 mb-1<?php echo ($status_male)?" active":""; ?>"><?php echo form_radio(array('name'=>'gender', 'value'=>'m', 'checked'=>$status_male, 'class'=>'')); ?><i class="iconsminds-male pr-2"></i><?php echo ('Male'); ?></label>
-									<label class="btn position-relative btn-light default p-1 mb-1<?php echo ($status_female)?" active":""; ?>"><?php echo form_radio(array('name'=>'gender', 'value'=>'f', 'checked'=>$status_female, 'class'=>'radio-primary form-check-input')); ?><i class="iconsminds-female pr-2"></i><?php echo ('Female'); ?></label>
-									<label class="btn position-relative btn-light default p-1 mb-1<?php echo ($status_none)?" active":""; ?>"><?php echo form_radio(array('name'=>'gender', 'value'=>'n', 'checked'=>$status_none, 'class'=>'radio-primary form-check-input')); ?><i class="iconsminds-woman-man pr-2"></i><?php echo ('Not Specified'); ?></label>
+									<label class="btn position-relative btn-outline-primary p-1 mb-1<?php echo ($status_male)?" btn-primary text-white":""; ?>"><?php echo form_radio(array('name'=>'gender', 'value'=>'m', 'checked'=>$status_male, 'class'=>'')); ?><i class="iconsminds-male pr-2"></i><?php echo ('Male'); ?></label>
+									<label class="btn position-relative btn-outline-primary p-1 mb-1<?php echo ($status_female)?" btn-primary text-white":""; ?>"><?php echo form_radio(array('name'=>'gender', 'value'=>'f', 'checked'=>$status_female, 'class'=>'radio-primary form-check-input')); ?><i class="iconsminds-female pr-2"></i><?php echo ('Female'); ?></label>
+									<label class="btn position-relative btn-outline-primary p-1 mb-1<?php echo ($status_none)?" btn-primary text-white":""; ?>"><?php echo form_radio(array('name'=>'gender', 'value'=>'n', 'checked'=>$status_none, 'class'=>'radio-primary form-check-input')); ?><i class="iconsminds-woman-man pr-2"></i><?php echo ('Not Specified'); ?></label>
 								</div>
 							</div>
 						</div>
@@ -138,11 +106,14 @@
 					
 				<div class="card-footer">
 					<?php
+					/*
 					if ($num_users >= $max_users && $member_id == 0) {
 						echo '<input type="button" class="btn btn-danger" disabled value="User Limit Reached">';
 					} else {						
 						echo form_submit (array('name'=>'submit', 'value'=>'Save ', 'class'=>'btn btn-primary')); 
 					}
+					*/
+					echo form_submit (array('name'=>'submit', 'value'=>'Save ', 'class'=>'btn btn-primary')); 
 					?>					
 				</div>
 			</form>

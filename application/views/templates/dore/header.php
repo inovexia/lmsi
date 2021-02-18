@@ -220,23 +220,22 @@
 	            <?php if ($this->session->userdata ('is_logged_in')) { ?>
 		            <div class="user d-inline-block">
 		                <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		                    <span>
-			                    <?php 
-					              $pi = $this->session->userdata ('profile_image');
-					              if ($pi['type'] == 'avatar') {
-					                ?>
-					                  <div class="rounded-circle m-0 align-self-center list-thumbnail-letters small">
-					                    <?php echo $pi['path']; ?>
-					                  </div>
-					                </a>
-					                <?php
-					              } else {
-					                ?>
-					                <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>" class="img-thumbnail" alt="<?php echo $this->session->userdata ('user_name'); ?>" />
-					                <?php
-					              }
-					            ?>
-		                    </span>
+		                    <span></span>
+		                    <?php 
+				              $pi = $this->session->userdata ('profile_image');
+				              if ($pi['type'] == 'avatar') {
+				                ?>
+				                  <div class="rounded-circle m-0 align-self-center list-thumbnail-letters small">
+				                    <?php echo $pi['path']; ?>
+				                  </div>
+				                </a>
+				                <?php
+				              } else {
+				                ?>
+				                <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>" class="img-thumbnail" alt="<?php echo $this->session->userdata ('user_name'); ?>" />
+				                <?php
+				              }
+				            ?>
 		                </button>
 
 		                <div class="dropdown-menu dropdown-menu-right mt-3">
@@ -337,7 +336,9 @@
 		                    <h1>
 		                    	<?php
 		                    	if (isset ($bc)) {
-		                    		echo '<a href="'.site_url (current($bc)).'" title="Back to '.key ($bc).'"><i class="iconsminds-arrow-out-left"></i></a>';
+		                    		echo '<a href="'.site_url (current($bc)).'" title="Back to '.key ($bc).'">
+		                    				<i class="iconsminds-arrow-out-left"></i>
+		                    			</a>';
 		                    	}
 		                    	?>
 		                    	<span class="ml-1"><?php if (isset($page_title)) echo $page_title; ?></span>
@@ -379,7 +380,7 @@
 		                        <?php } ?>	                           
 	                        </div>
 
-	                    	<?php if (isset ($sub_title)) { ?>
+	                    	<?php /*if (isset ($sub_title)) { ?>
 			                    <nav class="breadcrumb-container d-sm-block d-lg-inline-block" aria-label="breadcrumb">
 			                        <ol class="breadcrumb pt-0">
 			                            <li class="breadcrumb-item">
@@ -387,7 +388,7 @@
 			                            </li>
 			                        </ol>
 			                    </nav>
-			                <?php } ?>
+			                <?php }*/ ?>
 	                	</div>
 
 	                    <?php
