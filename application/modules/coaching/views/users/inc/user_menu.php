@@ -1,6 +1,8 @@
 <div class="card">
   <div class="card-body">
     <div class="text-center">
+
+
       <img alt="Profile" src="<?php echo base_url($profile_image); ?>"
         class="img-thumbnail border-0 rounded-circle mb-4 border" width="200">
       <h4 class="list-item-heading mb-1"><?php echo $result['first_name'].' '.$result['last_name']; ?></h4>
