@@ -30,7 +30,7 @@
                 <h5 class="card-title">Localisation </h5>
 				<?php echo form_open ('coaching/setting_actions/save_default_settings/'.$coaching_id, array('class'=>'validate-form', 'id'=>'')); ?>
 	                <div class="form-group">
-	                	<label class="form-label">Default Currency</label>
+	                	<label class="form-label"> Currency</label>
 						<select name="currency" class="form-control">
 							<?php 
 							if (! empty ($country_list)) {
@@ -47,7 +47,7 @@
 	                </div>
 
 	                <div class="form-group">
-	                	<label class="form-label">Default Dialing Code</label>
+	                	<label class="form-label"> Dialing Code</label>
 						<select name="dialing" class="form-control">
 							<?php 
 							if (! empty ($country_list)) {
@@ -59,7 +59,7 @@
 							}
 							?>
 						</select>
-	                </div>
+	                </div>	                
 
     	            <input type="submit" class="btn btn-primary">
 	            </form>

@@ -35,7 +35,7 @@
     <!--==== Manifest JSON ====-->
     <link rel="manifest" href="<?php echo base_url ('manifest.json'); ?>">
 
-    <title><?php if (isset($page_title)) echo $page_title . ': '; echo $this->session->userdata ('site_title'); ?>zxzx</title>
+    <title><?php if (isset($page_title)) echo $page_title . ': '; echo $this->session->userdata ('site_title'); ?></title>
 
     <!--==== Core CSS ====-->
     <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/font/iconsmind-s/css/iconsminds.css'); ?>" />
@@ -49,8 +49,17 @@
     <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/scrollbar.light.css'); ?>" />
     <link rel="stylesheet" href="<?php echo base_url(THEME_CSS); ?>" />
     <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/main.css'); ?>" />
-    <!-- Toastr CSS -->
     <link type="text/css" href="<?php echo base_url(THEME_PATH . 'assets/css/toastr.min.css'); ?>" rel="stylesheet">
+    <link type="text/css" href="<?php echo base_url(THEME_PATH . 'assets/css/custom.css'); ?>" rel="stylesheet">
+
+    <!-- Custom CSS (Dynamically included) -->
+    <?php
+    if (isset ($script_css) && !empty ($script_css)) {
+        foreach ($script_css as $css) {
+		    echo '<link rel="stylesheet" href="'.base_url(THEME_PATH . $css).'" />';
+        }
+    }
+    ?>
 
     <!-- Custom JS (Dynamically included) -->
     <?php
@@ -60,14 +69,6 @@
         }
     }
     ?>
-    <?php
-    if (isset ($script_css) && !empty ($script_css)) {
-        foreach ($script_css as $css) {
-		    echo '<link rel="stylesheet" href="'.base_url(THEME_PATH . $css).'" />';
-        }
-    }
-    ?>
-
 </head>
 
 <body id="app-container" class="show-spinner <?php if (isset ($hide_sidemenu)) echo 'menu-hidden'; else { echo 'menu-default';} ?> <?php if (isset ($right_sidebar)) echo 'right-menu'; ?>">
@@ -219,13 +220,29 @@
 	            <?php if ($this->session->userdata ('is_logged_in')) { ?>
 		            <div class="user d-inline-block">
 		                <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		                    <span class="name"><?php echo $this->session->userdata ('user_name'); ?></span>
 		                    <span>
-		                        <img alt="<?php echo $this->session->userdata ('user_name'); ?>" src="<?php echo base_url ($this->session->userdata ('profile_image')); ?>" class="img-thumbnail " />
+			                    <?php 
+					              $pi = $this->session->userdata ('profile_image');
+					              if ($pi['type'] == 'avatar') {
+					                ?>
+					                  <div class="rounded-circle m-0 align-self-center list-thumbnail-letters small">
+					                    <?php echo $pi['path']; ?>
+					                  </div>
+					                </a>
+					                <?php
+					              } else {
+					                ?>
+					                <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>" class="img-thumbnail" alt="<?php echo $this->session->userdata ('user_name'); ?>" />
+					                <?php
+					              }
+					            ?>
 		                    </span>
 		                </button>
 
 		                <div class="dropdown-menu dropdown-menu-right mt-3">
+		                    <p class="pl-3 border-bottom">
+		                    	<?php echo $this->session->userdata ('user_name'); ?>
+	                    	</p>
 		                    <a class="dropdown-item" href="#">Account</a>
 		                    <a class="dropdown-item" href="<?php echo site_url ('login/login/logout'); ?>">Sign out</a>
 		                </div>
@@ -310,7 +327,7 @@
 	<?php } ?>
 
     <main>
-        <div class="container-fluid disable-text-selection">
+        <div class="container-fluid __disable-text-selection">
             <div class="row <?php if (isset ($right_sidebar)) echo 'app-row'; ?>">
                 <div class="col-12">
 		        	<?php if (isset ($hide_titlebar)) { ?>

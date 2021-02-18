@@ -175,7 +175,7 @@ class Settings_model extends CI_Model {
 						$data[$row['name']] = $row['value'];
 					}
 				}
-			}			
+			}
 		} else {							// No setting(s) found
 			$default = $this->common_model->get_country_by_code (DEFAULT_COUNTRY_CODE);
 			return $default;
@@ -187,9 +187,8 @@ class Settings_model extends CI_Model {
 
 	public function save_default_settings ($coaching_id=0) {
 
-		$currency = $this->input->post ('currency');
-
 		// Add/update currency
+		$currency_code = $this->input->post ('currency');
 		$this->db->select ('value');
 		$this->db->where ('name', 'currency_code');
 		$this->db->where ('coaching_id', $coaching_id);
@@ -197,18 +196,17 @@ class Settings_model extends CI_Model {
 		if ($sql->num_rows () == 0) {
 			$data['coaching_id'] = $coaching_id;
 			$data['name'] = 'currency_code';
-			$data['value'] = $currency;
+			$data['value'] = $currency_code;
 			$this->db->insert ('coaching_config', $data);
 		} else {
-			$this->db->set ('value', $currency);
+			$this->db->set ('value', $currency_code);
 			$this->db->where ('name', 'currency_code');
 			$this->db->set ('coaching_id', $coaching_id);
 			$this->db->update ('coaching_config');
 		}
 
-		$dialing = $this->input->post ('dialing');
-
 		// Add/update dialing
+		$dialing_code = $this->input->post ('dialing');
 		$this->db->select ('value');
 		$this->db->where ('name', 'dialing_code');
 		$this->db->where ('coaching_id', $coaching_id);
@@ -216,11 +214,29 @@ class Settings_model extends CI_Model {
 		if ($sql->num_rows () == 0) {
 			$data['coaching_id'] = $coaching_id;
 			$data['name'] = 'dialing_code';
-			$data['value'] = $dialing;
+			$data['value'] = $dialing_code;
 			$this->db->insert ('coaching_config', $data);
 		} else {
-			$this->db->set ('value', $dialing);
+			$this->db->set ('value', $dialing_code);
 			$this->db->where ('name', 'dialing_code');
+			$this->db->set ('coaching_id', $coaching_id);
+			$this->db->update ('coaching_config');
+		}
+
+		// Add/update timezone
+		$timezone = $this->input->post ('timezone');
+		$this->db->select ('value');
+		$this->db->where ('name', 'timezone');
+		$this->db->where ('coaching_id', $coaching_id);
+		$sql = $this->db->get ('coaching_config');
+		if ($sql->num_rows () == 0) {
+			$data['coaching_id'] = $coaching_id;
+			$data['name'] = 'timezone';
+			$data['value'] = $timezone;
+			$this->db->insert ('coaching_config', $data);
+		} else {
+			$this->db->set ('value', $timezone);
+			$this->db->where ('name', 'timezone');
 			$this->db->set ('coaching_id', $coaching_id);
 			$this->db->update ('coaching_config');
 		}

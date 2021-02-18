@@ -24,6 +24,14 @@ $hook['pre_controller'][] = array(
 $hook['pre_controller'][] = array(
         'class'    => 'Vitals',
         'filename' => 'Vitals.php',
+        'function' => 'load_defaults',
+        'filepath' => 'hooks',
+        'params'   => ''
+);
+
+$hook['pre_controller'][] = array(
+        'class'    => 'Vitals',
+        'filename' => 'Vitals.php',
         'function' => 'is_student',
         'filepath' => 'hooks',
         'params'   => ''

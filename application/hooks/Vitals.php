@@ -41,19 +41,7 @@ class Vitals extends MX_Controller {
 		}
 	}
 
-
-	public function setup_login () {
-		/*
-		unset ($_SESSION);
-		$data['member_id'] = 143;
-		$data['coaching_id'] = 0;
-		$data['is_logged_in'] = true;
-		$this->session->set_userdata ($data);
-		$this->common_model->setup_login ();
-		*/
-		// print_r ($_SESSION);
-	}
-
+	
 	public function is_student () {
 		if (isset ($_GET['s'])) {
 			$slug = $_GET['s'];
@@ -63,6 +51,21 @@ class Vitals extends MX_Controller {
 
 	// Load default settings
 	public function load_defaults () {
+
+		$member_id = $this->session->userdata ('member_id');
+
+		// Set timezone
+		$default = $this->users_model->get_default_settings ($member_id);
+		if (isset ($default['timezone'])) {
+			$tz_code = $default['timezone'];
+		} else {
+			$tz_code = DEFAULT_TIMEZONE;
+		}
+		$tz_list = timezone_identifiers_list ();
+		$timezone = $tz_list[$tz_code];
+		@date_default_timezone_set($timezone);
+
+		/*
 		if ( ! $this->session->has_userdata('SITE_TITLE')) {			
     		$config = $this->common_model->load_defaults ();
     		$options = array ();
@@ -81,6 +84,7 @@ class Vitals extends MX_Controller {
 		    define ('MAX_FILE_SIZE', $this->session->userdata ('MAX_FILE_SIZE'));
 		    define ('MAX_STORAGE', $this->session->userdata ('MAX_STORAGE'));
 		}
+		*/
 	}
 	
 	public function validate_session () {

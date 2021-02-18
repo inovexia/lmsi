@@ -112,6 +112,26 @@ class Settings extends MX_Controller {
 
 	}
 
+	public function user_settings ($coaching_id=0) {
+
+		$coaching_id = $this->coaching_id;
+		$member_id = $this->session->userdata ('member_id');
+
+		$data['page_title'] = 'User Settings';
+		
+		/* Back Link */
+		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
+		$data['coaching'] = $this->coaching_model->get_coaching ($coaching_id);
+		$data['default'] = $this->users_model->get_default_settings ($member_id);
+		$data['coaching_id'] = $coaching_id;
+		$data['member_id'] = $member_id;
+		
+		$this->load->view(INCLUDE_PATH . 'header', $data);
+		$this->load->view('settings/user_settings', $data);
+		$this->load->view(INCLUDE_PATH . 'footer', $data);
+
+	}
+
 
 	
 	/* GENERAL SETTINGS PAGE */

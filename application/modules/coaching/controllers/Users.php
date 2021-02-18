@@ -36,7 +36,7 @@ class Users extends MX_Controller {
 	/* LIST USERS
 		Function to list all or selected users
 	*/
-	public function index ($coaching_id=0, $role_id=0, $status='-1', $batch_id=0, $sort=SORT_ALPHA_ASC) {
+	public function index ($coaching_id=0, $role_id=USER_ROLE_STUDENT, $status='-1', $batch_id=0, $sort=SORT_ALPHA_ASC) {
 		
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
 
@@ -83,15 +83,15 @@ class Users extends MX_Controller {
 		}
 		$data['batch_id'] 	= $batch_id;
 		$data['sort'] 		= $sort;
-		$data['data'] 		= $data;
 		$data['page_title'] = 'Users';
 
 		if (! empty ($data['results'])) {
 			$data['num_results'] = count ($data['results']);
 		} else {
 			$data['num_results'] = 0;
-		}
+		} 
 		
+		$data['data'] 		= $data;
 		$data['page_title'] = 'Users';
 		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
 

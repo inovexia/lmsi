@@ -54,4 +54,4 @@
     <button type="button" name="Submit" class="btn btn-primary apply">Apply</button>
   </div>
 </div>
-<?php echo form_close(); ?>
+<?php echo form_close(); ?> 

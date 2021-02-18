@@ -4,7 +4,7 @@ class Users_model extends CI_Model {
     
     // Get all users
 	public function get_users ($coaching_id=0, $role_id=0, $status='-1', $batch_id=0) {
-
+		$data = [];
 		if ($coaching_id > 0) {
 		    $select = 'M.*, SR.description'; 
 		    
@@ -26,8 +26,15 @@ class Users_model extends CI_Model {
 		    $this->db->where ('M.coaching_id', $coaching_id);
 		    $this->db->order_by ('M.first_name, M.second_name, M.last_name', 'ASC');
 		    $sql = $this->db->get ();
-		    return $sql->result_array ();
-
+		    $result = $sql->result_array ();
+		    if (! empty($result)) {
+		    	foreach ($result as $row) {
+		    		$pi = $this->view_profile_image ($row['member_id']);
+		    		$row['pi'] = $pi;
+		    		$data[] = $row;
+		      	}
+		    }
+		    return $data;
 		} else {
 			return false;
 		}
@@ -237,11 +244,14 @@ class Users_model extends CI_Model {
 		
 		// if a profile_image of this user does not exists we can proceed normally
 		if ( read_file ( $file_path ) == false ) {
-			$profile_image = $path_to_image_dir . 'default.png';
+			//$profile_image = $path_to_image_dir . 'default.png';
+			$data['type'] = 'avatar';
+			$data['path'] = $this->user_name_initials ($member_id);
 		} else {
-			$profile_image = $path_to_image_dir . $file_name . '?' . time ();
+			$data['type'] = 'image';
+			$data['path'] = site_url ($path_to_image_dir . $file_name . '?' . time ());
 		}
-		return $profile_image;	
+		return $data;	
 	}
 	
 	public function upload_profile_picture ($member_id, $coaching_id=0) {
@@ -304,6 +314,20 @@ class Users_model extends CI_Model {
 		} else{
 			return false;
 		}
+	}
+
+	public function user_name_initials ($member_id=0) {
+		$user = $this->get_user ($member_id);
+		$fname = $user['first_name'];
+        $lname = $user['last_name'];
+        $initials = '';
+        if ($lname == "") {
+          $initials = substr($fname, 0, 2); 
+        } else {
+          $initials = $fname[0] .''. $lname[0]; 
+        }
+
+        return $initials;
 	}
 	
 	public function get_user_by_login ($login_id=0) {
@@ -1112,4 +1136,53 @@ class Users_model extends CI_Model {
 			$this->invite_by_mobile ($coaching_id, $row['mobile']);
 		}
 	}
+
+
+	public function get_default_settings ($member_id=0, $name='') {
+		$data = [];
+		$this->db->select ('name, value');
+		$this->db->where ('member_id', $member_id);
+		if (! empty($name)) {
+			$this->db->where ('name', $name);
+		}
+		$sql = $this->db->get ('member_config');
+		if ($sql->num_rows () > 0) {		// Setting(s) found
+			if (! empty($name)) {
+				$row = $sql->row_array ();
+				$data[$row['name']] = $row['value'];
+			} else {
+				$result = $sql->result_array ();
+				if (! empty($result)) {
+					foreach ($result as $row) {
+						$data[$row['name']] = $row['value'];
+					}
+				}
+			}
+		}
+
+		return $data;
+	}
+
+	public function save_default_settings ($coaching_id=0, $member_id=0) {	
+
+		$setting = $this->input->post ('setting');
+		foreach ($setting as $name=>$value) {
+			$this->db->select ('value');
+			$this->db->where ('name', $name);
+			$this->db->where ('member_id', $member_id);
+			$sql = $this->db->get ('member_config');
+			if ($sql->num_rows () == 0) {
+				$data['member_id'] = $member_id;
+				$data['name'] = $name;
+				$data['value'] = $value;
+				$this->db->insert ('member_config', $data);
+			} else {
+				$this->db->set ('value', $value);
+				$this->db->where ('name', $name);
+				$this->db->set ('member_id', $member_id);
+				$this->db->update ('member_config');
+			}
+		}
+	}
+
 }
