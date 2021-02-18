@@ -26,8 +26,18 @@ class Users_model extends CI_Model {
 		    $this->db->where ('M.coaching_id', $coaching_id);
 		    $this->db->order_by ('M.first_name, M.second_name, M.last_name', 'ASC');
 		    $sql = $this->db->get ();
-		    return $sql->result_array ();
-
+		    // return $sql->result_array ();
+       $results =  $sql->result_array(); 
+        foreach ($results as $i => $user) {
+          $results[$i]['user_initials'] = $this->profile_image_initial($user['member_id'],$user['coaching_id']);
+          if($this->is_404(site_url ('contents/users/pi_'.$user['member_id'].'.gif')) ){
+            $results[$i]['user_dp'] = 404;
+          }
+          else{
+            $results[$i]['user_dp'] = site_url ('contents/users/pi_'.$user['member_id'].'.gif');
+          }
+        }
+        return $results;
 		} else {
 			return false;
 		}
@@ -1112,4 +1122,40 @@ class Users_model extends CI_Model {
 			$this->invite_by_mobile ($coaching_id, $row['mobile']);
 		}
 	}
+
+  // Delete Invitation
+  	public function delete_invite ($coaching_id=0, $invite_id=0) {
+		$this->db->where ("invite_id", $invite_id);
+		$this->db->delete ("member_invites");
+		return true;
+	}
+
+  // Profile Image Initial Name
+  public function profile_image_initial ($member_id=0, $coaching_id=0){
+    $user_details	=	$this->get_user ($member_id);
+		$f_name = $user_details['first_name'];
+    $l_name = $user_details['last_name'];
+    if($l_name == ""){
+      $initial_name =  substr($f_name, 0, 2); 
+    }
+    else{
+      $initial_name =  $f_name[0].''.$l_name[0]; 
+    }
+    return $initial_name;
+  }
+  function is_404($url) {
+    $handle = curl_init($url);
+    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+    /* Get the HTML or whatever is linked in $url. */
+    $response = curl_exec($handle);
+    /* Check for 404 (file not found). */
+    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+    curl_close($handle);
+    /* If the document has loaded successfully without any redirection or error */
+    if ($httpCode >= 200 && $httpCode < 300){
+        return false;
+    } else {
+        return true;
+    }
+  }
 }
