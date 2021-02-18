@@ -3,12 +3,12 @@
     foreach ($results as $i => $row):
       $name =  $row['first_name'] .' '. $row['second_name'] .' '. $row['last_name'];
       ?>
-      <div class="card d-flex flex-row mb-3 pl-2 align-middle">
+      <div class="card d-flex flex-row mb-3 pl-4 align-middle">
           <label class="custom-control custom-checkbox mb-1 align-self-center ">
               <input type="checkbox" class="custom-control-input">
               <span class="custom-control-label">&nbsp;</span>
           </label>
-          <a class="d-flex align-self-center" href="<?php echo site_url ('coaching/users/edit/'.$coaching_id.'/'.$row['role_id'].'/'.$row['member_id']); ?>">
+          <a class="d-flex flex-shrink-1 align-self-center" href="<?php echo site_url ('coaching/users/edit/'.$coaching_id.'/'.$row['role_id'].'/'.$row['member_id']); ?>">
               <?php 
               $pi = $row['pi'];
               if ($pi['type'] == 'avatar') {
