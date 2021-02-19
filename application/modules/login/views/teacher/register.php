@@ -4,7 +4,7 @@
       <div class="card-body">
         <h2 class="mb-2">Step 1 - Basic Information</h2>
 
-        <?php echo form_open ('api/account_actions/register_teacher', array('id'=>'basic-info-form')); ?>
+        <?php echo form_open ('api/account_actions/register', array('id'=>'basic-info-form')); ?>
         <input type="hidden" name="role_id" value="<?php echo USER_ROLE_TEACHER; ?>">
         <input type="hidden" name="coaching_id" value="0">
 

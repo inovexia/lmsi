@@ -66,7 +66,7 @@ class Account_actions extends MX_Controller {
 	}
 
 	
-	public function register () {
+	public function register_teacher () {
 		$this->form_validation->set_rules ('first_name', 'Name', 'required|trim|alpha_numeric_spaces|min_length[3]', 
 				['min_length'=>'Name is too short. Should be atleast 3 characters']);
 		$this->form_validation->set_rules ('primary_contact', 'Mobile Number', 'required|is_natural|min_length[10]|max_length[15]');
