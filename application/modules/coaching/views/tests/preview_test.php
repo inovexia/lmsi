@@ -8,9 +8,9 @@
 				$parent 	= $all_questions['parent'];
 				$questions 	= $all_questions['questions'];
 				?>
-				<div class="card pt-4" oncopy="return false;" oncut="return false;" onpaste="return false;" onmousedown="return false;" onselectstart="return false;">
-					<div class="card-header">
-						<div class="">
+				<div class="card" oncopy="return false;" oncut="return false;" onpaste="return false;" onmousedown="return false;" onselectstart="return false;">
+					<div class="card-header pt-4 px-4 pb-2">
+						<div class="section-label">
 							<?php if ( $test['finalized'] == 0) { ?>
 								<input type="checkbox" class="checks checkAll d-none" id="checkAll<?php echo $parent_id; ?>" value="<?php echo $parent_id; ?>" onclick="check_all ()">
 							<?php } ?>
@@ -27,53 +27,44 @@
 								// }
 							?>						  
 						  </div>
-						  
-						  <div class="">
-						  </div>
 						</div>
 					</div>
-					<ul class="list-group">
-						<?php 
-						$num_question = 1;
-						if ( ! empty($questions)) {
-							foreach ($questions as $id=>$row) {
-								?>
-								<li class="list-group-item">
-								  <div class="media">
-									<div class="media-left test">
-										<?php if ( $test['finalized'] == 0) { ?>
-											<input name="questions[]" id="select<?php echo $id; ?>" type="checkbox" value="<?php echo $id; ?>" class="d-none mr-2 checks checks<?php echo $parent_id; ?>">
-										<?php } ?>
-										<label class="pr-2" for="select<?php echo $id; ?>"><?php echo $num_question; ?>.</label>
-									</div>
+          <div class="card-body px-0 pt-0">
+            <ul class="list-group">
+              <?php 
+              $num_question = 1;
+              if ( ! empty($questions)) {
+                foreach ($questions as $id=>$row) {
+                  ?>
+                  <li class="list-group-item border-0">
+                    <div class="media">
+                    <div class="media-left test">
+                      <?php if ( $test['finalized'] == 0) { ?>
+                        <input name="questions[]" id="select<?php echo $id; ?>" type="checkbox" value="<?php echo $id; ?>" class="d-none mr-2 checks checks<?php echo $parent_id; ?>">
+                      <?php } ?>
+                      <label class="pr-2" for="select<?php echo $id; ?>"><?php echo $num_question; ?>.</label>
+                    </div>
 
-									<div class="media-body test">
-										<?php 
-										// if ( $test['finalized'] == 0) {
-										// 	echo anchor ('coaching/tests/question_edit/'.$coaching_id.'/'.$course_id.'/'.$test_id.'/'.$row['parent_id'].'/'.$id, $row['question']);
-										// } else {
-											echo $row['question'];
-										// }
-										?>
-										<?php echo $this->qb_model->display_answer_choices($row['type'], $row); ?>
-									</div>
-								  </div>
-								
-								  <div class="row">
-									<div class="col-xs-12 pl-4 pr-1">
-									</div>
-								  </div>
-
-								</li>
-
-								<?php
-								$num_question++;
-							}
-						}
-						$num_parent++;
-						?>
-					</ul>
-
+                    <div class="media-body test">
+                      <?php 
+                      // if ( $test['finalized'] == 0) {
+                      // 	echo anchor ('coaching/tests/question_edit/'.$coaching_id.'/'.$course_id.'/'.$test_id.'/'.$row['parent_id'].'/'.$id, $row['question']);
+                      // } else {
+                        echo $row['question'];
+                      // }
+                      ?>
+                      <?php echo $this->qb_model->display_answer_choices($row['type'], $row); ?>
+                    </div>
+                    </div>
+                  </li>
+                  <?php
+                  $num_question++;
+                }
+              }
+              $num_parent++;
+              ?>
+            </ul>
+          </div>
 					<div class="card-footer d-none">
 						<?php 
 						if ( $test['finalized'] == 0) {

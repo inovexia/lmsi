@@ -85,10 +85,10 @@
           <p class="mb-0 text-muted text-small w-100 w-md-40">Last sent on <br>
             <?php echo date ('d-m-Y', $row['sent_time']); ?> at <?php echo date ('h:i a', $row['sent_time']); ?></p>
           <div class="w-100 w-md-30 text-left text-md-right mt-3 mt-md-0">
-            <a class="btn btn-sm btn-outline-primary mr-2" href="#"
-              onclick="resend_invitation (<?php echo $row['invite_id']; ?>, '<?php echo $type; ?>')">Resend</a>
-            <a class="btn btn-sm btn-outline-danger" href="#"
-              onclick="show_confirm ('Do you want to delete this invitation?', '<?php echo site_url('coaching/user_actions/delete_invite/'.$coaching_id.'/'.$row['invite_id']); ?>')">Remove</a>
+            <button class="btn btn-sm btn-outline-primary mr-2" type="button"
+              onclick="resend_invitation (<?php echo $row['invite_id']; ?>, '<?php echo $type; ?>')">Resend</button>
+            <button class="btn btn-sm btn-outline-danger" type="button"
+              onclick="show_confirm ('Do you want to delete this invitation?', '<?php echo site_url('coaching/user_actions/delete_invite/'.$coaching_id.'/'.$row['invite_id']); ?>')">Remove</button>
 
 
           </div>
