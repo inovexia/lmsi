@@ -68,7 +68,7 @@ class Teacher extends MX_Controller {
 
 		$data['country'] = $this->common_model->get_user_geo_location ();
 		$data['country_list'] = $this->common_model->sys_country_list ();
-		$data['script'] = $this->load->view ('scripts/register', $data, true); 
+		$data['script'] = $this->load->view ('scripts/teacher/register', $data, true); 
 		$this->load->view (INCLUDE_PATH . 'header', $data);
 		$this->load->view ('teacher/register', $data);		
 		$this->load->view (INCLUDE_PATH . 'footer', $data);
