@@ -182,6 +182,9 @@ class Common_model extends CI_Model {
 
 	public function generate_coaching_id ($coaching_id=0) {
 		
+		define ('COACHING_ID_PREFIX1', 'LMSi');
+		define ('COACHING_ID_PREFIX1', date('Ym'));
+
 		$id = 0;
 		if ($coaching_id > 0) {
 			// This means coaching record is already inserted and the primary key is passed as coaching_id
