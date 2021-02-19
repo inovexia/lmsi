@@ -112,7 +112,7 @@ class Registration_model extends CI_Model {
 		$sql = $this->db->get ('coachings');		
 		if ($sql->num_rows () == 0) {
 			$data['status'] = 1;
-			if (isset ($this->session->userdata ('member_id'))) {
+			if ($this->session->userdata ('member_id')) {
 				$data['created_by'] = $this->session->userdata ('member_id');
 			} else {
 				$data['created_by'] = 0;				
