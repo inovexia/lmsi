@@ -38,8 +38,22 @@ $(document).ready(function() {
   $(document).on('change', ".type", function() {
     if ($(this).val() == 1) {
       $(".input-user-limit").fadeOut();
+      $(".course-selection-radio").fadeOut();
+      $(".course-selection-checkbox").fadeIn();
     } else {
       $(".input-user-limit").fadeIn();
+      $(".course-selection-checkbox").fadeOut();
+      $(".course-selection-radio").fadeIn();
+    }
+  });
+
+  $(document).on('change', ".repeat-or-single", function() {
+    if ($(this).val() == "non-repeat") {
+      $(".recursive-slot-area").fadeOut();
+      $(".oneday-slot-area").fadeIn();
+    } else {
+      $(".oneday-slot-area").fadeOut();
+      $(".recursive-slot-area").fadeIn();
     }
   });
 });
