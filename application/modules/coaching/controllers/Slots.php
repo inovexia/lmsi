@@ -63,15 +63,15 @@ class Slots extends MX_Controller {
         $data['bc'] = ['Dashboard' => 'coaching/home/dashboard/'];
         $data['toolbar_buttons'] = $this->toolbar_buttons;
 
-        if ($date == "") {
-            $date = mktime (0, 0, 0, date ('m'), date('d'), date('Y'));
-        }
+        // if ($date == "") {
+        //     $date = mktime (0, 0, 0, date ('m'), date('d'), date('Y'));
+        // }
         $data['coaching_id'] = $coaching_id;
-        $data['date'] = $date;
+        // $data['date'] = $date;
         $data['script_css'] = ['assets/css/vendor/bootstrap-datepicker3.min.css'];
         $data['script_footer'] = ['assets/js/vendor/bootstrap-datepicker.js'];
 
-        $data['courses'] = $this->slots_model->get_slots ($coaching_id, $date);
+        //$data['courses'] = $this->slots_model->get_slots ($coaching_id, $date);
         $data['script'] = $this->load->view('slots/scripts/index', $data, true);
         $this->load->view(INCLUDE_PATH . 'header', $data);
         $this->load->view('slots/create', $data);
