@@ -29,7 +29,7 @@
                 <i class="simple-icon-options-vertical"></i>
                 <span class="sr-only"></span>
               </button>
-              <div class="dropdown-menu">
+              <div class="dropdown-menu dropdown-menu-right">
                 <?php 
 										echo anchor ('coaching/lessons/add_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id.'/'.$row['page_id'], '<i class="simple-icon-note mr-2"></i> Edit', ['class'=>'dropdown-item']);
 									?>
