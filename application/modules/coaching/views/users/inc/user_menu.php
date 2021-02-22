@@ -5,46 +5,50 @@
       <?php 
         if ($pi['type'] == 'avatar') {
           ?>
-            <div class="rounded-circle m-0 align-self-center list-thumbnail-letters ">
-              <?php echo $pi['path']; ?>
-            </div>
-          </a>
-          <?php
+      <div class="rounded-circle m-0 align-self-center list-thumbnail-letters mx-auto text-uppercase">
+        <?php echo $pi['path']; ?>
+      </div>
+      </a>
+      <?php
         } else {
           ?>
-          <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>" class="img-thumbnail border-0 rounded-circle mb-4 border" alt="<?php echo $this->session->userdata ('user_name'); ?>" />
-          <?php
+      <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>"
+        class="img-thumbnail border-0 rounded-circle mb-4 border"
+        alt="<?php echo $this->session->userdata ('user_name'); ?>" />
+      <?php
         }
       ?>
 
-      <h4 class="list-item-heading mb-1">
+      <h4 class="list-item-heading mb-1 py-3" style="font-weight:bold">
         <?php echo $result['first_name'].' '.$result['last_name']; ?>
       </h4>
-      <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#add_image"><i class="fa fa-edit"></i> Edit</button>
+      <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#add_image"><i
+          class="fa fa-edit"></i> Edit</button>
     </div>
   </div>
 
-  <ul class="list-group list-group-menu">
-    <li class="list-group-item border-left-0 border-right-0">
+  <ul class="list-group list-group-menu user-action-menu">
+    <li class="list-group-item border-left-0 border-right-0 user-menu-list active-menu">
       <a class="d-block"
-        href="<?php echo site_url ('coaching/users/create/'.$coaching_id.'/'.$role_id.'/'.$member_id); ?>">Basic Details</a>
+        href="<?php echo site_url ('coaching/users/create/'.$coaching_id.'/'.$role_id.'/'.$member_id); ?>">Basic
+        Details</a>
     </li>
 
-    <li class="list-group-item border-left-0 border-right-0">
+    <li class="list-group-item border-left-0 border-right-0 user-menu-list">
       <?php 
 				$url = 'coaching/users/change_password/'.$coaching_id.'/'.$member_id;
 			?>
       <a class="d-block" href="<?php echo site_url ($url); ?>">Change Password</a>
     </li>
 
-    <li class="list-group-item border-left-0 border-right-0 ">
+    <li class="list-group-item border-left-0 border-right-0 user-menu-list">
       <?php 
 				$url = 'coaching/users/courses/'.$coaching_id.'/'.$role_id.'/'.$member_id;
 			?>
       <a class="d-block" href="<?php echo site_url ($url); ?>">Enrolled Courses</a>
     </li>
 
-    <li class="list-group-item border-left-0 border-right-0 d-none">
+    <li class="list-group-item border-left-0 border-right-0 d-none user-menu-list">
       <?php 
 				$url = 'coaching/users/tests_taken/'.$coaching_id.'/'.$role_id.'/'.$member_id;
 			?>
@@ -81,15 +85,17 @@
               <?php 
                 if ($pi['type'] == 'avatar') {
                   ?>
-                    <div class="rounded-circle m-0 align-self-center list-thumbnail-letters ">
-                      <?php echo $pi['path']; ?>
-                    </div>
-                  </a>
-                  <?php
+              <div class="rounded-circle m-0 align-self-center list-thumbnail-letters ">
+                <?php echo $pi['path']; ?>
+              </div>
+              </a>
+              <?php
                 } else {
                   ?>
-                  <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>" class="img-thumbnail border-0 rounded-circle mb-4 border" alt="<?php echo $this->session->userdata ('user_name'); ?>" />
-                  <?php
+              <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>"
+                class="img-thumbnail border-0 rounded-circle mb-4 border"
+                alt="<?php echo $this->session->userdata ('user_name'); ?>" />
+              <?php
                 }
               ?>
             </div>

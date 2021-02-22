@@ -28,7 +28,7 @@ class Tests extends MX_Controller {
 
 	    $course_id = $this->uri->segment (5);
 
-        $this->toolbar_buttons['add_new'] = ['<i class="iconsminds-add"></i> New Course' => 'coaching/courses/create/'.$coaching_id];
+        $this->toolbar_buttons['add_new'] = ['<i class="iconsminds-add"></i> New Test' => 'coaching/tests/create_test/'.$coaching_id.'/'.$course_id];
         $this->toolbar_buttons['actions'] = [
             '<i class="simple-icon-list"></i> All Courses'=>'coaching/courses/index/'.$coaching_id,
         ];
