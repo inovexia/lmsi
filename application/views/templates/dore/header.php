@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="author" content="" />
   <meta name="description" content="" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -14,7 +14,6 @@
   <meta name="msapplication-navbutton-color" content="" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="msapplication-starturl" content="<?php echo site_url (''); ?>" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <!--==== Apple Touch Icons ====-->
   <link rel="icon" sizes="128x128" href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon128.png'); ?>" />
   <link rel="apple-touch-icon" sizes="128x128"
@@ -35,7 +34,7 @@
   <link rel="icon" href="<?php echo base_url(THEME_PATH . 'assets/img/fav-icon.png'); ?>" type="image/png"
     sizes="512x512">
   <!--==== Manifest JSON ====-->
-  <link rel="manifest" href="<?php echo base_url ('manifest.json'); ?>" />
+  <link rel="manifest" href="<?php echo base_url ('manifest.webmanifest'); ?>" />
   <title><?php if (isset($page_title)) echo $page_title . ': '; echo $this->session->userdata ('site_title'); ?></title>
   <!--==== Core CSS ====-->
   <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/font/iconsmind-s/css/iconsminds.css'); ?>" />
@@ -75,7 +74,7 @@
   <?php else : ?>
   <nav class="navbar fixed-top">
     <div class="d-flex align-items-center navbar-left">
-      <a href="#" class="menu-button d-none d-md-block">
+      <a href="#" class="menu-button d-none d-md-block" aria-label="Main Menu">
         <svg class="main" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 17">
           <rect x="0.48" y="0.5" width="7" height="1" />
           <rect x="0.48" y="7.5" width="7" height="1" />
@@ -87,7 +86,7 @@
           <rect x="1.56" y="15.5" width="16" height="1" />
         </svg>
       </a>
-      <a href="#" class="menu-button-mobile d-xs-block d-sm-block d-md-none">
+      <a href="#" class="menu-button-mobile d-xs-block d-sm-block d-md-none" aria-label="Main Menu">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 17">
           <rect x="0.5" y="0.5" width="25" height="1" />
           <rect x="0.5" y="7.5" width="25" height="1" />

@@ -5,7 +5,7 @@
       ?>
 <div class="card d-flex flex-row mb-3 pl-4 align-middle">
   <label class="custom-control custom-checkbox mb-1 align-self-center ">
-    <input type="checkbox" class="custom-control-input">
+    <input type="checkbox" aria-label="checkUser" class="custom-control-input">
     <span class="custom-control-label">&nbsp;</span>
   </label>
   <a class="d-flex flex-shrink-1 align-self-center"

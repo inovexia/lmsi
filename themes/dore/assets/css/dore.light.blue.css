@@ -4719,8 +4719,8 @@ a.ck.ck-button.ck-on:not(.ck-disabled):hover {
   border: 2px solid rgba(20, 83, 136, 0.2);
   border-radius: 50%;
   border-top-color: #145388;
-  animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
+  animation: spin 1s ease-in-out infinite;
   left: calc(50% - 15px);
   top: calc(50% - 15px);
   position: fixed;

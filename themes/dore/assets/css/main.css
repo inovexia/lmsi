@@ -40,8 +40,8 @@ body.show-spinner::after {
   border: 2px solid rgba(0, 0, 0, 0.3);
   border-radius: 50%;
   border-top-color: rgba(0, 0, 0, 0.8);
-  animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
+  animation: spin 1s ease-in-out infinite;
   left: calc(50% - 25px);
   top: calc(50% - 25px);
   position: fixed;

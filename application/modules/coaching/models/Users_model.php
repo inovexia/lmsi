@@ -88,8 +88,14 @@ class Users_model extends CI_Model {
 		}
 
 		$sql = $this->db->get ();
-		return $sql->result_array ();
-		
+    $result = $sql->result_array ();
+    if (! empty($result)) {
+      foreach ($result as $i => $row) {
+        $pi = $this->view_profile_image ($row['member_id']);
+        $result[$i]['pi'] = $pi;
+        }
+    }
+    return $result;	
 	}
 	
 	public function get_user ($member_id=0) {		
