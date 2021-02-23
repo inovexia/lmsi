@@ -12,6 +12,7 @@
       <span class="action-label">Delete</span>
     </button>
     <div class="dropdown-menu">
+
       <button type="button" class="dropdown-item action active" value="delete" data-label="Delete">
         <i class="simple-icon-trash"></i> Delete
       </button>
@@ -56,4 +57,4 @@
     <button type="button" name="Submit" class="btn btn-primary apply">Apply</button>
   </div>
 </div>
-<?php echo form_close(); ?> 
+<?php echo form_close(); ?>

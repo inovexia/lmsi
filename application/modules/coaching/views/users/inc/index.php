@@ -73,25 +73,27 @@
         <i class="simple-icon-options-vertical"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu<?php echo $row['member_id'];?>">
-        <?php echo anchor('coaching/users/edit/'.$coaching_id.'/'.$row['role_id'].'/'.$row['member_id'], '<i class="fa fa-edit"></i> Edit User', array('title'=>'Edit', 'class'=>'dropdown-item')); ?>
+        <?php echo anchor('coaching/users/edit/'.$coaching_id.'/'.$row['role_id'].'/'.$row['member_id'], '<i class="simple-icon-pencil pr-2"></i> Edit User', array('title'=>'Edit', 'class'=>'dropdown-item')); ?>
+        <?php echo anchor('coaching/users/courses/'.$coaching_id.'/'.$row['role_id'].'/'.$row['member_id'], '<i class="simple-icon-book-open pr-2"></i> Enroll In Courses', array('title'=>'Enroll In Courses', 'class'=>'dropdown-item')); ?>
+
         <?php if ( $row['status'] == USER_STATUS_ENABLED ) { ?>
         <a href="javascript:void(0)"
           onclick="javascript:show_confirm ( '<?php echo 'Do you want to disable this user?'; ?>', '<?php echo site_url('coaching/user_actions/disable_member/'.$coaching_id.'/'.$role_id.'/'.$row['member_id']); ?>')"
-          title="Disable" class="dropdown-item"><i class="fa fa-times-circle"></i> Disable User</a>
+          title="Disable" class="dropdown-item"><i class="simple-icon-user-unfollow pr-2"></i> Disable User</a>
         <?php } else if ( $row['status'] == USER_STATUS_DISABLED ) { ?>
         <a href="javascript:void(0)"
           onclick="javascript:show_confirm ( '<?php echo 'Do you want to enable this user?'; ?>', '<?php echo site_url('coaching/user_actions/enable_member/'.$coaching_id.'/'.$role_id.'/'.$row['member_id']); ?>' )"
-          class="dropdown-item"><i class="fa fa-check-circle"></i> Enable User</a>
+          class="dropdown-item"><i class="simple-icon-user-following pr-2"></i> Enable User</a>
         <?php } else if ($row['status'] == USER_STATUS_UNCONFIRMED) { ?>
         <a href="javascript:void(0)"
           onclick="javascript:show_confirm ( '<?php echo 'Do you want to approve this user?'; ?>', '<?php echo site_url('coaching/user_actions/enable_member/'.$coaching_id.'/'.$role_id.'/'.$row['member_id']); ?>' )"
-          class="dropdown-item"><i class="fa fa-check-circle"></i> Approve</a>
+          class="dropdown-item"><i class="fa fa-check-circle pr-2"></i> Approve</a>
         <?php } ?>
         <?php //echo anchor('coaching/users/member_log/'.$coaching_id.'/'.$role_id.'/'.$row['member_id'], '<i class="fa fa-info-circle"></i> Member Log', array ('class'=>'dropdown-item') ); ?>
-        <?php echo anchor('coaching/users/change_password/'.$coaching_id.'/'.$row['member_id'], '<i class="fa fa-key"></i> Change Password', array ('class'=>'dropdown-item')); ?>
+        <?php echo anchor('coaching/users/change_password/'.$coaching_id.'/'.$row['member_id'], '<i class="iconsminds-key-lock pr-2"></i> Change Password', array ('class'=>'dropdown-item')); ?>
         <a href="javascript:void(0)"
           onclick="show_confirm ('<?php echo 'Are you sure want to delete this users?' ; ?>','<?php echo site_url('coaching/user_actions/delete_account/'.$coaching_id.'/'.$role_id.'/'.$row['member_id']); ?>' )"
-          class="dropdown-item"><i class="fa fa-trash"></i> Delete User</a>
+          class="dropdown-item"><i class="simple-icon-trash pr-2"></i> Delete User</a>
       </div>
     </div>
   </div>
