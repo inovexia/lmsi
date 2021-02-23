@@ -28,31 +28,38 @@
   </div>
 
   <ul class="list-group list-group-menu user-action-menu">
-    <li class="list-group-item border-left-0 border-right-0 user-menu-list active-menu">
-      <a class="d-block"
+    <li
+      class="list-group-item border-left-0 border-right-0 user-menu-list<?php echo ($user_active_item == "create")? " bg-primary":null; ?>">
+      <a class="d-block<?php echo ($user_active_item == "create")? " text-white":null; ?>"
         href="<?php echo site_url ('coaching/users/create/'.$coaching_id.'/'.$role_id.'/'.$member_id); ?>">Basic
         Details</a>
     </li>
 
-    <li class="list-group-item border-left-0 border-right-0 user-menu-list">
+    <li
+      class="list-group-item border-left-0 border-right-0 user-menu-list<?php echo ($user_active_item == "change_password")? " bg-primary":null; ?>">
       <?php 
 				$url = 'coaching/users/change_password/'.$coaching_id.'/'.$member_id;
 			?>
-      <a class="d-block" href="<?php echo site_url ($url); ?>">Change Password</a>
+      <a class="d-block<?php echo ($user_active_item == "change_password")? " text-white":null; ?>"
+        href="<?php echo site_url ($url); ?>">Change Password</a>
     </li>
 
-    <li class="list-group-item border-left-0 border-right-0 user-menu-list">
+    <li
+      class="list-group-item border-left-0 border-right-0 user-menu-list<?php echo ($user_active_item == "courses")? " bg-primary":null; ?>">
       <?php 
 				$url = 'coaching/users/courses/'.$coaching_id.'/'.$role_id.'/'.$member_id;
 			?>
-      <a class="d-block" href="<?php echo site_url ($url); ?>">Enrolled Courses</a>
+      <a class="d-block<?php echo ($user_active_item == "courses")? " text-white":null; ?>"
+        href="<?php echo site_url ($url); ?>">Enrolled Courses</a>
     </li>
 
-    <li class="list-group-item border-left-0 border-right-0 d-none user-menu-list">
+    <li
+      class="list-group-item border-left-0 border-right-0 user-menu-list<?php echo ($user_active_item == "tests_taken")? " bg-primary":null; ?>">
       <?php 
 				$url = 'coaching/users/tests_taken/'.$coaching_id.'/'.$role_id.'/'.$member_id;
 			?>
-      <a class="d-block" href="<?php echo site_url ($url); ?>">Tests Taken</a>
+      <a class="d-block<?php echo ($user_active_item == "tests_taken")? " text-white":null; ?>"
+        href="<?php echo site_url ($url); ?>">Tests Taken</a>
     </li>
 
     <?php if ($member_id <> $this->session->userdata ('member_id')) { ?>
