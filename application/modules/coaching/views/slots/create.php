@@ -21,7 +21,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="text-primary font-weight-bold">Appointment Type</label>
+            <label class="text-primary font-weight-bold">Slot Type</label>
             <div class="d-md-flex">
               <div class="custom-control custom-radio col-md-6">
                 <input type="radio" class="custom-control-input type" id="customCheck1" name="appointment_type"

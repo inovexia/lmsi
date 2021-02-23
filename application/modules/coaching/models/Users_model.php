@@ -1059,18 +1059,20 @@ class Users_model extends CI_Model {
 		$this->send_invite ($coaching_id, 'email', $email, $checksum);
 	}
 
-	public function invite_by_mobile ($coaching_id=0, $mobile='') {
+	public function invite_by_mobile ($coaching_id=0, $mobile='', $dialing_code='') {
 		if ($mobile == '') {
 			$mobile = $this->input->post ('mobile');
+      $dialing_code = $this->input->post ('dialing_code');
+      $mob = ($dialing_code.' '.$mobile);
 		}
-		$checksum = md5 ($mobile);
+		$checksum = md5 ($mob);
 
-		if ($this->invite_exists ($coaching_id, 'mobile', $mobile) == false) {
+		if ($this->invite_exists ($coaching_id, 'mobile', $mob) == false) {
 			// Add record
 			$data['coaching_id'] = $coaching_id;
 			$data['checksum'] = $checksum;
 			$data['sent_time'] = time ();
-			$data['mobile'] = $mobile;
+			$data['mobile'] = $mob;
 			$data['email'] = '';
 			$data['status'] = 0;
 			$this->db->insert ('member_invites', $data);
@@ -1078,7 +1080,7 @@ class Users_model extends CI_Model {
 		} else {
 			$data['sent_time'] = time ();
 			$this->db->where ('coaching_id', $coaching_id);
-			$this->db->where ('mobile', $mobile);
+			$this->db->where ('mobile', $mob);
 			$this->db->update ('member_invites', $data);
 			return true;
 		}

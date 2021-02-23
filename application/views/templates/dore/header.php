@@ -43,6 +43,8 @@
     href="<?php echo base_url(THEME_PATH . 'assets/font/simple-line-icons/css/simple-line-icons.css'); ?>" />
   <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/bootstrap.min.css'); ?>" />
   <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/bootstrap.rtl.only.min.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/select2.min.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/select2-bootstrap.min.css'); ?>" />
   <link rel="stylesheet"
     href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/bootstrap-float-label.min.css'); ?>" />
   <link rel="stylesheet"
@@ -198,7 +200,7 @@
           <span>
             <?php $pi = $this->session->userdata ('profile_image'); ?>
             <?php if ($pi['type'] == 'avatar') : ?>
-            <div class="rounded-circle m-0 align-self-center list-thumbnail-letters small">
+            <div class="rounded-circle m-0 align-self-center list-thumbnail-letters small text-uppercase">
               <?php echo $pi['path']; ?>
             </div>
             <?php else: ?>
