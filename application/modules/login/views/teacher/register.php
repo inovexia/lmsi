@@ -39,15 +39,15 @@
               Mobile<span class="text-danger">*</span>
             </label>
             <div class="input-group">
-              <div class="input-group-prepend">
-                <select name="dialing_code" class="input-group-text" id="user_mobile">
+              <div class="input-group-prepend" style="min-width:65px;">
+                <select name="dialing_code" class="input-group-text form-control select2-single" id="user_mobile">
                   <?php 
                 if (! empty($country_list)) {
                   foreach ($country_list as $cl) {
                     ?>
-                  <option value="<?php echo $cl['dialing_code']; ?>"
+                  <option value="+<?php echo $cl['dialing_code']; ?>"
                     <?php if ($cl['dialing_code'] == $country['dialing_code']) echo 'selected="selected"'; ?>>
-                    <?php echo $cl['dialing_code']; ?>
+                    +<?php echo $cl['dialing_code']; ?>
                   </option>
                   <?php
                   }

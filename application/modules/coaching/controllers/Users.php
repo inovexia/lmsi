@@ -141,6 +141,7 @@ class Users extends MX_Controller {
 			$data['page_title'] = 'Create Account';
 		}
 
+    $data['user_active_item'] = "create"; 
 		$data['data']	=	$data;
 		$this->load->view(INCLUDE_PATH . 'header', $data);
 		$this->load->view ('users/create', $data);
@@ -201,7 +202,7 @@ class Users extends MX_Controller {
 		$data['coaching_id']   = $coaching_id;
 		$data["bc"] = array ( 'Users'=>'coaching/users/index/'.$coaching_id );
 		// $data['toolbar_buttons'] = $this->toolbar_buttons;
-
+    $data['user_active_item'] = "change_password"; 
 		$data['data'] = $data;
 		
 		$data['script'] = $this->load->view ('users/scripts/change_password', $data, true);
@@ -268,6 +269,7 @@ class Users extends MX_Controller {
 		$data['role_id'] 		= $role_id;
 		$data['member_id'] 		= $member_id; 
 		$data['page_title'] 	= 'Courses';
+    $data['user_active_item'] = "courses";
 		$data['data']			= $data;
 		
 		$data['bc'] = array ('Users'=>'coaching/users/edit/'.$coaching_id.'/'.$role_id.'/'.$member_id);
@@ -292,6 +294,7 @@ class Users extends MX_Controller {
 		$data['member_id'] 		= $member_id; 
 		$data['test_taken'] 	= $tests_taken;
 		$data['page_title'] 	= 'Tests Taken';
+    $data['user_active_item'] = "tests_taken";
 		$data['data']			= $data;
 		
 		$data['bc'] = array ('Users'=>'coaching/users/edit/'.$coaching_id.'/'.$role_id.'/'.$member_id);
