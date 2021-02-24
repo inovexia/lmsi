@@ -56,5 +56,14 @@ $(document).ready(function() {
       $(".recursive-slot-area").fadeIn();
     }
   });
+
+  $(document).on('change', "#repeat-session:checkbox", function() {
+
+    if ($(this).is(":checked")) {
+      $('.day-selection-checkbox').fadeIn();
+    } else {
+      $('.day-selection-checkbox').fadeOut();
+    }
+  });
 });
 </script>
