@@ -47,15 +47,15 @@ $(document).ready(function() {
     }
   });
 
-  $(document).on('change', ".repeat-or-single", function() {
-    if ($(this).val() == "non-repeat") {
-      $(".recursive-slot-area").fadeOut();
-      $(".oneday-slot-area").fadeIn();
-    } else {
-      $(".oneday-slot-area").fadeOut();
-      $(".recursive-slot-area").fadeIn();
-    }
-  });
+  // $(document).on('change', ".repeat-or-single", function() {
+  //   if ($(this).val() == "non-repeat") {
+  //     $(".recursive-slot-area").fadeOut();
+  //     $(".oneday-slot-area").fadeIn();
+  //   } else {
+  //     $(".oneday-slot-area").fadeOut();
+  //     $(".recursive-slot-area").fadeIn();
+  //   }
+  // });
 
   $(document).on('change', "#repeat-session:checkbox", function() {
 
