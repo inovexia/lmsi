@@ -22,9 +22,9 @@ class Courses extends MX_Controller
     if ($member_id == 0) {
       $member_id = $this->session->userdata('member_id');
     }
-    $data['toolbar_buttons'] = [
-      '<i class="fa fa-book"></i> My Courses' => 'student/courses/my_courses/' . $coaching_id . '/' . $member_id,
-    ];
+    // $data['toolbar_buttons'] = [
+    //   '<i class="fa fa-book"></i> My Courses' => 'student/courses/my_courses/' . $coaching_id . '/' . $member_id,
+    // ];
     $data['bc'] = array('Dashboard' => 'student/home/dashboard/' . $coaching_id);
     $data['coaching_id'] = $coaching_id;
     $data['member_id'] = $member_id;

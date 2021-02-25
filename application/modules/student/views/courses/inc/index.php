@@ -25,7 +25,7 @@
               <div class="w-60 d-flex align-items-center">
                   <div class="card-body">
                       <a href="<?php echo site_url ('student/courses/home/'.$coaching_id.'/'.$member_id.'/'.$course['course_id']); ?>">
-                          <h5 class="listing-heading ellipsis"><?php echo $course['title']; ?></h5>
+                          <h5 class="listing-heading ellipsis" style="height:unset;"><?php echo $course['title']; ?></h5>
                       </a>
                       <div class="text-danger">
                         <?php 
@@ -50,18 +50,18 @@
                         if ($course['price'] > 0) {
                           echo '<span class="badge badge-outline-danger">&#8377 '.$course['price'].'</span>';
                         } else {
-                          echo '<span class="badge badge-outline-primary">-</span>';
+                          echo '<span class="badge badge-outline-primary">Free</span>';
                         }
                         ?>
                       </div>
-                      <div class="listing-desc text-muted ellipsis mt-1">
+                      <div class="listing-desc text-muted ellipsis mt-1" style="height:unset;">
                         <?php 
                           $desc = strip_tags($course['description']);
                           $desc = character_limiter ($desc, 100);
                           echo $desc;
                         ?>
                       </div>                      
-                      <div class="">
+                      <div class="mt-3">
                         <a href="<?php echo site_url ('student/courses/view/'.$coaching_id.'/'.$member_id.'/'.$course['course_id']); ?>" class="btn btn-primary align-self-center">Course Details</a>
                       </div>
                   </div>

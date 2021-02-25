@@ -3,7 +3,7 @@
   <div class="btn-group" role="group">
     <div class="btn btn-primary btn-lg pl-4 pr-0 check-button">
       <label class="custom-control custom-checkbox mb-0 d-inline-block">
-        <input type="checkbox" class="custom-control-input" id="checkAll">
+        <input type="checkbox" class="custom-control-input" aria-label="checkAll" id="checkAll">
         <span class="custom-control-label">&nbsp;</span>
       </label>
     </div>
@@ -12,6 +12,7 @@
       <span class="action-label">Delete</span>
     </button>
     <div class="dropdown-menu">
+
       <button type="button" class="dropdown-item action active" value="delete" data-label="Delete">
         <i class="simple-icon-trash"></i> Delete
       </button>
@@ -34,7 +35,7 @@
   <div class="btn-group" role="group">
     <div class="btn btn-primary btn-lg pl-4 pr-0 check-button">
       <label class="custom-control custom-checkbox mb-0 d-inline-block">
-        <input type="checkbox" class="custom-control-input" id="checkAll2">
+        <input type="checkbox" class="custom-control-input" aria-label="checkAll" id="checkAll2">
         <span class="custom-control-label">&nbsp;</span>
       </label>
     </div>
@@ -56,4 +57,4 @@
     <button type="button" name="Submit" class="btn btn-primary apply">Apply</button>
   </div>
 </div>
-<?php echo form_close(); ?> 
+<?php echo form_close(); ?>

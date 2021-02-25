@@ -1,237 +1,128 @@
-<div class="row">
-  <div class="col-12 col-lg-6 mx-auto">
-    <div class="card mb-4">
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <?php echo form_open('coaching/slot_actions/create_common_slot/' . $coaching_id, ['class' => 'validate-form']); ?>
+    <div class="card">
       <div class="card-body">
-        <h5 class="mb-4">Create a new slot</h5>
-        <?php echo form_open ('', array('id'=>'validate-slot')); ?>
-        <div class="form-group col-12">
-          <label for="date">Select Date</label>
-          <div class="input-group date" data-date-start-date="" data-date-format="dd-mm-yyyy">
-            <input id="date" type="date" class="form-control" name="date" value="<?php echo (date ('d-m-Y')); ?>" />
-            <span class="input-group-text input-group-append input-group-addon">
-              <i class="simple-icon-calendar"></i>
-            </span>
-          </div>
-        </div>
-        <div class="form-group col-12">
-          <label for="subject">Select Subject</label>
-          <select id="subject" class="form-control select2-single" name="subject">
-            <option value="" selected>Select a subject</option>
-            <option value="Course 1">Course 1</option>
-            <option value="Course 2">Course 2</option>
-            <option value="Course 3">Course 3</option>
-            <option value="Course 4">Course 4</option>
-          </select>
-        </div>
-        <div class="form-group col-12">
-          <label for="start">Start Time</label>
-          <input id="start" class="form-control" type="time" name="start" value="" />
-        </div>
-        <div class="form-group col-12">
-          <label for="end">End Time</label>
-          <input id="end" class="form-control" type="time" name="end" value="" />
-        </div>
-        <div class="form-group col-12">
-          <label>Appointment Type</label>
-          <div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="single" name="type" class="custom-control-input" value="" />
-              <label class="custom-control-label" for="single">Single</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="multiple" name="type" class="custom-control-input" value="" />
-              <label class="custom-control-label" for="multiple">Multiple</label>
+        <h1 class="text-primary font-weight-bold" style="font-size:22px;">Common Slot</h1>
+        <div id="output-selector">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label class="form-label text-primary font-weight-bold" for="max_users">Maximum users </label>
+              <div class="btn p-0 btn-link text-primary simple-icon-question" style="cursor:pointer;font-weight:600;" data-toggle="tooltip" data-placement="right" title="Users limit of the slot.">
+              </div>
+              <input type="number" min="0" length="6" value="0" class="form-control" id="max_users" name="max_users" required />
+              <p class="text-muted mb-0">Enter 0 for no limit</p>
             </div>
           </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="text-primary font-weight-bold" for="start_time">Start Time</label>
+              <div class="btn p-0 btn-link text-primary simple-icon-question" style="cursor:pointer;font-weight:600;" data-toggle="tooltip" data-placement="right" title="Start Time the slot."></div>
+              <input type="time" class="form-control" placeholder="" name="start_time" id="start_time" value="<?php echo date('H:i'); ?>" required />
+            </div>
+            <div class="form-group col-md-6">
+              <label class="text-primary font-weight-bold" for="end_time">End Time</label>
+              <div class="btn p-0 btn-link text-primary simple-icon-question" style="cursor:pointer;font-weight:600;" data-toggle="tooltip" data-placement="right" title="End Time the slot."></div>
+              <input type="time" class="form-control" placeholder="" name="end_time" id="end_time" value="<?php echo date('H:i', strtotime('+1 hour')); ?>" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label class="text-primary font-weight-bold" for="slot_date">Start Date</label>
+              <div class="btn p-0 btn-link text-primary simple-icon-question" style="cursor:pointer;font-weight:600;" data-toggle="tooltip" data-placement="right" title="Date of the slot."></div>
+              <input type="date" class="form-control" placeholder="" id="slot_date" name="slot_date" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+90 days')); ?>"
+                value="<?php echo date('Y-m-d'); ?>" required />
+            </div>
+          </div>
+          <div class="recursive-slot-area mt-3">
+            <div class="mb-3">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="repeat-session" name="repeat_slot" />
+                <label class="custom-control-label text-primary font-weight-bold" for="repeat-session">Repeat
+                  Session</label>
+                <div class="btn p-0 btn-link text-primary simple-icon-question" style="cursor:pointer;font-weight:600;" data-toggle="tooltip" data-placement="right" title="Repeat
+                slot same time for future dates."></div>
+              </div>
+            </div>
+            <div class="day-selection-checkbox" style="display:none;">
+              <div>
+                <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                  <input type="checkbox" class="custom-control-input" id="day1" value="1" name="days[]" />
+                  <label class="custom-control-label" for="day1">Mon</label>
+                </div>
+                <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                  <input type="checkbox" class="custom-control-input" id="day2" value="2" name="days[]" />
+                  <label class="custom-control-label" for="day2">Tue</label>
+                </div>
+                <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                  <input type="checkbox" class="custom-control-input" id="day3" value="3" name="days[]" />
+                  <label class="custom-control-label" for="day3">Wed</label>
+                </div>
+                <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                  <input type="checkbox" class="custom-control-input" id="day4" value="4" name="days[]" />
+                  <label class="custom-control-label" for="day4">Thu</label>
+                </div>
+                <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                  <input type="checkbox" class="custom-control-input" id="day5" value="5" name="days[]" />
+                  <label class="custom-control-label" for="day5">Fri</label>
+                </div>
+                <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                  <input type="checkbox" class="custom-control-input" id="day6" value="6" name="days[]" />
+                  <label class="custom-control-label" for="day6">Sat</label>
+                </div>
+                <div class="custom-control custom-checkbox mr-4 d-inline-block">
+                  <input type="checkbox" class="custom-control-input" id="day7" value="7" name="days[]" />
+                  <label class="custom-control-label" for="day7">Sun</label>
+                </div>
+              </div>
+              <div class="form-row mt-3">
+                <div class="form-group col-12">
+                  <label class="text-primary font-weight-bold" for="end_date">End Date</label>
+                  <div class="btn p-0 btn-link text-primary simple-icon-question" style="cursor:pointer;font-weight:600;" data-toggle="tooltip" data-placement="right"
+                    title="End Date of the slot repeat."></div>
+                  <input type="date" class="form-control" placeholder="" id="end_date" name="end_date" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+90 days')); ?>"
+                    value="<?php echo date('Y-m-d'); ?>" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="text-primary font-weight-bold" for="price_all_slots">General Price Per Student</label>
+            <div class="btn p-0 btn-link text-primary simple-icon-question" style="cursor:pointer;font-weight:600;" data-toggle="tooltip" data-placement="right"
+              title="General cost of the slot per student."></div>
+            <div class="slot-price d-flex">
+              <div class="currency-symbol form-control text-primary font-weight-bold" style="width:35px; padding-top:13px">
+                $
+              </div>
+              <input type="number" class="form-control price" min="0" value="0" placeholder="Price" id="price_all_slots" name="price_all_slots" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="text-primary font-weight-bold">Slot Mode</label>
+            <div class="btn p-0 btn-link text-primary simple-icon-question" style="cursor:pointer;font-weight:600;" data-toggle="tooltip" data-placement="right"
+              title="Kind of Slot Offline, Online or both."></div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="offline" name="slot_mode" value="1" required />
+              <label class="custom-control-label" for="offline">Offline</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="online" name="slot_mode" value="2" required />
+              <label class="custom-control-label" for="online">Online</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="both" name="slot_mode" value="3" required />
+              <label class="custom-control-label" for="both">Both</label>
+            </div>
+          </div>
         </div>
-
-        <div class="">
-          <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-html="true" data-placement="right"
-            data-original-title="<small>Create a New Slot</small>">
-            <i class="fas fa-plus"></i>
-            Create
-          </button>
-        </div>
-        </form>
+      </div>
+      <div class="card-footer d-flex justify-content-end">
+        <input type="hidden" name="slot_id" value="0" />
+        <button type="submit" class="btn btn-sm btn-primary mr-2">Save</button>
+        <span id="delete_container"></span>
+        <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Cancel</button>
       </div>
     </div>
+    <?php echo form_close(); ?>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-  <div class="card mb-4 d-none">
-    <div class="card-body">
-      <?php echo form_open ('', array('id'=>'validate-slot')); ?>
-
-      <div class="form-row">
-        <div class="form-group col-sm-6">
-          <label for="subject">Select Subject</label> <button type="button"
-            class="btn btn-light bg-transparent border-0 p-0" data-toggle="tooltip" data-placement="right"
-            data-html="true" data-original-title="<small>Courses created<br/>by current user.</small>"><i
-              class="fas fa-question-circle"></i></button>
-          <select id="subject" class="form-control select2-single" name="subject">
-            <option value="" selected>Select a subject</option>
-
-          </select>
-        </div>
-        <div class="form-group col-sm-6">
-          <label for="date">Select Date</label> <button type="button" class="btn btn-light bg-transparent border-0 p-0"
-            data-toggle="tooltip" data-placement="right" data-html="true"
-            data-original-title="<small>Select date<br/>for the slot.</small>"><i
-              class="fas fa-question-circle"></i></button>
-          <div class="input-group date" data-date-start-date="<?php echo date(
-            'd-m-Y',
-            time()
-        ); ?>" data-date-format="dd-mm-yyyy">
-            <input id="date" type="text" class="form-control" name="date"
-              value="<?php echo isset($date) ? date('d-m-Y', $date) : null; ?>" />
-            <span class="input-group-text input-group-append input-group-addon">
-              <i class="simple-icon-calendar"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-sm-6">
-          <label for="start">Start Time</label> <button type="button" class="btn btn-light bg-transparent border-0 p-0"
-            data-toggle="tooltip" data-placement="right" data-html="true"
-            data-original-title="<small>Select start time<br/>for the slot.</small>"><i
-              class="fas fa-question-circle"></i></button>
-          <input id="start" class="form-control" type="time" name="start"
-            value="<?php echo isset($start_time) ? date('H:i', $start_time) : null; ?>" />
-        </div>
-        <div class="form-group col-sm-6">
-          <label for="end">End Time</label> <button type="button" class="btn btn-light bg-transparent border-0 p-0"
-            data-toggle="tooltip" data-placement="right" data-html="true"
-            data-original-title="<small>Select end time<br/>for the slot.</small>"><i
-              class="fas fa-question-circle"></i></button>
-          <input id="end" class="form-control" type="time" name="end"
-            value="<?php echo isset($end_time) ? date('H:i', $end_time) : null; ?>" />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-sm-6">
-          <label>Appointment Type</label> <button type="button" class="btn btn-light bg-transparent border-0 p-0"
-            data-toggle="tooltip" data-placement="right" data-html="true"
-            data-original-title="<small>Select appointment<br/>type for the slot.</small>"><i
-              class="fas fa-question-circle"></i></button>
-          <div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="single" name="type" class="custom-control-input" value="" />
-              <label class="custom-control-label" for="single">Single</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="multiple" name="type" class="custom-control-input" value="" />
-              <label class="custom-control-label" for="multiple">Multiple</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-html="true" data-placement="right"
-          data-original-title="<small>Create a New Slot</small>">
-          <i class="fas fa-plus"></i>
-          Create
-        </button>
-      </div>
-      <?php echo form_close(); ?>
-    </div>
-  </div>
-
-
-  <div class="card mb-4 d-none">
-    <div class="card-body">
-      <?php echo form_open("coaching/slots_actions/create/$slot_id", ['class' => 'form-horizontal', 'id' => 'validate-1']); ?>
-      <?php extract($slot); ?>
-      <div class="form-row">
-        <div class="form-group col-sm-6">
-          <label for="subject">Select Subject</label> <button type="button"
-            class="btn btn-light bg-transparent border-0 p-0" data-toggle="tooltip" data-placement="right"
-            data-html="true" data-original-title="<small>Courses created<br/>by current user.</small>"><i
-              class="fas fa-question-circle"></i></button>
-          <select id="subject" class="form-control select2-single" name="subject">
-            <option value="" selected>Select a subject</option>
-            <?php foreach ($courses as $i => $course): ?>
-            <?php extract($course); ?>
-            <?php if ($member_id == $created_by): ?>
-            <?php $selected = isset($subject) && $subject == $course_id ? 'selected' : ''; ?>
-            <?php echo "<option value=\"$course_id\"$selected>$title</option>"; ?>
-            <?php endif; ?>
-            <?php endforeach; ?>
-          </select>
-        </div>
-        <div class="form-group col-sm-6">
-          <label for="date">Select Date</label> <button type="button" class="btn btn-light bg-transparent border-0 p-0"
-            data-toggle="tooltip" data-placement="right" data-html="true"
-            data-original-title="<small>Select date<br/>for the slot.</small>"><i
-              class="fas fa-question-circle"></i></button>
-          <div class="input-group date" data-date-start-date="<?php echo date(
-            'd-m-Y',
-            time()
-        ); ?>" data-date-format="dd-mm-yyyy">
-            <input id="date" type="text" class="form-control" name="date"
-              value="<?php echo isset($date) ? date('d-m-Y', $date) : null; ?>" />
-            <span class="input-group-text input-group-append input-group-addon">
-              <i class="simple-icon-calendar"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-sm-6">
-          <label for="start">Start Time</label> <button type="button" class="btn btn-light bg-transparent border-0 p-0"
-            data-toggle="tooltip" data-placement="right" data-html="true"
-            data-original-title="<small>Select start time<br/>for the slot.</small>"><i
-              class="fas fa-question-circle"></i></button>
-          <input id="start" class="form-control" type="time" name="start"
-            value="<?php echo isset($start_time) ? date('H:i', $start_time) : null; ?>" />
-        </div>
-        <div class="form-group col-sm-6">
-          <label for="end">End Time</label> <button type="button" class="btn btn-light bg-transparent border-0 p-0"
-            data-toggle="tooltip" data-placement="right" data-html="true"
-            data-original-title="<small>Select end time<br/>for the slot.</small>"><i
-              class="fas fa-question-circle"></i></button>
-          <input id="end" class="form-control" type="time" name="end"
-            value="<?php echo isset($end_time) ? date('H:i', $end_time) : null; ?>" />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-sm-6">
-          <label>Appointment Type</label> <button type="button" class="btn btn-light bg-transparent border-0 p-0"
-            data-toggle="tooltip" data-placement="right" data-html="true"
-            data-original-title="<small>Select appointment<br/>type for the slot.</small>"><i
-              class="fas fa-question-circle"></i></button>
-          <div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="single" name="type" class="custom-control-input"
-                value="<?php echo APPOINTMENT_TYPE_SINGLE; ?>"
-                <?php echo (isset($slot_type) && $slot_type == APPOINTMENT_TYPE_SINGLE)? "checked ":null; ?> />
-              <label class="custom-control-label" for="single">Single</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="multiple" name="type" class="custom-control-input"
-                value="<?php echo APPOINTMENT_TYPE_MULTIPLE; ?>"
-                <?php echo (isset($slot_type) && $slot_type == APPOINTMENT_TYPE_MULTIPLE)? "checked ":null; ?> />
-              <label class="custom-control-label" for="multiple">Multiple</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-html="true" data-placement="right"
-          data-original-title="<small>Create a New Slot</small>">
-          <i class="fas fa-plus"></i>
-          Create
-        </button>
-      </div>
-      <?php echo form_close(); ?>
-    </div>
-  </div>
+</div>

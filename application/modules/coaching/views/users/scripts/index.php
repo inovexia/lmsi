@@ -40,25 +40,28 @@ $(document).ready(function() {
       '/<?php echo $status.'/'.$batch_id; ?>';
     $(location).attr('href', url);
   });
-  $('#checkAll2').on('change', function() {
-    if (!$('#checkAll').prop('checked')) {
-      $('#checkAll').trigger('click');
-    }
-    if (!$(this).prop('checked')) {
-      $('#checkAll').trigger('click');
+  $('#checkAll').on('change', function() {
+    if ($(this).prop('checked')) {
+      if (!$('#checkAll2').prop('checked')) {
+        $('#checkAll2').prop('checked', true);
+      }
+    } else {
+      $('#checkAll2').prop('checked', false);
     }
   });
-  $('#checkAll').on('change', function() {
-    if (!$('#checkAll2').prop('checked')) {
-      $('#checkAll2').trigger('click');
-    }
-    if (!$(this).prop('checked')) {
-      $('#checkAll2').trigger('click');
+  $('#checkAll2').on('change', function() {
+    if ($(this).prop('checked')) {
+      if (!$('#checkAll').prop('checked')) {
+        $('#checkAll').trigger('click');
+      }
+    } else {
+      $('#checkAll').trigger('click');
     }
   });
   $('#users-list .custom-control-input').on('change', function() {
     if ($('#users-list .custom-control-input:checked').length) {
-      if ($('#users-list .custom-control-input').length === $('#users-list .custom-control-input:checked').length) {
+      if ($('#users-list .custom-control-input').length === $('#users-list .custom-control-input:checked')
+        .length) {
         $('#checkAll2').prop({
           'indeterminate': false,
           'checked': true

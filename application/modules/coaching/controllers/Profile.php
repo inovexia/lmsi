@@ -17,7 +17,7 @@ class Profile extends MX_Controller
   {
     $data['page_title'] = 'My Profile';
     $data['bc'] = [
-      'Dashboard' => 'coaching/home/dashboard/' . $coaching_id,
+      'Dashboard' => 'coaching/home/dashboard/',
     ];
     $this->load->view(INCLUDE_PATH . 'header', $data);
     $this->load->view('profile/index', $data);

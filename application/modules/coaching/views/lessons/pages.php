@@ -8,7 +8,7 @@
 			?>
   <div class="col-12 mb-3">
     <div class="card flex-row listing-card-container">
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center w-100">
         <div class="card-body d-flex">
           <div class="w-80">
             <a
@@ -29,7 +29,7 @@
                 <i class="simple-icon-options-vertical"></i>
                 <span class="sr-only"></span>
               </button>
-              <div class="dropdown-menu">
+              <div class="dropdown-menu dropdown-menu-right">
                 <?php 
 										echo anchor ('coaching/lessons/add_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id.'/'.$row['page_id'], '<i class="simple-icon-note mr-2"></i> Edit', ['class'=>'dropdown-item']);
 									?>
