@@ -42,9 +42,10 @@ class Courses extends MX_Controller {
 
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
 		$data['courses'] = $this->courses_model->courses ($coaching_id, $cat_id);
+		$data['data']	= $data;
 		
 		$data['script'] = $this->load->view('courses/scripts/index', $data, true);
-    $data['filter_template']  = $this->load->view ('courses/inc/index_filters', $data, true);
+    	$data['filter_template']  = $this->load->view ('courses/inc/index_filters', $data, true);
 		$this->load->view(INCLUDE_PATH . 'header', $data);
 		$this->load->view('courses/index', $data);
 		$this->load->view(INCLUDE_PATH . 'footer', $data);

@@ -61,9 +61,7 @@ class Vitals extends MX_Controller {
 		} else {
 			$tz_code = DEFAULT_TIMEZONE;
 		}
-		$tz_list = timezone_identifiers_list ();
-		$timezone = $tz_list[$tz_code];
-		@date_default_timezone_set($timezone);
+		@date_default_timezone_set($tz_code);
 
 		/*
 		if ( ! $this->session->has_userdata('SITE_TITLE')) {			

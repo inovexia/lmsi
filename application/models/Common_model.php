@@ -180,10 +180,7 @@ class Common_model extends CI_Model {
 	
 	
 
-	public function generate_coaching_id ($coaching_id=0) {
-		
-		define ('COACHING_ID_PREFIX1', 'LMSi');
-		define ('COACHING_ID_PREFIX1', date('Ym'));
+	public function generate_coaching_id ($coaching_id=0) {		
 
 		$id = 0;
 		if ($coaching_id > 0) {

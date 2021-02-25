@@ -30,11 +30,18 @@ class Courses_model extends CI_Model {
 		return $uncategorized_courses;
 	}
 	
-	public function courses ($coaching_id=0, $cat_id='-1', $status=CATEGORY_STATUS_ALL) {
+	public function courses ($coaching_id=0, $cat_id='-1', $status=CATEGORY_STATUS_ALL, $sort=SORT_ALPHA_ASC) {
+
 		$this->db->select ('CONCAT(M.first_name, M.last_name) AS user_name, CC.*');
 		$this->db->from ('coaching_courses CC');
 		$this->db->join ('members M', 'CC.created_by=M.member_id');
 		$this->db->where ('CC.coaching_id', $coaching_id);
+		
+		if ($this->input->post ('search_text')) {
+			$title = $this->input->post ('search_text');
+			$this->db->like ('CC.title', $title);
+		}
+		
 		if ($cat_id == '-1') {
 			
 		} else if ($cat_id == 0) {
@@ -42,10 +49,20 @@ class Courses_model extends CI_Model {
 		} else {
 			$this->db->where ('CC.cat_id', $cat_id);
 		}
+
 		if ($status > CATEGORY_STATUS_ALL) {
 			$this->db->where('CC.status', $status);
 		}
-		$this->db->order_by ('CC.created_on', 'DESC');
+
+		if ($sort == SORT_ALPHA_ASC) {
+			$this->db->order_by ('CC.title', 'ASC');
+		} else if ($sort == SORT_ALPHA_DESC) {
+			$this->db->order_by ('CC.title', 'DESC');
+		} else if ($sort == SORT_CREATION_ASC) {
+			$this->db->order_by ('CC.created_on', 'ASC');
+		} else if ($sort == SORT_CREATION_DESC) {
+			$this->db->order_by ('CC.created_on', 'DESC');
+		}
 		$sql = $this->db->get();
 		$courses = $sql->result_array();
 		$result  = [];

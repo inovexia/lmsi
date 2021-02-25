@@ -120,7 +120,7 @@ class Setting_actions extends MX_Controller {
 	public function save_user_settings ($coaching_id=0, $member_id=0) {
 		$this->users_model->save_default_settings ($coaching_id, $member_id);
 		$this->output->set_content_type("application/json");
-		$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Settings updated successfully')));
+		$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Settings updated successfully', 'redirect'=>site_url ('coaching/settings/user_settings'))));
 	}
 
 	public function save_default_theme ($coaching_id=0) {

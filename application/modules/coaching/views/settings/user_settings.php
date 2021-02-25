@@ -10,7 +10,7 @@
 						<select name="setting[timezone]" class="form-control">
 							<?php 
 							$current_tz = '';
-							$tz_list = timezone_identifiers_list ();
+							$tz_list = $timezones;
 							if (! empty ($tz_list)) {
 								foreach ($tz_list as $i=>$tz_name) {
 									?>
@@ -20,6 +20,7 @@
 							}
 							?>
 						</select>
+	                	<label class="form-label"> Current Time <strong><?php echo date ('l, d F, Y h:i a'); ?></strong></label>
 	                </div>
 
     	            <input type="submit" class="btn btn-primary" name="Save">

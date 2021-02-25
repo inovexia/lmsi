@@ -119,10 +119,11 @@ class Settings extends MX_Controller {
 
 		$data['page_title'] = 'User Settings';
 		
-		/* Back Link */
+		/* Back Link */		
 		$data['bc'] = array ('Dashboard'=>'coaching/home/dashboard/'.$coaching_id);
 		$data['coaching'] = $this->coaching_model->get_coaching ($coaching_id);
 		$data['default'] = $this->users_model->get_default_settings ($member_id);
+		$data['timezones'] = $this->settings_model->get_timezones_list ();
 		$data['coaching_id'] = $coaching_id;
 		$data['member_id'] = $member_id;
 		

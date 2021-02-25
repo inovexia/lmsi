@@ -44,6 +44,16 @@ class Courses_actions extends MX_Controller {
 		}
 	}
 
+	public function get_courses ($coaching_id=0, $cat_id=0, $status=0, $sort=SORT_ALPHA_ASC) {
+
+		$data['coaching_id'] = $coaching_id;
+		$data['cat_id'] = $cat_id;
+		$data['courses'] = $this->courses_model->courses ($coaching_id, $cat_id, $status, $sort);
+		$output = $this->load->view ('courses/inc/index', $data, true);
+		$this->output->set_content_type("application/json");
+		$this->output->set_output(json_encode(array('status'=>true, 'output'=>$output)));
+	}
+
 
 	public function create_course ($coaching_id=0, $category_id=0, $course_id=0) {
 		

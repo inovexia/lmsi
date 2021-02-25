@@ -10,20 +10,17 @@ class Lesson_actions extends MX_Controller {
 	} 
 
 
-	public function search ($coaching_id=0, $course_id=0, $status='-1') {
+	public function search ($coaching_id=0, $course_id=0, $status='-1', $sort=SORT_ALPHA_ASC) {
 
 		$data['coaching_id'] = $coaching_id;
 		$data['course_id'] = $course_id;
 		$data['status'] = $status;
-		$data['lessons'] = $this->lessons_model->get_lessons ($coaching_id, $course_id, $status);
-		$data['is_admin'] = USER_ROLE_COACHING_ADMIN === intval($this->session->userdata('role_id'));
-
-		$data['data']	= $data;
+		$data['lessons'] = $this->lessons_model->get_lessons ($coaching_id, $course_id, $status, $sort);
 
 		$output  = $this->load->view ('lessons/inc/index', $data, true);
 
 		$this->output->set_content_type("application/json");
-		$this->output->set_output(json_encode(array('status'=>true, 'data'=>$output )));
+		$this->output->set_output(json_encode(array('status'=>true, 'output'=>$output )));
 	}
 
 	public function create_lesson ($coaching_id=0, $course_id=0, $lesson_id=0) {

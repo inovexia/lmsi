@@ -20,7 +20,7 @@ class Courses_model extends CI_Model
     return $result;
   }
 
-  public function get_courses($coaching_id = 0, $category_id = '-1')
+  public function get_courses ($coaching_id = 0, $category_id = '-1')
   {
     $this->db->select('CC.*');
     if ($this->input->post('search')) {

@@ -27,6 +27,9 @@ class Teacher extends MX_Controller {
 		$data['hide_titlebar'] = true;
 
 		$captcha_dir = $this->config->item ('captcha_dir');
+		if ( ! is_dir ($captcha_dir) ) {
+			@mkdir ($captcha_dir, 755, true);
+		}
 
 		$vals = array(
 				'word'          => '',

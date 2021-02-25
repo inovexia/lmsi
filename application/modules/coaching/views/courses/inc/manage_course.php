@@ -43,7 +43,7 @@
                     <?php echo anchor ('coaching/courses/preview/'.$coaching_id.'/'.$course_id, '<i class="simple-icon-eye heading-icon"></i> Preview'); ?>
                 </li>
                 <li>
-                    <?php echo anchor ('coaching/enrolments/course_users/'.$coaching_id.'/'.$course_id, '<i class="iconsminds-student-male-female heading-icon"></i> Users '); ?>
+                    <?php //echo anchor ('coaching/enrolments/course_users/'.$coaching_id.'/'.$course_id, '<i class="iconsminds-student-male-female heading-icon"></i> Users '); ?>
                     </a>
                 </li>                  
             </ul>

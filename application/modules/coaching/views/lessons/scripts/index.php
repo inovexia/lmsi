@@ -1,38 +1,95 @@
- <script>
-	const dataURL = '<?php echo site_url ('coaching/lesson_actions/search/'.$coaching_id.'/'.$course_id); ?>';
-	const formSelector = document.getElementById ('search-form');
-	const outputSelector = document.getElementById ('lessons-list');
-	function search_status (status) {
-		fetch (dataURL + '/' + status, {
-			method: 'POST',
-		}).then (function (response) {
-			return response.json ();
-		}).then (function (result) {
-			if (result.status == true) {
-				outputSelector.innerHTML = result.data;
-			}
-		});
-	}
-	$('#search-text').on ('keyup', function () {
-		var data = new FormData (formSelector);
-		var search = $(this).val ();
-		fetch (dataURL, {
-			method: 'POST',
-			body: data,
-		}).then (function (response) {
-			return response.json ();
-		}).then (function (result) {
-			if (result.status == true) {
-				outputSelector.innerHTML = result.data;
-			}
-		});
-	});
-	$('.status').on('click', (e) => {
-		var thisElement = $(e.currentTarget);
-		thisElement.parents('.dropdown-menu').prev().html(thisElement.html());
-		thisElement.parents('.dropdown-menu').find('.dropdown-item.active').removeClass('active');
-		thisElement.addClass('active');
-	});
+<script>
+
+const outputSelector = document.getElementById ('outputDiv');
+const statusSelector = document.getElementById ('filter-status');
+const sortSelector = document.getElementById ('filter-sort');
+
+const filterStatusSelector = document.getElementById ('filter-status-val');
+const filterSortSelector = document.getElementById ('filter-sorting-val');
+const filterCourseSelector = document.getElementById ('filter-course-val');
+const dataURL = '<?php echo site_url ('coaching/lesson_actions/search/'.$coaching_id.'/'.$course_id); ?>';
+
+function change_status (status) {
+   
+    outputSelector.innerHTML = pageLoader;
+    sort = document.getElementById ('filter-sorting-val').value;
+    filterCourseSelector.value = '';
+
+    /* Filter Status */
+    var filterStatus = 'All Status';
+    if (status == <?php echo COURSE_STATUS_INACTIVE; ?>) {
+        filterStatus = 'Unpublished';
+    } else if (status == <?php echo COURSE_STATUS_ACTIVE; ?>) {
+        filterStatus = 'Published';
+    }
+    statusSelector.innerHTML = filterStatus;
+    filterStatusSelector.value = status;
+
+    fetch (dataURL+'/'+status+'/'+sort, {
+        method: 'POST',
+    }).then (function (response) {
+        return response.json ();
+    }).then (function (result) {
+        if (result.status == true) {
+            outputSelector.innerHTML = result.output;
+        }
+    });
+}
+
+
+function change_sorting (sort) {
+
+    outputSelector.innerHTML = pageLoader;
+    status = document.getElementById ('filter-status-val').value;
+    filterCourseSelector.value = '';
+
+    /* Filter Sort */
+    var filterSort = 'Sort by name';
+    if (sort == <?php echo SORT_ALPHA_ASC; ?>) {
+        filterSort = 'Name A to Z';
+    } else if (sort == <?php echo SORT_ALPHA_DESC; ?>) {
+        filterSort = 'Name Z to A';
+    } else if (sort == <?php echo SORT_CREATION_ASC; ?>) {
+        filterSort = 'Old to New';
+    } else if (sort == <?php echo SORT_CREATION_DESC; ?>) {
+        filterSort = 'New to Old';
+    }
+    sortSelector.innerHTML = filterSort;
+    filterSortSelector.value = sort;
+
+    fetch (dataURL+'/'+status+'/'+sort, {
+        method: 'POST',
+    }).then (function (response) {
+        return response.json ();
+    }).then (function (result) {
+        if (result.status == true) {
+            outputSelector.innerHTML = result.output;
+        }
+    });
+}
+
+
+function search_courses(title) {
+
+    outputSelector.innerHTML = pageLoader;
+    let status = document.getElementById ('filter-status-val').value;
+    let sort = document.getElementById ('filter-sorting-val').value;
+
+    let searchForm = document.getElementById('search-form');
+    let formData = new FormData(searchForm);
+    
+    fetch (dataURL+'/'+status+'/'+sort, {
+        method: 'POST',
+        body: formData
+    }).then (function (response) {
+        return response.json ();
+    }).then (function (result) {
+        if (result.status == true) {
+            outputSelector.innerHTML = result.output;
+        }
+    });   
+}
+
 	// For Demo Switch
 	$('.switch_demo').on ('change', function () {
 		if ($(this).is(':checked')) {

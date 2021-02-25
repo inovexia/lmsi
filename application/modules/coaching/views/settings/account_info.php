@@ -12,10 +12,9 @@
 				</div>
 				<div class="form-group">
 					<label class="form-label">ACESSS URL</label>
-					<h4 class="text-primary"><?php echo site_url('?s='.$coaching['coaching_url']); ?>
-						<a onclick="copy_text('coaching_url')" class="btn btn-outline-info btn-xs float-right">Copy to clipboard</a>
-					</h4>
-					<input type="hidden" name="coaching_url" value="<?php echo site_url('?s='.$coaching['coaching_url']); ?>" id="coaching_url">
+					<input type="text" name="coaching_url" value="<?php echo site_url('?s='.$coaching['coaching_url']); ?>" id="coaching_url" readonly="true" class="form-control">
+
+					<a onclick="copy_text('coaching_url')" class="btn btn-outline-info btn-xs mt-2">Copy to clipboard</a>
 				</div>
 				<div class="form-group">
 					<label class="form-label">CREATION DATE</label>

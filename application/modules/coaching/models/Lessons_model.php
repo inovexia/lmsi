@@ -2,18 +2,31 @@
 
 class Lessons_model extends CI_Model {
 
-	public function get_lessons ($coaching_id=0, $course_id=0, $status='-1') {
+	public function get_lessons ($coaching_id=0, $course_id=0, $status='-1', $sort=SORT_ALPHA_ASC) {
 
 		if ($this->input->post ('search_text')) {
 			$search = $this->input->post ('search_text');
 			$this->db->like ('title', $search);
 		}
+		
 		$this->db->where ('coaching_id', $coaching_id);
 		$this->db->where ('course_id', $course_id);
+		
 		if ($status > '-1') {
 			$this->db->where ('status', $status);
 		}
-		$this->db->order_by ('position', 'ASC');
+		
+		if ($sort == SORT_ALPHA_ASC) {
+			$this->db->order_by ('title', 'ASC');
+		} else if ($sort == SORT_ALPHA_DESC) {
+			$this->db->order_by ('title', 'DESC');
+		} else if ($sort == SORT_CREATION_ASC) {
+			$this->db->order_by ('created_on', 'ASC');
+		} else if ($sort == SORT_CREATION_DESC) {
+			$this->db->order_by ('created_on', 'DESC');
+		} else {
+			$this->db->order_by ('position', 'ASC');
+		}
 		$sql = $this->db->get ('coaching_course_lessons');
 		return $sql->result_array ();
 	}

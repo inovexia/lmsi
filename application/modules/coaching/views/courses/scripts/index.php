@@ -1,20 +1,92 @@
-<script>
-$(document).ready(() => {
-    $(".edit-category").hide();
-    $('#edit-categories').click(() => {
-        $(".edit-category").toggle("slide").toggleClass('pl-2');
+<script> 
+
+const outputSelector = document.getElementById ('outputDiv');
+const statusSelector = document.getElementById ('filter-status');
+const sortSelector = document.getElementById ('filter-sort');
+
+const filterStatusSelector = document.getElementById ('filter-status-val');
+const filterSortSelector = document.getElementById ('filter-sorting-val');
+const filterCourseSelector = document.getElementById ('filter-course-val');
+const dataURL = '<?php echo site_url ('coaching/courses_actions/get_courses/'.$coaching_id.'/'.$cat_id); ?>';
+
+function change_status (status) {
+   
+    outputSelector.innerHTML = pageLoader;
+    sort = document.getElementById ('filter-sorting-val').value;
+    filterCourseSelector.value = '';
+
+    /* Filter Status */
+    var filterStatus = 'All Status';
+    if (status == <?php echo COURSE_STATUS_INACTIVE; ?>) {
+        filterStatus = 'Unpublished';
+    } else if (status == <?php echo COURSE_STATUS_ACTIVE; ?>) {
+        filterStatus = 'Published';
+    }
+    statusSelector.innerHTML = filterStatus;
+    filterStatusSelector.value = status;
+
+    fetch (dataURL+'/'+status+'/'+sort, {
+        method: 'POST',
+    }).then (function (response) {
+        return response.json ();
+    }).then (function (result) {
+        if (result.status == true) {
+            outputSelector.innerHTML = result.output;
+        }
     });
-    $('.edit-cat').click((event) => {
-    	$('#editCategories').find('form').attr('action', `<?php echo site_url('coaching/courses_actions/category_action/' . $coaching_id . '/'); ?>${$(event.currentTarget).data('id')}/`);
-    	$('#editCategories').find('#title').val($(event.currentTarget).data('value'));
-    	$('#editCategories').find('#delete-cat').data('id', $(event.currentTarget).data('id'));
+}
+
+
+function change_sorting (sort) {
+
+    outputSelector.innerHTML = pageLoader;
+    status = document.getElementById ('filter-status-val').value;
+    filterCourseSelector.value = '';
+
+    /* Filter Sort */
+    var filterSort = 'Sort by name';
+    if (sort == <?php echo SORT_ALPHA_ASC; ?>) {
+        filterSort = 'Name A to Z';
+    } else if (sort == <?php echo SORT_ALPHA_DESC; ?>) {
+        filterSort = 'Name Z to A';
+    } else if (sort == <?php echo SORT_CREATION_ASC; ?>) {
+        filterSort = 'Old to New';
+    } else if (sort == <?php echo SORT_CREATION_DESC; ?>) {
+        filterSort = 'New to Old';
+    }
+    sortSelector.innerHTML = filterSort;
+    filterSortSelector.value = sort;
+
+    fetch (dataURL+'/'+status+'/'+sort, {
+        method: 'POST',
+    }).then (function (response) {
+        return response.json ();
+    }).then (function (result) {
+        if (result.status == true) {
+            outputSelector.innerHTML = result.output;
+        }
     });
-    $('#editCategories').find('#delete-cat').click((event) => {
-    	show_confirm('This will delete this category, Are you sure?', `<?php echo site_url('coaching/courses_actions/delete_category/' . $coaching_id . '/'); ?>${$(event.currentTarget).data('id')}/`);
-    });
-    $('.toggle-status').change((event) => {
-        $(event.currentTarget).prop('disabled', true);
-        window.location.href = $(event.currentTarget).data('href');
-    });
-});
+}
+
+
+function search_courses(title) {
+
+    outputSelector.innerHTML = pageLoader;
+    let status = document.getElementById ('filter-status-val').value;
+    let sort = document.getElementById ('filter-sorting-val').value;
+
+    let searchForm = document.getElementById('search-form');
+    let formData = new FormData(searchForm);
+    
+    fetch (dataURL+'/'+status+'/'+sort, {
+        method: 'POST',
+        body: formData
+    }).then (function (response) {
+        return response.json ();
+    }).then (function (result) {
+        if (result.status == true) {
+            outputSelector.innerHTML = result.output;
+        }
+    });   
+}
 </script>

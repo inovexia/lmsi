@@ -5,7 +5,7 @@ class Account_actions extends MX_Controller {
 
 
 	public function __construct () {
-		$config = ['config_public'];
+		$config = ['config_public', 'coaching/config_coaching'];
 		$models = ['registration_model', 'coaching/users_model'];
 	    $this->common_model->autoload_resources ($config, $models);
 	    $this->load->helper ('string');
@@ -66,7 +66,7 @@ class Account_actions extends MX_Controller {
 	}
 
 	
-	public function register_teacher () {
+	public function register () {
 		$this->form_validation->set_rules ('first_name', 'Name', 'required|trim|alpha_numeric_spaces|min_length[3]', 
 				['min_length'=>'Name is too short. Should be atleast 3 characters']);
 		$this->form_validation->set_rules ('primary_contact', 'Mobile Number', 'required|is_natural|min_length[10]|max_length[15]');
@@ -132,6 +132,9 @@ class Account_actions extends MX_Controller {
 			if ($this->registration_model->is_unique_url () == false) {
 				$this->output->set_content_type("application/json");
 				$this->output->set_output(json_encode(array('status'=>false, 'error'=>'This url is already taken by someone')));
+			} else {
+				$this->output->set_content_type("application/json");
+				$this->output->set_output(json_encode(array('status'=>false, 'error'=>'')));				
 			}
 		} else {
 			$this->output->set_content_type("application/json");

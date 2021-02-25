@@ -285,4 +285,28 @@ class Settings_model extends CI_Model {
 		$this->session->set_userdata ('THEME_CSS', $theme_css);
 	}
 
+	public function get_timezones_list () {
+	    $timezones = [];
+	    $output = [];
+	    foreach (timezone_identifiers_list() as $timezone) {
+	        $datetime = new \DateTime('now', new DateTimeZone($timezone));
+	        $timezones[] = [
+	            'sort' => str_replace(':', '', $datetime->format('P')),
+	            'offset' => $datetime->format('P'),
+	            'name' => str_replace('_', ' ', implode(', ', explode('/', $timezone))),
+	            'timezone' => $timezone,
+	        ];
+	    }
+
+	    usort($timezones, function($a, $b) {
+	        return $a['sort'] - $b['sort'] ?: strcmp($a['name'], $b['name']);
+	    });
+
+		foreach ($timezones as $tz) {
+		    $output[$tz['timezone']] = '(UTC '.$tz['offset'].') '.$tz['name'];
+		}
+	    
+	    return $output;
+	}
+
 } 

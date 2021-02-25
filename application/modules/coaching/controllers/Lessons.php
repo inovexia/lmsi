@@ -37,18 +37,6 @@ class Lessons extends MX_Controller {
 		$data['course'] = $this->courses_model->get_course_by_id ($course_id);
 		$data['data']	= $data;
 		$data['page_title'] = 'Chapters';
-		switch ($status) {
-			case LESSON_STATUS_UNPUBLISHED:
-			$status_label = "Unpublished";
-				break;
-			case LESSON_STATUS_PUBLISHED:
-			$status_label = "Published";
-				break;
-			default:
-			$status_label = "All Status";
-				break;
-		}
-		$data['status_label'] 	= $status_label;
 
 		/* --==// Toolbar //==-- */
 		$data['toolbar_buttons'] = $this->toolbar_buttons;
