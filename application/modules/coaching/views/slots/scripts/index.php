@@ -1,7 +1,7 @@
 <script>
 $(document).ready(function() {
   function change_date(date) {
-    document.location = '<?php echo site_url ('coaching/slots/index/'.$coaching_id); ?>/' + date;
+    document.location = '<?php echo site_url('coaching/slots/index/' . $coaching_id); ?>/' + date;
   }
   //triggered when modal is about to be shown
   $('#addSlot').on('show.bs.modal', function(e) {
@@ -14,7 +14,7 @@ $(document).ready(function() {
     $(e.currentTarget).find('input[name="course_id"]').val(course_id);
     $(e.currentTarget).find('input[name="slot_id"]').val(slot_id);
     if (slot_id > 0) {
-      fetch('<?php echo site_url ('coaching/slot_actions/get_slot/'.$coaching_id); ?>/' + slot_id, {
+      fetch('<?php echo site_url('coaching/slot_actions/get_slot/' . $coaching_id); ?>/' + slot_id, {
         method: 'POST',
       }).then(function(response) {
         return response.json();
@@ -22,10 +22,10 @@ $(document).ready(function() {
         if (result.status == true) {
           outputSelector.html(result.data);
           actionButtons =
-            '<a href="<?php echo site_url ('coaching/slots/my_appointments/'.$coaching_id); ?>/' +
+            '<a href="<?php echo site_url('coaching/slots/my_appointments/' . $coaching_id); ?>/' +
             slot_id + '" class="btn btn-sm btn-secondary">Bookings</a>';
           actionButtons +=
-            ' <a href="<?php echo site_url ('coaching/slot_actions/delete_slot/'.$coaching_id); ?>/' +
+            ' <a href="<?php echo site_url('coaching/slot_actions/delete_slot/' . $coaching_id); ?>/' +
             slot_id +
             '" class="btn btn-sm btn-danger">Delete</a>';
           deleteSelector.html(actionButtons);
@@ -34,7 +34,6 @@ $(document).ready(function() {
       outputSelector.html('<i class="simple-icon-refresh"></i>');
     }
   });
-
   $(document).on('change', ".type", function() {
     if ($(this).val() == 1) {
       $(".input-user-limit").fadeOut();
@@ -46,7 +45,6 @@ $(document).ready(function() {
       $(".course-selection-radio").fadeIn();
     }
   });
-
   // $(document).on('change', ".repeat-or-single", function() {
   //   if ($(this).val() == "non-repeat") {
   //     $(".recursive-slot-area").fadeOut();
@@ -56,9 +54,7 @@ $(document).ready(function() {
   //     $(".recursive-slot-area").fadeIn();
   //   }
   // });
-
   $(document).on('change', "#repeat-session:checkbox", function() {
-
     if ($(this).is(":checked")) {
       $('.day-selection-checkbox').fadeIn();
     } else {

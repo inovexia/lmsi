@@ -2,7 +2,7 @@
   <div class="modal-dialogs" role="document" style="max-width:800px; margin:0px auto">
     <div class="modal-content p-3 p-md-4 p-lg-5">
       <h1 class="text-primary font-weight-bold" style="font-size:22px;">Add Course Slot</h1>
-      <?php echo form_open ('coaching/slot_actions/create_slot/'.$coaching_id, ['class'=>'validate-form']); ?>
+      <?php echo form_open('coaching/slot_actions/create_slot/' . $coaching_id, ['class' => 'validate-form']); ?>
       <div class="modal-body p-0">
         <div id="output-selector">
           <div class="form-group">
@@ -17,20 +17,18 @@
             </div>
             <div class="form-group col-md-6">
               <label class="text-primary font-weight-bold">Start Date</label>
-              <input type="date" class="form-control" placeholder="" name="date" min="<?php echo date ('Y-m-d'); ?>"
-                max="<?php echo date ('Y-m-d', strtotime('+90 days')); ?>" value="<?php echo date ('Y-m-d'); ?>">
+              <input type="date" class="form-control" placeholder="" name="date" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+90 days')); ?>"
+                value="<?php echo date('Y-m-d'); ?>">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label class="text-primary font-weight-bold">Start Time</label>
-              <input type="time" class="form-control" placeholder="" name="start_time" min="<?php echo date ('H:i'); ?>"
-                value="<?php echo date ('H:i'); ?>">
+              <input type="time" class="form-control" placeholder="" name="start_time" min="<?php echo date('H:i'); ?>" value="<?php echo date('H:i'); ?>">
             </div>
             <div class="form-group col-md-6">
               <label class="text-primary font-weight-bold">End Time</label>
-              <input type="time" class="form-control" placeholder="" name="end_time" min="<?php echo date ('H:i'); ?>"
-                value="<?php echo date ('H:i', strtotime('+1 hour')); ?>">
+              <input type="time" class="form-control" placeholder="" name="end_time" min="<?php echo date('H:i'); ?>" value="<?php echo date('H:i', strtotime('+1 hour')); ?>">
             </div>
           </div>
           <div class="recursive-slot-area mt-3" style="">
@@ -75,8 +73,8 @@
               <div class="form-row mt-3">
                 <div class="form-group col-12">
                   <label class="text-primary font-weight-bold">End Date</label>
-                  <input type="date" class="form-control" placeholder="" name="date" min="<?php echo date ('Y-m-d'); ?>"
-                    max="<?php echo date ('Y-m-d', strtotime('+90 days')); ?>" value="<?php echo date ('Y-m-d'); ?>">
+                  <input type="date" class="form-control" placeholder="" name="date" min="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d', strtotime('+90 days')); ?>"
+                    value="<?php echo date('Y-m-d'); ?>">
                 </div>
               </div>
             </div>
@@ -87,8 +85,7 @@
             <div class="form-group col-12">
               <label class="text-primary font-weight-bold">Price per student for entire group course</label>
               <div class="slot-price d-flex">
-                <div class="currency-symbol form-control text-primary font-weight-bold"
-                  style="width:35px; padding-top:13px">
+                <div class="currency-symbol form-control text-primary font-weight-bold" style="width:35px; padding-top:13px">
                   $
                 </div>
                 <input type="text" class="form-control price " placeholder="Price" name="price">
@@ -98,8 +95,7 @@
               <label class="text-primary font-weight-bold">Price for each day for students not attending complete course
                 (optional)</label>
               <div class="slot-price d-flex">
-                <div class="currency-symbol form-control text-primary font-weight-bold"
-                  style="width:35px; padding-top:13px">
+                <div class="currency-symbol form-control text-primary font-weight-bold" style="width:35px; padding-top:13px">
                   $
                 </div>
                 <input type="text" class="form-control price " placeholder="Price" name="price">
@@ -135,6 +131,6 @@
       <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Cancel</button>
     </div>
   </div>
-  <?php echo form_close (); ?>
+  <?php echo form_close(); ?>
 </div>
 </div>
