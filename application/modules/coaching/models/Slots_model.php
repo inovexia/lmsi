@@ -235,7 +235,7 @@ class Slots_model extends CI_Model
     $days = $this->input->post('days');
     $end_date = $this->input->post('end_date');
     $price_all_slots = $this->input->post('price_all_slots');
-    $price_per_slot = $this->input->post('price_per_day');
+    $price_per_slot = $this->input->post('price_per_slot');
     $slot_mode = $this->input->post('slot_mode');
     // TODO: init $slot_id with 0 if $slot_id is empty
     $slot_id = $slot_id !== '' ? $slot_id : 0;

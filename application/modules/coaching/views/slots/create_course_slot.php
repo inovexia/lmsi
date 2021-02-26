@@ -115,7 +115,7 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label class="text-primary font-weight-bold" for="price_per_day">Price Per Day</label>
+              <label class="text-primary font-weight-bold" for="price_per_slot">Price Per Slot</label>
               <button type="button" class="btn p-0 btn-link text-primary simple-icon-question" style="cursor:pointer;font-weight:600;" data-toggle="tooltip" data-trigger="focus" data-placement="right"
                 title="Price for each day for students not attending complete course
                 (optional)"></button>
@@ -123,7 +123,7 @@
                 <div class="currency-symbol form-control text-primary font-weight-bold" style="width:35px; padding-top:13px">
                   $
                 </div>
-                <input type="number" class="form-control price" min="0" value="0" placeholder="Price" id="price_per_day" name="price_per_day" />
+                <input type="number" class="form-control price" min="0" value="0" placeholder="Price" id="price_per_slot" name="price_per_slot" />
               </div>
             </div>
           </div>
