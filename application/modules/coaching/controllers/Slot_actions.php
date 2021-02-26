@@ -4,7 +4,6 @@ if (!defined('BASEPATH')) {
 }
 class Slot_actions extends MX_Controller
 {
-
   public function __construct()
   {
     // Load Config and Model files required throughout Users sub-module
@@ -12,7 +11,6 @@ class Slot_actions extends MX_Controller
     $models = ['courses_model', 'slots_model'];
     $this->common_model->autoload_resources($config, $models);
   }
-
   public function create_slot($coaching_id = 0)
   {
     $this->form_validation->set_rules('start_time', 'Start Time', 'required');
@@ -61,8 +59,40 @@ class Slot_actions extends MX_Controller
     $this->form_validation->set_rules('start_time', 'Start Time', 'required');
     $this->form_validation->set_rules('end_time', 'End Time', 'required');
     $this->form_validation->set_rules('slot_date', 'Start Date', 'required');
+    $this->form_validation->set_rules('slot_mode', 'Slot Mode', 'required');
+
     if ($this->form_validation->run() == true) {
       $slots = $this->slots_model->create_common_slot($coaching_id);
+      if (!empty($slots)) {
+        $count = count($slots);
+        $message = "$count slots created successfully";
+        $redirect = 'coaching/slots/index/' . $coaching_id;
+        $this->message->set($message, 'success', true);
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode(['status' => true, 'message' => $message, 'redirect' => site_url($redirect)]));
+      } else {
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode(['status' => false, 'error' => 'Something went wrong. Unable to complete the operation.',
+          $_POST])
+        );
+      }
+    } else {
+      $this->output->set_content_type('application/json');
+      $this->output->set_output(json_encode(['status' => false, 'error' => validation_errors()]));
+    }
+  }
+  public function create_course_slot($coaching_id = 0)
+  {
+    $this->form_validation->set_rules('slot_name', 'Slot Name', 'required');
+    $this->form_validation->set_rules('max_users', 'Maximum users', 'required');
+    $this->form_validation->set_rules('start_time', 'Start Time', 'required');
+    $this->form_validation->set_rules('end_time', 'End Time', 'required');
+    $this->form_validation->set_rules('slot_date', 'Start Date', 'required');
+    $this->form_validation->set_rules('price_all_slots', 'Price Per Student', 'required');
+    $this->form_validation->set_rules('price_per_day', 'Price Per Day', 'required');
+    $this->form_validation->set_rules('slot_mode', 'Slot Mode', 'required');
+    if ($this->form_validation->run() == true) {
+      $slots = $this->slots_model->create_course_slot($coaching_id);
       if (!empty($slots)) {
         $count = count($slots);
         $message = "$count slots created successfully";

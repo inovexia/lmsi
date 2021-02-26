@@ -144,7 +144,7 @@ class Slots_model extends CI_Model
   }
   public function create_common_slot($coaching_id = 0)
   {
-    // todo: All Input values into variable
+    // TODO: All Input values into variable
     $course_id = $this->input->post('course_id');
     $slot_id = $this->input->post('slot_id');
     $max_users = $this->input->post('max_users');
@@ -156,19 +156,30 @@ class Slots_model extends CI_Model
     $end_date = $this->input->post('end_date');
     $price_all_slots = $this->input->post('price_all_slots');
     $slot_mode = $this->input->post('slot_mode');
-    // ? done with all Input values
-    $slot_id = $slot_id !== '' ? $slot_id : 0; // ? init $slot_id with 0 if $slot_id is empty
+    // TODO: init $slot_id with 0 if $slot_id is empty
+    $slot_id = $slot_id !== '' ? $slot_id : 0;
+    // TODO: Initialize variable $return as empty array
+    $return = [];
+    // TODO: check if the request is to create repeated slots for certain range
     if ($repeat_slot === "on") {
+      // TODO: Start date = time stamp of the beginning of given $slot_date
       $slot_date = intval(DateTime::createFromFormat('Y-m-d H:i:s', "$slot_date 00:00:00")->format('U'));
+      // TODO: End date = time stamp of the beginning of given $end_date
       $end_date = intval(DateTime::createFromFormat('Y-m-d H:i:s', "$end_date 00:00:00")->format('U'));
+      // TODO: Seconds in a day 60 * 60 * 24
       $oneDay = 86400;
-      $return = [];
+      // TODO: Calculate Number of days between start date and end date
       $numDays = ($end_date - $slot_date) / 86400;
       for ($i = 0; $i < $numDays; $i++) {
+        // TODO: Get timestamp of the date within the loop in variable $loop_slot_date
         $loop_slot_date = $slot_date + ($i * $oneDay);
+        // TODO: check week number of the timestamp $loop_slot_date exist in the days array
         if (in_array(date('N', $loop_slot_date), $days)) {
+          // TODO: create a formatted date of the timestamp $loop_slot_date to use later
           $formatted_date = date('Y-m-d', $loop_slot_date);
+          // TODO: create array to push data record into the database
           $data = [
+            // TODO: combine formatted date with the given formatted time to calculate correct start_time & end_time of the slot on $loop_slot_date
             'start_time' => intval(DateTime::createFromFormat('Y-m-d H:i:s', "$formatted_date $start_time:00")->format('U')),
             'end_time' => intval(DateTime::createFromFormat('Y-m-d H:i:s', "$formatted_date $end_time:00")->format('U')),
             'slot_date' => $loop_slot_date,
@@ -180,17 +191,20 @@ class Slots_model extends CI_Model
             'created_on' => time(),
             'created_by' => $this->session->userdata('member_id'),
           ];
+          // TODO: push slot record to the database and push return value to the $return array
           array_push($return, $this->push_slot_record($slot_id, $data));
         }
       }
+      // TODO: return the whole array
       return $return;
     } else {
-      $start_time = intval(DateTime::createFromFormat('Y-m-d H:i:s', "$slot_date $start_time:00")->format('U'));
-      $end_time = intval(DateTime::createFromFormat('Y-m-d H:i:s', "$slot_date $end_time:00")->format('U'));
+      // TODO: Start date = time stamp of the beginning of given $slot_date
       $slot_date = intval(DateTime::createFromFormat('Y-m-d H:i:s', "$slot_date 00:00:00")->format('U'));
+      // TODO: create array to push data record into the database
       $data = [
-        'start_time' => $start_time,
-        'end_time' => $end_time,
+        // TODO: combine given $slot_date with the given start_time & end_time to calculate correct timestamp
+        'start_time' => intval(DateTime::createFromFormat('Y-m-d H:i:s', "$slot_date $start_time:00")->format('U')),
+        'end_time' => intval(DateTime::createFromFormat('Y-m-d H:i:s', "$slot_date $end_time:00")->format('U')),
         'slot_date' => $slot_date,
         'course_id' => $course_id === "" ? null : $course_id,
         'max_users' => $max_users,
@@ -200,12 +214,97 @@ class Slots_model extends CI_Model
         'created_on' => time(),
         'created_by' => $this->session->userdata('member_id'),
       ];
-      $return = [];
+      // TODO: push slot record to the database and push return value to the $return array
       array_push($return, $this->push_slot_record($slot_id, $data));
+      // TODO: return the whole array
       return $return;
     }
   }
 
+  public function create_course_slot($coaching_id = 0)
+  {
+    // TODO: All Input values into variable
+    $course_id = $this->input->post('course_id');
+    $name = $this->input->post('slot_name');
+    $slot_id = $this->input->post('slot_id');
+    $max_users = $this->input->post('max_users');
+    $start_time = $this->input->post('start_time');
+    $end_time = $this->input->post('end_time');
+    $slot_date = $this->input->post('slot_date');
+    $repeat_slot = $this->input->post('repeat_slot');
+    $days = $this->input->post('days');
+    $end_date = $this->input->post('end_date');
+    $price_all_slots = $this->input->post('price_all_slots');
+    $price_per_slot = $this->input->post('price_per_day');
+    $slot_mode = $this->input->post('slot_mode');
+    // TODO: init $slot_id with 0 if $slot_id is empty
+    $slot_id = $slot_id !== '' ? $slot_id : 0;
+    // TODO: Initialize variable $return as empty array
+    $return = [];
+    // TODO: check if the request is to create repeated slots for certain range
+    if ($repeat_slot === "on") {
+      // TODO: Start date = time stamp of the beginning of given $slot_date
+      $slot_date = intval(DateTime::createFromFormat('Y-m-d H:i:s', "$slot_date 00:00:00")->format('U'));
+      // TODO: End date = time stamp of the beginning of given $end_date
+      $end_date = intval(DateTime::createFromFormat('Y-m-d H:i:s', "$end_date 00:00:00")->format('U'));
+      // TODO: Seconds in a day 60 * 60 * 24
+      $oneDay = 86400;
+      // TODO: Calculate Number of days between start date and end date
+      $numDays = ($end_date - $slot_date) / 86400;
+      for ($i = 0; $i < $numDays; $i++) {
+        // TODO: Get timestamp of the date within the loop in variable $loop_slot_date
+        $loop_slot_date = $slot_date + ($i * $oneDay);
+        // TODO: check week number of the timestamp $loop_slot_date exist in the days array
+        if (in_array(date('N', $loop_slot_date), $days)) {
+          // TODO: create a formatted date of the timestamp $loop_slot_date to use later
+          $formatted_date = date('Y-m-d', $loop_slot_date);
+          // TODO: create array to push data record into the database
+          $data = [
+            'name' => $name,
+            // TODO: combine formatted date with the given formatted time to calculate correct start_time & end_time of the slot on $loop_slot_date
+            'start_time' => intval(DateTime::createFromFormat('Y-m-d H:i:s', "$formatted_date $start_time:00")->format('U')),
+            'end_time' => intval(DateTime::createFromFormat('Y-m-d H:i:s', "$formatted_date $end_time:00")->format('U')),
+            'slot_date' => $loop_slot_date,
+            'course_id' => $course_id === "" ? null : $course_id,
+            'max_users' => $max_users,
+            'price_all_slots' => $price_all_slots,
+            'price_per_slot' => $price_per_slot,
+            'learning_mode' => $slot_mode,
+            'status' => 1,
+            'created_on' => time(),
+            'created_by' => $this->session->userdata('member_id'),
+          ];
+          // TODO: push slot record to the database and push return value to the $return array
+          array_push($return, $this->push_slot_record($slot_id, $data));
+        }
+      }
+      // TODO: return the whole array
+      return $return;
+    } else {
+      // TODO: Start date = time stamp of the beginning of given $slot_date
+      $slot_date = intval(DateTime::createFromFormat('Y-m-d H:i:s', "$slot_date 00:00:00")->format('U'));
+      // TODO: create array to push data record into the database
+      $data = [
+        'name' => $name,
+        // TODO: combine given $slot_date with the given start_time & end_time to calculate correct timestamp
+        'start_time' => intval(DateTime::createFromFormat('Y-m-d H:i:s', "$slot_date $start_time:00")->format('U')),
+        'end_time' => intval(DateTime::createFromFormat('Y-m-d H:i:s', "$slot_date $end_time:00")->format('U')),
+        'slot_date' => $slot_date,
+        'course_id' => $course_id === "" ? null : $course_id,
+        'max_users' => $max_users,
+        'price_all_slots' => $price_all_slots,
+        'price_per_slot' => $price_per_slot,
+        'learning_mode' => $slot_mode,
+        'status' => 1,
+        'created_on' => time(),
+        'created_by' => $this->session->userdata('member_id'),
+      ];
+      // TODO: push slot record to the database and push return value to the $return array
+      array_push($return, $this->push_slot_record($slot_id, $data));
+      // TODO: return the whole array
+      return $return;
+    }
+  }
   public function push_slot_record($slot_id, $data)
   {
     if ($slot_id > 0) {
