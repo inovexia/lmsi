@@ -8,7 +8,6 @@
         <?php echo date('D, d', strtotime('+' . $i . ' days')); ?>
       </a>
       <?php endforeach;?>
-      <a href="<?php echo site_url('coaching/slots/create/' . $coaching_id); ?>" class="btn btn-sm btn-secondary mr-1"><i class="iconsminds-timer"></i> Create Common Slots</a>
       <a href="<?php echo site_url('coaching/slots/create/' . $coaching_id); ?>" class="btn btn-sm btn-info mr-1"><i class="simple-icon-eye"></i> Preview All Slots</a>
       <a href="<?php echo site_url('coaching/slots/create/' . $coaching_id); ?>" class="btn btn-sm btn-warning mr-1"><i class="iconsminds-dollar-sign-2"></i> Set Custom Pricing</a>
     </form>
@@ -25,7 +24,7 @@
           <?php if (!empty($common_slots)): ?>
           <?php foreach ($common_slots as $i => $slot): extract($slot);?>
           <button type="button" data-coaching_id="<?php echo $coaching_id; ?>" data-slot_id="<?php echo $id; ?>" data-toggle="tooltip" data-html="true" data-placement="right"
-            title="<strong>Common Slot</strong><br/><em><strong>User Limit: </strong><?php echo $max_users === 0 ? "Unlimited" : $max_users; ?></em><br/><em><strong>Booked: </strong><?php echo $max_users === 0 ? "Unlimited" : $max_users; ?></em>"
+            title="<strong>Common Slot</strong><br/><em><strong>Limit: </strong><?php echo $max_users == 0 ? "Unlimited" : $max_users; ?></em><br/><em><strong>Booked: </strong><?php echo $max_users == 0 ? "Unlimited" : $max_users; ?></em>"
             class="btn btn-outline-primary default book-slot m-1 px-md-5">
             <?php printf("<span class='d-block ml-n4 mr-4'>%s</span> To <span class='d-block mr-n4 ml-4'>%s</span>", date('h:i A', $start_time), date('h:i A', $end_time));?>
           </button>
@@ -37,10 +36,8 @@
           <?php endif;?>
         </div>
       </div>
-      <div class="card-footer d-none">
+      <div class="card-footer">
         <a href="<?php echo site_url('coaching/slots/create/' . $coaching_id); ?>" class="btn btn-sm btn-primary mr-1"><i class="iconsminds-timer"></i> Create Common Slots</a>
-        <a href="<?php echo site_url('coaching/slots/create/' . $coaching_id); ?>" class="btn btn-sm btn-primary mr-1"><i class="simple-icon-eye"></i> Preview All Slots</a>
-        <a href="<?php echo site_url('coaching/slots/create/' . $coaching_id); ?>" class="btn btn-sm btn-primary mr-1"><i class="iconsminds-dollar-sign-2"></i> Set Custom Pricing</a>
       </div>
     </div>
     <?php if (!empty($course_slots)): ?>
@@ -56,7 +53,7 @@
           <?php if (!empty($slots)): ?>
           <?php foreach ($slots as $i => $slot): extract($slot);?>
           <button type="button" data-coaching_id="<?php echo $coaching_id; ?>" data-slot_id="<?php echo $id; ?>" data-toggle="tooltip" data-html="true" data-placement="right"
-            title="<strong><?php echo $name; ?></strong><br /><em><strong>User Limit: </strong><?php echo $max_users === 0 ? "Unlimited" : $max_users; ?></em><br/><em><strong>Booked: </strong><?php echo $max_users === 0 ? "Unlimited" : $max_users; ?></em>"
+            title="<strong><?php echo $name; ?></strong><br /><em><strong>Limit: </strong><?php echo $max_users == 0 ? "Unlimited" : $max_users; ?></em><br/><em><strong>Booked: </strong><?php echo $max_users == 0 ? "Unlimited" : $max_users; ?></em>"
             class="btn btn-outline-primary default book-slot m-1 px-md-5">
             <?php printf("<span class='d-block ml-n4 mr-4'>%s</span> To <span class='d-block mr-n4 ml-4'>%s</span>", date('h:i A', $start_time), date('h:i A', $end_time));?>
           </button>
