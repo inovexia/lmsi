@@ -46,6 +46,57 @@ class Slots_model extends CI_Model
     }
     return $data;
   }
+  public function get_common_slots($date = "")
+  {
+    if ($date == "") {
+      $y = date('Y');
+      $m = date('m');
+      $d = date('d');
+      $slot_date = mktime(0, 0, 0, $m, $d, $y);
+      $to = mktime(23, 59, 59, $m, $d, $y);
+    } else {
+      list($y, $m, $d) = explode('-', $date);
+      $slot_date = mktime(0, 0, 0, $m, $d, $y);
+      // 24 hours from date
+      $step = (24 * 60 * 60) - 1;
+      $to = $slot_date + $step;
+    }
+    $this->db->where('course_id', null);
+    $this->db->where('price_per_slot', null);
+    $this->db->where('slot_date', $slot_date);
+    $sql = $this->db->get('coaching_course_slots');
+    return $sql->result_array();
+  }
+
+  public function get_course_slots($coaching_id = 0, $date = "")
+  {
+    $courses = $this->courses_model->courses($coaching_id);
+    if ($date == "") {
+      $y = date('Y');
+      $m = date('m');
+      $d = date('d');
+      $slot_date = mktime(0, 0, 0, $m, $d, $y);
+      $to = mktime(23, 59, 59, $m, $d, $y);
+    } else {
+      list($y, $m, $d) = explode('-', $date);
+      $slot_date = mktime(0, 0, 0, $m, $d, $y);
+      // 24 hours from date
+      $step = (24 * 60 * 60) - 1;
+      $to = $slot_date + $step;
+    }
+    $data = [];
+    if (!empty($courses)) {
+      foreach ($courses as $course) {
+        $this->db->where('course_id', $course['course_id']);
+        $this->db->where('slot_date', $slot_date);
+        $sql = $this->db->get('coaching_course_slots');
+        $slots = $sql->result_array();
+        $data[$course['course_id']]['course_title'] = $course['title'];
+        $data[$course['course_id']]['slots'] = $slots;
+      }
+    }
+    return $data;
+  }
 
   public function get_slot($coaching_id = 0, $slot_id = 0)
   {

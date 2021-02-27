@@ -89,7 +89,7 @@ class Slot_actions extends MX_Controller
     $this->form_validation->set_rules('end_time', 'End Time', 'required');
     $this->form_validation->set_rules('slot_date', 'Start Date', 'required');
     $this->form_validation->set_rules('price_all_slots', 'Price Per Student', 'required');
-    $this->form_validation->set_rules('price_per_day', 'Price Per Day', 'required');
+    $this->form_validation->set_rules('price_per_slot', 'Price Per Slot', 'required');
     $this->form_validation->set_rules('slot_mode', 'Slot Mode', 'required');
     if ($this->form_validation->run() == true) {
       $slots = $this->slots_model->create_course_slot($coaching_id);
