@@ -1,4 +1,9 @@
 <script>
+function set_att_type (att_type) {
+	$('#att-type').val (att_type);
+
+}
+/*
 $(document).ready (function () {
 	$('.attachments').hide ();
 	$('#att-youtube').show ();
@@ -18,4 +23,6 @@ $(document).ready (function () {
 		$('#att-upload').show ();
 	});
 });
+*/
+
 </script>

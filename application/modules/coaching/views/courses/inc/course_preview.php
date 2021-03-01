@@ -50,6 +50,11 @@
               ?>
 
             </ul>
-      </div>
+        </div>
     </div>
+    <a class="app-menu-button d-inline-block d-xl-none" href="#">
+      <i class="simple-icon-options">
+      </i>
+    </a>
+
 </div>

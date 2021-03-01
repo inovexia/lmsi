@@ -26,6 +26,7 @@ $config['sys_dir']						= CONTENT_DIR . 'system/';
 $config['system_logo']					= CONTENT_DIR . 'logo.png';
 $config['profile_picture_path']			= CONTENT_DIR . 'users/';
 $config['captcha_dir']					= CONTENT_DIR . 'captcha/';
+$config['course_data']					= CONTENT_DIR . 'course_data/';
 
 define ('ANSWER_TEMPLATE', 			    TEMPLATE_DIR . 'answer_choices/');
 define ('SMS_TEMPLATE', 			    TEMPLATE_DIR . 'sms/');
@@ -44,6 +45,7 @@ define ('SITE_TITLE', 					'LMS Made Easy');
 define ('DEFAULT_DIALING_CODE', 			91);
 define ('DEFAULT_COUNTRY_CODE', 			'IND');
 define ('DEFAULT_TIMEZONE', 				'Asia/Kolkata');
+define ('MAX_UPLOAD_FILE_SIZE', 			10240);			// 10 MB
 
 /* MENU TYPES */
 define ('MENUTYPE_SIDEMENU', 				1);

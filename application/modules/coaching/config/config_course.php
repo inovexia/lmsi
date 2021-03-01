@@ -11,6 +11,7 @@ define ('LESSON_STATUS_UNPUBLISHED', 			0);
 define ('LESSON_ATT_YOUTUBE', 					1);
 define ('LESSON_ATT_EXTERNAL', 					2);
 define ('LESSON_ATT_UPLOAD', 					3);
+define ('LESSON_ATT_TEXT', 						4);
 
 // Lesson Durations
 define ('LESSON_DURATION_MIN', 					1);

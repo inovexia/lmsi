@@ -113,18 +113,18 @@ class Courses extends MX_Controller {
 		$data['course'] = $this->courses_model->get_course_by_id ($course_id);
 		$data['contents'] = $this->courses_model->get_course_content ($coaching_id, $course_id);	
 
+		$data['lesson'] = $data['pages'] = false;
 		if ($lesson_id > 0) {
 			$data['lesson'] = $this->lessons_model->get_lesson ($coaching_id, $course_id, $lesson_id);
-		} else {
-			$data['lesson'] = false;
+			$data['pages'] = $this->lessons_model->get_all_pages ($coaching_id, $course_id, $lesson_id);
 		}
 
 		if ($page_id > 0) {
 			$data['page'] = $this->lessons_model->get_page ($coaching_id, $course_id, $lesson_id, $page_id);
-			$data['attachments'] = $this->lessons_model->get_attachments ($coaching_id, $course_id, $lesson_id, $page_id);
+			$data['content'] = $this->lessons_model->get_attachments ($coaching_id, $course_id, $lesson_id, $page_id);
 		} else {
 			$data['page'] = false;
-			$data['attachments'] = false;
+			$data['content'] = false;
 		}
 
 		/* --==// Back //==-- */

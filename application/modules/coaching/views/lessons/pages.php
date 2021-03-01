@@ -1,6 +1,17 @@
-<h3><?php echo $lesson['title']; ?></h3>
-
+<nav aria-label="breadcrumb d-none">
+  <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+          <a href="#" class="text-info"><?php echo $course['title']; ?></a>
+      </li>
+      <li class="breadcrumb-item">
+          <a href="#" class="text-info"><?php echo $lesson['title']; ?></a>
+      </li>
+  </ol>
+</nav>
 <div class="row">
+  <div class="col-12 list" data-check-all="checkAll">
+    <div id="outputDiv">
+
   <?php 
 	$i = 1;
 	if ( ! empty ($pages)) { 
@@ -56,12 +67,15 @@
 		} 
 	} else {
 		?>
-  <div class="col-12">
-    <div class="alert alert-danger ">
-      <span class="">No pages found</span>
+  <div class="card">
+    <div class="card-body text-center">
+      <p class="">You have not added any content in this chapter. Create a new page to add content</p>
+      <?php echo anchor ('coaching/lessons/add_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id, 'Create Page', ['class'=>'btn btn-success']); ?>
     </div>
   </div>
   <?php
 	}
 	?>
+    </div>
+  </div>
 </div>

@@ -34,18 +34,32 @@ function excerpt($text, $limit) {
 	}
 	return $text;
 }
-function getYoutubeEmbedUrl($url){
-    $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_]+)\??/i';
-    $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))(\w+)/i';
-    if (preg_match($longUrlRegex, $url, $matches)) {
-        $youtube_id = $matches[count($matches) - 1];
-    }
-    if (preg_match($shortUrlRegex, $url, $matches)) {
-        $youtube_id = $matches[count($matches) - 1];
-    }
-    if(isset($youtube_id)){
+
+function getYoutubeEmbedUrl($url) {
+
+	// Here is a sample of the URLs this regex matches: (there can be more content after the given URL that will be ignored)
+
+	// http://youtu.be/dQw4w9WgXcQ
+	// http://www.youtube.com/embed/dQw4w9WgXcQ
+	// http://www.youtube.com/watch?v=dQw4w9WgXcQ
+	// http://www.youtube.com/?v=dQw4w9WgXcQ
+	// http://www.youtube.com/v/dQw4w9WgXcQ
+	// http://www.youtube.com/e/dQw4w9WgXcQ
+	// http://www.youtube.com/user/username#p/u/11/dQw4w9WgXcQ
+	// http://www.youtube.com/sandalsResorts#p/c/54B8C800269D7C1B/0/dQw4w9WgXcQ
+	// http://www.youtube.com/watch?feature=player_embedded&v=dQw4w9WgXcQ
+	// http://www.youtube.com/?feature=player_embedded&v=dQw4w9WgXcQ
+
+	// It also works on the youtube-nocookie.com URL with the same above options.
+	// It will also pull the ID from the URL in an embed code (both iframe and object tags)
+	
+	// https://gist.github.com/ghalusa/6c7f3a00fd2383e5ef33
+
+	preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
+	$youtube_id = $match[1];
+    if (isset($youtube_id)) {
     	return 'https://www.youtube.com/embed/' . $youtube_id ;
-    }else{
+    } else {
     	return null;
     }
 }
