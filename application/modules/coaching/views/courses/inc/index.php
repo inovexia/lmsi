@@ -59,8 +59,11 @@
       }
     } else {
       ?>
-      <div class="alert alert-danger" role="alert">
-          <div>You have not created any course</div>
+      <div class="card">
+        <div class="card-body text-center">
+          <p class="">You have not created any course yet</p>
+          <?php echo anchor ('coaching/courses/create/'.$coaching_id, 'Create Course', ['class'=>'btn btn-success']); ?>
+        </div>
       </div>
       <?php
     }

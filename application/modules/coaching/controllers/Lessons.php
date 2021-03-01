@@ -112,8 +112,9 @@ class Lessons extends MX_Controller {
 		$data['page_id'] = $page_id;
 
 		$data['course'] = $this->courses_model->get_course_by_id ($course_id);
+		$data['lesson'] = $this->lessons_model->get_lesson ($coaching_id, $course_id, $lesson_id);
 		$data['page'] = $this->lessons_model->get_page ($coaching_id, $course_id, $lesson_id, $page_id);
-		$data['attachments'] = $this->lessons_model->get_attachments ($coaching_id, $course_id, $lesson_id, $page_id);
+		$data['content'] = $this->lessons_model->get_attachments ($coaching_id, $course_id, $lesson_id, $page_id);
 
 		$data['toolbar_buttons']['add_new'] = ['<i class="simple-icon-plus"></i> Add Page'=>'coaching/lessons/add_page/'.$coaching_id.'/'.$course_id.'/'.$lesson_id];
 		$data['toolbar_buttons']['actions'] = ['<i class="simple-icon-list"></i> All Pages'=>'coaching/lessons/pages/'.$coaching_id.'/'.$course_id.'/'.$lesson_id];
