@@ -140,6 +140,8 @@ class Users extends MX_Controller {
 		} else {
 			$data['page_title'] = 'Create Account';
 		}
+    $data['script_css'] = ['assets/css/vendor/bootstrap-datepicker3.min.css'];
+    $data['script_footer'] = ['assets/js/vendor/bootstrap-datepicker.js'];
 
     $data['user_active_item'] = "create"; 
 		$data['data']	=	$data;

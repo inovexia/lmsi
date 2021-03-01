@@ -16,17 +16,23 @@
   <meta name="msapplication-starturl" content="<?php echo site_url(''); ?>" />
   <!--==== Apple Touch Icons ====-->
   <link rel="icon" sizes="128x128" href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon128.png'); ?>" />
-  <link rel="apple-touch-icon" sizes="128x128" href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon128.png'); ?>" />
+  <link rel="apple-touch-icon" sizes="128x128"
+    href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon128.png'); ?>" />
   <link rel="icon" sizes="192x192" href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon192.png'); ?>" />
-  <link rel="apple-touch-icon" sizes="192x192" href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon192.png'); ?>" />
+  <link rel="apple-touch-icon" sizes="192x192"
+    href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon192.png'); ?>" />
   <link rel="icon" sizes="256x256" href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon256.png'); ?>" />
-  <link rel="apple-touch-icon" sizes="256x256" href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon256.png'); ?>" />
+  <link rel="apple-touch-icon" sizes="256x256"
+    href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon256.png'); ?>" />
   <link rel="icon" sizes="384x384" href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon384.png'); ?>" />
-  <link rel="apple-touch-icon" sizes="384x384" href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon384.png'); ?>" />
+  <link rel="apple-touch-icon" sizes="384x384"
+    href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon384.png'); ?>" />
   <link rel="icon" sizes="512x512" href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon512.png'); ?>" />
-  <link rel="apple-touch-icon" sizes="512x512" href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon512.png'); ?>" />
+  <link rel="apple-touch-icon" sizes="512x512"
+    href="<?php echo base_url(THEME_PATH . 'assets/img/touch/app-icon512.png'); ?>" />
   <!--==== Fav-icon ====-->
-  <link rel="icon" href="<?php echo base_url(THEME_PATH . 'assets/img/fav-icon.png'); ?>" type="image/png" sizes="512x512">
+  <link rel="icon" href="<?php echo base_url(THEME_PATH . 'assets/img/fav-icon.png'); ?>" type="image/png"
+    sizes="512x512">
   <!--==== Manifest JSON ====-->
   <link rel="manifest" href="<?php echo base_url('manifest.webmanifest'); ?>" />
   <title><?php if (isset($page_title)) {
@@ -36,13 +42,16 @@
 echo $this->session->userdata('site_title');?></title>
   <!--==== Core CSS ====-->
   <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/font/iconsmind-s/css/iconsminds.css'); ?>" />
-  <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/font/simple-line-icons/css/simple-line-icons.css'); ?>" />
+  <link rel="stylesheet"
+    href="<?php echo base_url(THEME_PATH . 'assets/font/simple-line-icons/css/simple-line-icons.css'); ?>" />
   <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/bootstrap.min.css'); ?>" />
   <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/bootstrap.rtl.only.min.css'); ?>" />
   <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/select2.min.css'); ?>" />
   <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/select2-bootstrap.min.css'); ?>" />
-  <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/bootstrap-float-label.min.css'); ?>" />
-  <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/component-custom-switch.min.css'); ?>" />
+  <link rel="stylesheet"
+    href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/bootstrap-float-label.min.css'); ?>" />
+  <link rel="stylesheet"
+    href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/component-custom-switch.min.css'); ?>" />
   <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/vendor/perfect-scrollbar.css'); ?>" />
   <link rel="stylesheet" href="<?php echo base_url(THEME_PATH . 'assets/css/scrollbar.light.css'); ?>" />
   <link rel="stylesheet" href="<?php echo base_url(THEME_CSS); ?>" />
@@ -189,7 +198,8 @@ echo isset($right_sidebar) ? ' right-menu' : null; ?>">
       -->
       <?php if ($this->session->userdata('is_logged_in')): ?>
       <div class="user d-inline-block">
-        <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
           <span>
             <?php $pi = $this->session->userdata('profile_image');?>
             <?php if ($pi['type'] == 'avatar'): ?>
@@ -197,7 +207,8 @@ echo isset($right_sidebar) ? ' right-menu' : null; ?>">
               <?php echo $pi['path']; ?>
             </div>
             <?php else: ?>
-            <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata('user_name'); ?>" class="img-thumbnail" alt="<?php echo $this->session->userdata('user_name'); ?>" />
+            <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata('user_name'); ?>"
+              class="img-thumbnail" alt="<?php echo $this->session->userdata('user_name'); ?>" />
             <?php endif;?>
           </span>
         </button>
@@ -205,8 +216,20 @@ echo isset($right_sidebar) ? ' right-menu' : null; ?>">
           <p class="pl-3 pb-2 mb-0 ml-1">
             <strong><?php echo $this->session->userdata('user_name'); ?></strong>
           </p>
-          <a class="dropdown-item border-top" href="<?php echo (USER_ROLE_TEACHER == $this->session->userdata('role_id')) ? site_url('coaching/profile/index') : ''; ?>">My
-            Profile</a>
+          <!-- <a class="dropdown-item border-top"
+            href="<?php //echo (USER_ROLE_TEACHER == $this->session->userdata('role_id')) ? site_url('coaching/profile/index') : ''; ?>">My
+            Profile</a> -->
+
+          <?php 
+              if($this->session->userdata('role_id') == 4){ ?>
+          <a class="dropdown-item border-top" href="<?php echo site_url('student/users/my_account/'.$coaching_id); ?>">
+            My Account</a>
+          <?php 
+             } else{ ?>
+          <a class="dropdown-item border-top" href="<?php echo site_url('coaching/profile/index') ?>">My Profile</a>
+          <?php
+             }
+          ?>
           <a class="dropdown-item" href="<?php echo site_url('login/user/logout'); ?>">Sign out</a>
         </div>
       </div>
@@ -295,7 +318,8 @@ echo isset($right_sidebar) ? ' right-menu' : null; ?>">
                   Actions
                 </a>
                 <?php endif;?>
-                <button type="button" class="btn btn-xs btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-xs btn-primary dropdown-toggle dropdown-toggle-split"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <?php if (!empty($toolbar_buttons['actions'])): ?>
