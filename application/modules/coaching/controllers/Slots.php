@@ -26,8 +26,8 @@ class Slots extends MX_Controller
     }
     // $this->toolbar_buttons['add_new'] = ['Create Slot'=>'coaching/slots/create/'.$coaching_id];
     $this->toolbar_buttons['actions'] = [
-      '<i class="iconsminds-timer"></i> Create Common Slot' => 'coaching/slots/create/' . $coaching_id,
-      '<i class="iconsminds-timer"></i> Create Course Slot' => 'coaching/slots/create_course_slot/' . $coaching_id,
+      //'<i class="iconsminds-timer"></i> Create Common Slot' => 'coaching/slots/create/' . $coaching_id,
+      //'<i class="iconsminds-timer"></i> Create Course Slot' => 'coaching/slots/create_course_slot/' . $coaching_id,
       '<i class="simple-icon-list"></i> All Slots' => 'coaching/slots/index/' . $coaching_id,
       '<i class="iconsminds-check"></i> My Appointments' => 'coaching/slots/my_appointments/' . $coaching_id,
       //'<i class="fa fa-history"></i> History'=>'coaching/slots/history/'.$coaching_id,
@@ -43,10 +43,15 @@ class Slots extends MX_Controller
     if ($date == "") {
       $date = date('Y-m-d');
     }
+    if ($coaching_id == 0) {
+      $coaching_id = $this->session->userdata('coaching_id');
+    }
     $data['coaching_id'] = $coaching_id;
     $data['date'] = $date;
     $data['script_css'] = ['assets/css/vendor/bootstrap-datepicker3.min.css'];
     $data['script_footer'] = ['assets/js/vendor/bootstrap-datepicker.js'];
+    $data['common_slots'] = $this->slots_model->get_common_slots($date);
+    $data['course_slots'] = $this->slots_model->get_course_slots($coaching_id, $date);
     $data['courses'] = $this->slots_model->get_slots($coaching_id, $date);
     $data['script'] = $this->load->view('slots/scripts/index', $data, true);
     $this->load->view(INCLUDE_PATH . 'header', $data);
@@ -62,7 +67,11 @@ class Slots extends MX_Controller
     // if ($date == "") {
     //     $date = mktime (0, 0, 0, date ('m'), date('d'), date('Y'));
     // }
+    if ($coaching_id == 0) {
+      $coaching_id = $this->session->userdata('coaching_id');
+    }
     $data['coaching_id'] = $coaching_id;
+    $data['slot_id'] = $slot_id;
     // $data['date'] = $date;
     $data['script_css'] = ['assets/css/vendor/bootstrap-datepicker3.min.css'];
     $data['script_footer'] = ['assets/js/vendor/bootstrap-datepicker.js'];
@@ -73,7 +82,7 @@ class Slots extends MX_Controller
     $this->load->view(INCLUDE_PATH . 'footer', $data);
   }
 
-  public function create_course_slot($coaching_id = 0, $slot_id = 0)
+  public function create_course_slot($coaching_id = 0, $course_id = 0, $slot_id = 0)
   {
     $data['page_title'] = 'Create Slot';
     $data['bc'] = ['Dashboard' => 'coaching/home/dashboard/'];
@@ -81,7 +90,12 @@ class Slots extends MX_Controller
     // if ($date == "") {
     //     $date = mktime (0, 0, 0, date ('m'), date('d'), date('Y'));
     // }
+    if ($coaching_id == 0) {
+      $coaching_id = $this->session->userdata('coaching_id');
+    }
     $data['coaching_id'] = $coaching_id;
+    $data['course_id'] = $course_id;
+    $data['slot_id'] = $slot_id;
     // $data['date'] = $date;
     $data['script_css'] = ['assets/css/vendor/bootstrap-datepicker3.min.css'];
     $data['script_footer'] = ['assets/js/vendor/bootstrap-datepicker.js'];

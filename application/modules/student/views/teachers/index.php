@@ -17,7 +17,7 @@
         <div class="d-sm-flex align-items-center mb-3 mx-n1">
           <?php foreach ($days as $n => $day): ?>
           <a href="<?php echo site_url("/student/teachers/index/$coaching_id/$day"); ?>"
-            class="<?php echo ($booking_date == $day) ? "btn btn-xs btn-primary disabled mx-1 mb-2 mb-sm-0" : "btn btn-xs btn-primary mx-1 mb-2 mb-sm-0"; ?>">
+            class="<?php echo ($booking_date == $day) ? "btn btn-primary mx-1 mb-2 mb-sm-0" : "btn btn-outline-primary mx-1 mb-2 mb-sm-0"; ?>">
             <?php echo ($n === 0) ? "Today" : date("j<\s\u\p>S</\s\u\p> M", $day); ?>
           </a>
           <?php endforeach;?>
@@ -40,7 +40,7 @@
                 <button type="button" data-coaching_id="<?php echo $coaching_id; ?>" data-course_id="<?php echo $course_id; ?>" data-slot_id="<?php echo $slot_id; ?>" data-toggle="tooltip"
                   data-html="true" data-placement="top" title="<?php echo date("j<\s\u\p>S</\s\u\p> M Y", $booking_date); ?>"
                   class="<?php echo ($booked) ? "btn btn-xs btn-primary rounded-0 disabled m-1 px-md-5" : "btn btn-xs btn-primary rounded-0 book-slot m-1 px-md-5" ?>">
-                  <?php printf("<span class='d-block'>%s</span> TO <span class='d-block'>%s</span>", $start_time, $end_time);?>
+                  <?php printf("<span class='d-block ml-n4 mr-4'>%s</span> To <span class='d-block mr-n4 ml-4'>%s</span>", $start_time, $end_time);?>
                 </button>
                 <?php endforeach;?>
                 <?php else: ?>
