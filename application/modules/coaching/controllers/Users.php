@@ -112,9 +112,9 @@ class Users extends MX_Controller {
 		Function to create new user.
 	*/
 	public function create ($coaching_id=0, $role_id=0, $member_id=0) {
-		if($member_id==$this->session->userdata ('member_id')){
-			redirect ('coaching/users/my_account/'.$coaching_id.'/'.$member_id);
-		}
+		// if($member_id==$this->session->userdata ('member_id')){
+		// 	redirect ('coaching/users/my_account/'.$coaching_id.'/'.$member_id);
+		// }
 		$data['coaching_id'] 	= $coaching_id;
 		$data['member_id'] 	= $member_id;
 
