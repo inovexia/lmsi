@@ -139,29 +139,29 @@
     <div class="card">
       <div class="card-body">
         <div class="text-center">
-          <img alt="Profile" src="<?php echo base_url($profile_image); ?>"
-            class="img-thumbnail border-0 rounded-circle mb-4 border" width="200">
-          <h4 class="list-item-heading mb-1"><?php echo $result['first_name'].' '.$result['last_name']; ?></h4>
+          <div class="p-image">
+            <?php 
+        if ($pi['type'] == 'avatar') {
+          ?>
+            <div class="rounded-circle m-0 align-self-center list-thumbnail-letters mx-auto text-uppercase">
+              <?php echo $pi['path']; ?>
+            </div>
+            </a>
+            <?php
+        } else {
+          ?>
+            <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>"
+              class="img-thumbnail border-0 rounded-circle mb-4 border"
+              alt="<?php echo $this->session->userdata ('user_name'); ?>" />
+            <?php
+        }
+      ?>
+          </div>
+          <h4 class="list-item-heading mb-1 py-3 font-weight-bold">
+            <?php echo $result['first_name'].' '.$result['last_name']; ?></h4>
           <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#add_image"><i
               class="fa fa-edit"></i> Edit</button>
         </div>
-        <?php 
-        if ($pi['type'] == 'avatar') {
-          ?>
-        <div class="rounded-circle m-0 align-self-center list-thumbnail-letters mx-auto text-uppercase">
-          <?php echo $pi['path']; ?>
-        </div>
-        </a>
-        <?php
-        } else {
-          ?>
-        <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>"
-          class="img-thumbnail border-0 rounded-circle mb-4 border"
-          alt="<?php echo $this->session->userdata ('user_name'); ?>" />
-        <?php
-        }
-      ?>
-
       </div>
     </div>
   </div>
@@ -173,7 +173,7 @@
 <div class="modal" tabindex="-1" role="dialog" id="add_image">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <?php echo form_open_multipart ('student/user_actions/upload_profile_picture/'.$member_id.'/'.$coaching_id, array ('class'=>'form-horizontal row-border', 'id'=>'upload_image')); ?>
+      <?php echo form_open_multipart ('student/user_actions/upload_profile_picture/'.$member_id.'/'.$coaching_id, array ('class'=>'form-horizontal row-border validate-form', 'id'=>'upload_image')); ?>
       <div class="modal-header">
         <h5 class="modal-title">Profile Image</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -185,8 +185,23 @@
           <div class="form-group col-12">
             <div id="profile_messages"></div>
             <div id="image_preview" class="text-center">
-              <img src="<?php echo base_url ($profile_image); ?>" alt="Profile Image"
-                class="img-fluid rounded-circle" />
+              <div class="p-image">
+                <?php 
+        if ($pi['type'] == 'avatar') {
+          ?>
+                <div class="rounded-circle m-0 align-self-center list-thumbnail-letters mx-auto text-uppercase">
+                  <?php echo $pi['path']; ?>
+                </div>
+                <?php
+        } else {
+          ?>
+                <img src="<?php echo $pi['path']; ?>" alt="<?php echo $this->session->userdata ('user_name'); ?>"
+                  class="img-thumbnail border-0 rounded-circle mb-4 border"
+                  alt="<?php echo $this->session->userdata ('user_name'); ?>" />
+                <?php
+        }
+      ?>
+              </div>
             </div>
             <?php echo form_label('Upload Image', '', array('class'=>'control-label')); ?>
             <div class="input-group mb-3">

@@ -33,7 +33,7 @@ class Users extends MX_Controller {
 		}
 		
 		$data['member_id'] 		= $member_id;
-		$data['profile_image'] 	= $this->users_model->view_profile_image ($member_id);
+		// $data['profile_image'] 	= $this->users_model->view_profile_image ($member_id);
 		$user 					= $this->users_model->get_user ($member_id);
 		$user_profile 			= $this->users_model->member_profile ($member_id); 
 		$batches 				= $this->users_model->member_batches ($member_id); 
@@ -43,6 +43,7 @@ class Users extends MX_Controller {
 		} else {
 			$data['result'] 	= false;
 		}		
+    $data['pi'] 		= $this->users_model->view_profile_image ($member_id);
 		$data['coaching_id'] 	= $coaching_id;
 		$data['role_id'] 		= $user['role_id'];
 		$data['batches'] 		= $batches;

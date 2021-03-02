@@ -51,6 +51,24 @@ class User_actions extends MX_Controller {
 			$this->output->set_output(json_encode(array('status'=>false, 'error'=>$response )));
 		}
 	}
+
+  /* PROFILE PICTURE */
+	// UPLOAD IMAGE
+	public function upload_profile_picture_new ($member_id=0, $coaching_id=0) {
+		$user = $this->users_model->get_user ($member_id);
+		$response = $this->users_model->upload_profile_picture ($member_id);
+		if (is_array($response)) {		// Upload successful
+    	$profile_image = ($this->config->item ('profile_picture_path').'pi_'.$member_id.'.gif');
+      $this->session->set_userdata ('profile_image', $profile_image);
+      $redirect = site_url ('student/users/my_account/'.$coaching_id.'/'.$member_id);
+		    
+			$this->output->set_content_type("application/json");
+			$this->output->set_output(json_encode(array('status'=>true, 'message'=>'Profile picture uploaded successfully', 'redirect'=>$redirect )));
+		} else {
+			$this->output->set_content_type("application/json");
+			$this->output->set_output(json_encode(array('status'=>false, 'error'=>$response )));
+		}
+	}
 	
 	// DISPLAY IMAGE AFTER UPLOAD
 	public function displayprofileimage ($member_id) {

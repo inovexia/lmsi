@@ -8,7 +8,7 @@
       <div class="rounded-circle m-0 align-self-center list-thumbnail-letters mx-auto text-uppercase">
         <?php echo $pi['path']; ?>
       </div>
-      </a>
+      <!-- </a> -->
       <?php
         } else {
           ?>

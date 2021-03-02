@@ -7,8 +7,15 @@ class Users_model extends CI_Model {
 		$this->db->where ('member_id', $member_id);
 		$sql = $this->db->get ('members');
 		if  ($sql->num_rows () > 0 ) {
-			$result = $sql->row_array ();			
-			return $result;
+			$result = $sql->row_array ();	
+      if (! empty($result)) {
+		    	foreach ($result as $row) {
+		    		$pi = $this->view_profile_image ($row['member_id']);
+		    		$row['pi'] = $pi;
+		    		$data[] = $row;
+		      	}
+		    }		
+			return $data;
 		} else {
 			return false;
 		}
@@ -98,7 +105,23 @@ class Users_model extends CI_Model {
 	
 	/* VIEW PROFILE IMAGE
 	*/
-	public function view_profile_image ($member_id=0, $coaching_id=0) { 
+	// public function view_profile_image ($member_id=0, $coaching_id=0) { 
+	
+	// 	$this->load->helper('file');
+	// 	$path_to_image_dir = $this->config->item('profile_picture_path');
+	// 	$file_name = 'pi_'.$member_id.'.gif';
+	// 	$file_path = $path_to_image_dir . $file_name;
+		
+	// 	// if a profile_image of this user does not exists we can proceed normally
+	// 	if ( read_file ( $file_path ) == false ) {
+	// 		$profile_image = $path_to_image_dir . 'default.png';
+	// 	} else {
+	// 		$profile_image = $path_to_image_dir . $file_name . '?' . time ();
+	// 	}
+	// 	return $profile_image;	
+	// }
+  
+  	public function view_profile_image ($member_id=0, $coaching_id=0) { 
 	
 		$this->load->helper('file');
 		$path_to_image_dir = $this->config->item('profile_picture_path');
@@ -107,12 +130,17 @@ class Users_model extends CI_Model {
 		
 		// if a profile_image of this user does not exists we can proceed normally
 		if ( read_file ( $file_path ) == false ) {
-			$profile_image = $path_to_image_dir . 'default.png';
+			//$profile_image = $path_to_image_dir . 'default.png';
+			$data['type'] = 'avatar';
+			$data['path'] = $this->user_name_initials ($member_id);
 		} else {
-			$profile_image = $path_to_image_dir . $file_name . '?' . time ();
+			$data['type'] = 'image';
+			$data['path'] = site_url ($path_to_image_dir . $file_name . '?' . time ());
 		}
-		return $profile_image;	
+		return $data;	
 	}
+
+
 	
 	public function upload_profile_picture ($member_id, $coaching_id=0) {
 		
@@ -174,7 +202,29 @@ class Users_model extends CI_Model {
 		} else{
 			return false;
 		}
+    $p_image = $this->users_model->view_profile_image($member_id);
+    $pi = array(
+      'profile_image' => $p_image
+    );
+    $this->session->set_userdata($pi);
 	}
+
+  public function user_name_initials ($member_id=0) {
+		$user = $this->get_user ($member_id);
+		$fname = $user['first_name'];
+        $lname = $user['last_name'];
+        $initials = '';
+        if ($lname == "") {
+          $initials = substr($fname, 0, 2); 
+        } else {
+          $initials = $fname[0] .''. $lname[0]; 
+        }
+
+        return $initials;
+	}
+
+
+  
 	
 	
 	public function get_user_by_login ($login_id=0) {

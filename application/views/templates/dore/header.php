@@ -211,6 +211,7 @@ echo isset($right_sidebar) ? ' right-menu' : null; ?>">
               class="img-thumbnail" alt="<?php echo $this->session->userdata('user_name'); ?>" />
             <?php endif;?>
           </span>
+
         </button>
         <div class="dropdown-menu dropdown-menu-right mt-3">
           <p class="pl-3 pb-2 mb-0 ml-1">
@@ -219,17 +220,12 @@ echo isset($right_sidebar) ? ' right-menu' : null; ?>">
           <!-- <a class="dropdown-item border-top"
             href="<?php //echo (USER_ROLE_TEACHER == $this->session->userdata('role_id')) ? site_url('coaching/profile/index') : ''; ?>">My
             Profile</a> -->
-
-          <?php 
-              if($this->session->userdata('role_id') == 4){ ?>
+          <?php if($this->session->userdata('role_id') == 4): ?>
           <a class="dropdown-item border-top" href="<?php echo site_url('student/users/my_account/'.$coaching_id); ?>">
             My Account</a>
-          <?php 
-             } else{ ?>
+          <?php else: ?>
           <a class="dropdown-item border-top" href="<?php echo site_url('coaching/profile/index') ?>">My Profile</a>
-          <?php
-             }
-          ?>
+          <?php endif;?>
           <a class="dropdown-item" href="<?php echo site_url('login/user/logout'); ?>">Sign out</a>
         </div>
       </div>
