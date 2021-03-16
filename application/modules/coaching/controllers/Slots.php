@@ -62,7 +62,7 @@ class Slots extends MX_Controller
   public function create($coaching_id = 0, $slot_id = 0)
   {
     $data['page_title'] = 'Create Slot';
-    $data['bc'] = ['Dashboard' => 'coaching/home/dashboard/'];
+    $data['bc'] = ['Slots' => 'coaching/slots/index'];
     $data['toolbar_buttons'] = $this->toolbar_buttons;
     // if ($date == "") {
     //     $date = mktime (0, 0, 0, date ('m'), date('d'), date('Y'));
