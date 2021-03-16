@@ -84,10 +84,9 @@
 							} else {
 								$dob = '';
 							}
-							echo form_input(array('type'=>'', 'name'=>'dob', 'data-date-end-date'=>'0d', 'data-date-format'=> 'dd-mm-yyyy', 'class'=>'form-control datepicker', 'value'=>set_value('dob', $dob)));
+							echo form_input(array('type'=>'text', 'name'=>'dob', 'data-date-end-date'=>'0d', 'data-date-format'=> 'dd-mm-yyyy', 'class'=>'form-control datepicker', 'onfocus'=>"(this.type='date')", 'onblur'=>"(this.type='text')",'value'=>set_value('dob', $dob)));
 							?>
             </div>
-
             <div class="col-md-6 mt-3 mt-md-0">
               <?php echo form_label('Gender', '', array('class'=>'form-label')); ?>
               <?php
